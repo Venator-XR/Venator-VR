@@ -5,6 +5,7 @@ public class MainMenuActions : MonoBehaviour
 {
     [Header("Scenes")]
     [SerializeField] private string mainSceneName = "Main"; 
+    [SerializeField] private string videoSceneName = "Video360";
 
     // 1. Cambiar a la escena principal
     public void PlayGame()
@@ -12,6 +13,14 @@ public class MainMenuActions : MonoBehaviour
         Debug.Log("[MENU] PlayGame -> " + mainSceneName);
         SceneManager.LoadScene(mainSceneName);
     }
+
+    // Escena video 360 (Trailer)
+    public void VideoPlay()
+    {
+        Debug.Log("[MENU] VideoPlay -> " + videoSceneName);
+        SceneManager.LoadScene(videoSceneName);
+    }
+
 
     // 2. Cerrar el juego
     public void QuitGame()
