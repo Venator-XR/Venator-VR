@@ -9,13 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/[Venator]/[Scenes]/Menu.unity
+    path: Assets/[Venator]/[[Scenes]]/Menu.unity
     guid: d2b300e5724cebe45be91d87db2928ed
   - enabled: 1
-    path: Assets/[Venator]/[Scenes]/Main.unity
+    path: Assets/[Venator]/[[Scenes]]/Main.unity
     guid: 1256754787e23da46868c1c9fecc5c07
   - enabled: 1
-    path: Assets/[Venator]/[Scenes]/Video360.unity
+    path: Assets/[Venator]/[[Scenes]]/Video360.unity
     guid: eb655c33c5587754bb5a3ae96173120b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
