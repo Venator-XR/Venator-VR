@@ -131,6 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5497779881445748910}
   - component: {fileID: 6564993408494444614}
+  - component: {fileID: 4828290084156326162}
+  - component: {fileID: 2839833118295153957}
   m_Layer: 0
   m_Name: vampire
   m_TagString: Untagged
@@ -173,6 +175,41 @@ MonoBehaviour:
   shapeshiftPS: {fileID: 947339983553122165}
   shapeshiftDelayMs: 600
   currentForm: 0
+--- !u!195 &4828290084156326162
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &2839833118295153957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f5d9f1c64b7034dbd069068c0085f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objSeguido: {fileID: 0}
 --- !u!1 &3379200181157459009
 GameObject:
   m_ObjectHideFlags: 0
