@@ -1,60 +1,59 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventorySlot : MonoBehaviour
 {
-    public int slotID; // 0: Left, 1: Right, 2: Down
-    public Image targetImage; // Arrastra la imagen aquí en el Inspector
+    public int slotID;
+    public Image targetImage;
+    public TextMeshProUGUI labelText;
 
     private InventoryTouchManager manager;
     private Color originalColor;
-    public Color hoverColor = Color.green;
-    private bool isSetup = false;
 
-    // Esta función la llamará el Manager automáticamente
+    // Color al que cambia cuando se selecciona
+    public Color hoverColor = Color.green;
+
     public void Setup(InventoryTouchManager newManager)
     {
         manager = newManager;
-
-        // Auto-detectar imagen si se te olvidó ponerla en el inspector
         if (targetImage == null) targetImage = GetComponent<Image>();
 
         if (targetImage != null)
         {
+            // Guardamos el color original (blanco/gris) para volver a él luego
             originalColor = targetImage.color;
-            isSetup = true;
-        }
-        else
-        {
-            Debug.LogError($"[InventorySlot] Error: El slot {gameObject.name} no tiene Imagen asignada.");
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void UpdateLabel(string text)
     {
-        if (!isSetup) return;
-
-        // Verificamos si es el cursor de la mano
-        if (other.CompareTag("Player") || other.name.Contains("Cursor"))
-        {
-            if (targetImage != null) targetImage.color = hoverColor;
-            if (manager != null) manager.SetCurrentSelection(slotID);
-        }
+        if (labelText != null) labelText.text = text;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!isSetup) return;
+    // --- FUNCIONES VISUALES (Controladas por el Manager) ---
 
-        if (other.CompareTag("Player") || other.name.Contains("Cursor"))
-        {
-            ResetColor();
-            if (manager != null) manager.ClearSelection(slotID);
-        }
+    public void Highlight()
+    {
+        if (targetImage != null) targetImage.color = hoverColor;
     }
 
     public void ResetColor()
     {
         if (targetImage != null) targetImage.color = originalColor;
     }
+
+    // --- DETECCIÓN FÍSICA ---
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Solo reaccionamos a la mano o cursor
+        if (other.CompareTag("Player") || other.name.Contains("Cursor"))
+        {
+            // AVISAMOS AL JEFE: "Soy el ID tal y me han tocado"
+            if (manager != null) manager.OnSlotHovered(slotID);
+        }
+    }
+
+    // Ya no usamos OnTriggerExit para limpiar, lo gestiona el manager
 }

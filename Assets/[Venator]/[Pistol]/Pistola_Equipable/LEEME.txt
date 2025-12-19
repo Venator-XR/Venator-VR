@@ -1,1 +1,0 @@
-Para poder equipar la pistola, reemplaza el "Right Controller" que ves aquí con el que haya en "XR Origin" dentro de "Camera Offset"
