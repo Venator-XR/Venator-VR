@@ -32,7 +32,7 @@ public class LeverController : MonoBehaviour
         float currentAngle = GetCurrentAngle();
 
         // Debug para ver qué está pasando realmente
-        Debug.Log($"Ángulo actual: {currentAngle} | Distancia a OFF: {Mathf.Abs(currentAngle - angleOff)} | Distancia a ON: {Mathf.Abs(currentAngle - angleOn)}");
+        //Debug.Log($"Ángulo actual: {currentAngle} | Distancia a OFF: {Mathf.Abs(currentAngle - angleOff)} | Distancia a ON: {Mathf.Abs(currentAngle - angleOn)}");
 
         // LÓGICA DE DISTANCIA: ¿A quién estoy más cerca?
         // Calculamos la distancia absoluta (sin signos) a cada punto
