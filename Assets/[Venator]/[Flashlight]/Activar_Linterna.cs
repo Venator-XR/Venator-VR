@@ -38,7 +38,7 @@ public class FlashlightController : MonoBehaviour
         // 2. Lógica de Agitar (Solo si está en mano y APAGADA)
         if (isHeld && !IsOn)
         {
-            if (showDebugLogs && speed > 0.5f) Debug.Log($"Speed: {speed:F2}");
+            if (showDebugLogs && speed > 0.5f) //Debug.Log($"Speed: {speed:F2}");
 
             if (speed > shakeThreshold && Time.time > lastShakeTime + shakeCooldown)
             {
@@ -81,5 +81,11 @@ public class FlashlightController : MonoBehaviour
     {
         if (lightSource != null) lightSource.SetActive(IsOn);
         if (lightCone != null) lightCone.SetActive(IsOn);
+    }
+
+    public void SetHeldState(bool state)
+    {
+        isHeld = state;
+        if (lightSource != null) lastTipPosition = lightSource.transform.position;
     }
 }
