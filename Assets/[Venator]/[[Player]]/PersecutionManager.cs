@@ -46,7 +46,7 @@ public class PersecutionManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemigo") && playerHealth != null && playerHealth.IsVulnerable)
+        if (collision.gameObject.CompareTag("Enemigo") && playerHealth != null)
         {
             ApplyEnemyDamage();
         }
@@ -54,7 +54,7 @@ public class PersecutionManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemigo") && playerHealth != null && playerHealth.IsVulnerable)
+        if (other.CompareTag("Enemigo") && playerHealth != null)
         {
             ApplyEnemyDamage();
         }

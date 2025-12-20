@@ -53,7 +53,7 @@ public class LaserProjectile : MonoBehaviour
 
         IHealth target = collision.gameObject.GetComponentInParent<IHealth>();
 
-        if (target != null && target.IsVulnerable())
+        if (target != null)
         {
             Debug.Log($"[BALA] IMPACTO REAL en {collision.gameObject.name}. Aplicando daño.");
             target.ApplyDamage(damageAmount);

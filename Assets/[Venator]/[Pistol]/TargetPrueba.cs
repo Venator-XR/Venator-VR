@@ -3,7 +3,7 @@ using System;
 
 public class TargetPrueba : MonoBehaviour, IHealth
 {
-    public float salud = 100f;
+    public int health = 100;
     private bool isVulnerable = true;
 
     /// <summary>
@@ -14,17 +14,17 @@ public class TargetPrueba : MonoBehaviour, IHealth
     /// <summary>
     /// Gets whether the target can currently take damage.
     /// </summary>
-    public bool IsVulnerable => isVulnerable && salud > 0;
+    public bool IsVulnerable => isVulnerable && health > 0;
 
     // Implementamos ApplyDamage de la interfaz IHealth
     public void ApplyDamage(int amount)
     {
         if (!IsVulnerable) return;
 
-        salud -= amount;
-        Debug.Log($"�Auch! He recibido {amount} de da�o. Salud restante: {salud}");
+        health -= amount;
+        Debug.Log($"�Auch! He recibido {amount} de da�o. Salud restante: {health}");
 
-        if (salud <= 0)
+        if (health <= 0)
         {
             Kill();
         }
