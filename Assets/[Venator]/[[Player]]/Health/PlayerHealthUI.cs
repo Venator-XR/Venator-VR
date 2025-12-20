@@ -1,51 +1,53 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
-/// UI component that listens to IHealth state changes and updates the visual display.
-/// Does not know about health numbers, only responds to HealthState changes.
+/// UI component that listens to PlayerHealth state changes and updates the visual display.
+/// Specifically depends on PlayerHealth for HealthState information.
 /// </summary>
 public class PlayerHealthUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject healthObject;
-    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private PlayerHealth playerHealth;
 
-    [Header("Sprites")]
-    [SerializeField] private Sprite healthySprite;
-    [SerializeField] private Sprite hurtSprite;
-    [SerializeField] private Sprite criticalSprite;
-    [SerializeField] private Sprite deadSprite;
+    [Header("Blood Damage Panel")]
+    [SerializeField] private GameObject damagePanel;
+    [SerializeField] private float bloodPulseSpeed = 3f;
 
-    private IHealth health;
+    private CanvasGroup damagePanelCG;
+    private Coroutine bloodPulseCoroutine;
 
     private void Awake()
     {
-        if (healthObject == null)
+        if (playerHealth == null)
         {
-            Debug.LogError("PlayerHealthUI: healthObject is not assigned!");
-            return;
+            Debug.LogError("PlayerHealthUI: playerHealth is not assigned!");
         }
 
-        health = healthObject.GetComponent<IHealth>();
-        if (health == null)
+        // Setup damage panel
+        if (damagePanel != null)
         {
-            Debug.LogError($"PlayerHealthUI: No component implementing IHealth found on {healthObject.name}!");
+            damagePanelCG = damagePanel.GetComponent<CanvasGroup>();
+            if (damagePanelCG == null) damagePanelCG = damagePanel.AddComponent<CanvasGroup>();
+
+            damagePanelCG.alpha = 0;
+            damagePanel.SetActive(false);
         }
     }
 
     private void OnEnable()
     {
-        if (health == null) return;
+        if (playerHealth == null) return;
 
-        health.OnStateChanged += UpdateUI;
-        UpdateUI(health.State);
+        playerHealth.OnStateChanged += UpdateUI;
+        UpdateUI(playerHealth.State);
     }
 
     private void OnDisable()
     {
-        if (health != null)
+        if (playerHealth != null)
         {
-            health.OnStateChanged -= UpdateUI;
+            playerHealth.OnStateChanged -= UpdateUI;
         }
     }
 
@@ -55,16 +57,54 @@ public class PlayerHealthUI : MonoBehaviour
     /// <param name="state">The current health state.</param>
     private void UpdateUI(HealthState state)
     {
-        if (renderer == null) return;
+        UpdateDamagePanel(state);
+        Debug.Log($"PlayerHealthUI: Updated UI to {state}");
+    }
+
+    /// <summary>
+    /// Updates the damage panel based on the current health state.
+    /// </summary>
+    /// <param name="state">The current health state.</param>
+    private void UpdateDamagePanel(HealthState state)
+    {
+        if (damagePanel == null) return;
+
+        // Stop any existing blood pulse effect
+        if (bloodPulseCoroutine != null)
+        {
+            StopCoroutine(bloodPulseCoroutine);
+            bloodPulseCoroutine = null;
+        }
 
         switch (state)
         {
-            case HealthState.Healthy:  renderer.sprite = healthySprite;  break;
-            case HealthState.Hurt:     renderer.sprite = hurtSprite;     break;
-            case HealthState.Critical: renderer.sprite = criticalSprite; break;
-            case HealthState.Dead:     renderer.sprite = deadSprite;     break;
-        }
+            case HealthState.Healthy:
+                // No UI changes for healthy state - deactivate panel
+                damagePanel.SetActive(false);
+                if (damagePanelCG != null) damagePanelCG.alpha = 0;
+                break;
 
-        Debug.Log($"PlayerHealthUI: Updated UI to {state}");
+            case HealthState.Hurt:
+            case HealthState.Critical:
+            case HealthState.Dead:
+                // Use damage panel the same way for all damaged states
+                damagePanel.SetActive(true);
+                bloodPulseCoroutine = StartCoroutine(BloodPulseEffect());
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Coroutine that creates a pulsing blood effect for damaged states.
+    /// </summary>
+    private IEnumerator BloodPulseEffect()
+    {
+        while (damagePanelCG != null && playerHealth != null && playerHealth.State != HealthState.Healthy)
+        {
+            float alpha = Mathf.Abs(Mathf.Sin(Time.time * bloodPulseSpeed));
+            float alphaAjustado = 0.2f + (alpha * 0.5f);
+            damagePanelCG.alpha = alphaAjustado;
+            yield return null;
+        }
     }
 }

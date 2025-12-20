@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class LaserProjectile : MonoBehaviour
 {
-    private DamageInfo payload;
+    private int damageAmount;
     private Rigidbody rb;
     private Collider myCollider; // Referencia a mi propio collider
     private bool isInitialized = false;
@@ -15,9 +15,9 @@ public class LaserProjectile : MonoBehaviour
     }
 
     // AHORA ACEPTAMOS UN NUEVO PARAMETRO: "colliderIgnorar"
-    public void Initialize(Vector3 direction, float speed, float damageAmount, string extraData, Collider colliderIgnorar)
+    public void Initialize(Vector3 direction, float speed, int damage, Collider colliderIgnorar)
     {
-        payload = new DamageInfo { amount = damageAmount, dataType = extraData };
+        damageAmount = damage;
         isInitialized = true;
 
         // 1. LIMPIEZA DE FÍSICAS
@@ -51,12 +51,12 @@ public class LaserProjectile : MonoBehaviour
 
         if (!isInitialized) return;
 
-        IDamageable target = collision.gameObject.GetComponentInParent<IDamageable>();
+        IHealth target = collision.gameObject.GetComponentInParent<IHealth>();
 
-        if (target != null)
+        if (target != null && target.IsVulnerable())
         {
             Debug.Log($"[BALA] IMPACTO REAL en {collision.gameObject.name}. Aplicando daño.");
-            target.TakeDamage(payload);
+            target.ApplyDamage(damageAmount);
         }
 
         Destroy(gameObject);

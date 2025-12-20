@@ -1,25 +1,49 @@
 using UnityEngine;
+using System;
 
-// ¡Importante! Heredamos de MonoBehaviour Y firmamos el contrato IDamageable
-public class TargetPrueba : MonoBehaviour, IDamageable
+public class TargetPrueba : MonoBehaviour, IHealth
 {
     public float salud = 100f;
+    private bool isVulnerable = true;
 
-    // Estamos OBLIGADOS a implementar esta función por la interfaz
-    public void TakeDamage(DamageInfo info)
+    /// <summary>
+    /// Invoked when the target dies.
+    /// </summary>
+    public event Action OnDeath;
+
+    /// <summary>
+    /// Gets whether the target can currently take damage.
+    /// </summary>
+    public bool IsVulnerable => isVulnerable && salud > 0;
+
+    // Implementamos ApplyDamage de la interfaz IHealth
+    public void ApplyDamage(int amount)
     {
-        salud -= info.amount;
-        Debug.Log($"¡Auch! He recibido {info.amount} de daño. Tipo: {info.dataType}. Salud restante: {salud}");
+        if (!IsVulnerable) return;
+
+        salud -= amount;
+        Debug.Log($"ï¿½Auch! He recibido {amount} de daï¿½o. Salud restante: {salud}");
 
         if (salud <= 0)
         {
-            Debug.Log("¡Destruido!");
-            Destroy(gameObject);
+            Kill();
         }
+        else
+        {
+            // Aquï¿½ podrï¿½as cambiar el color del cubo para dar feedback visual
+            GetComponent<Renderer>().material.color = Color.red;
+            Invoke("ResetColor", 0.2f);
+        }
+    }
 
-        // Aquí podrías cambiar el color del cubo para dar feedback visual
-        GetComponent<Renderer>().material.color = Color.red;
-        Invoke("ResetColor", 0.2f);
+    /// <summary>
+    /// Instantly kills the target.
+    /// </summary>
+    public void Kill()
+    {
+        Debug.Log("ï¿½Destruido!");
+        OnDeath?.Invoke();
+        Destroy(gameObject);
     }
 
     void ResetColor()

@@ -5,12 +5,12 @@ using System.Collections;
 namespace Unity.AI.Navigation.Samples
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class agentFollowPos : MonoBehaviour
+    public class FollowPlayerAgent : MonoBehaviour
     {
         NavMeshAgent m_Agent;
         public Transform objSeguido;
 
-        [Header("Configuración de Velocidad")]
+        [Header("Configuraciï¿½n de Velocidad")]
         public float velocidadNormal = 3.5f;
         public float velocidadAturdido = 0.5f; // Casi quieto
 
@@ -34,7 +34,7 @@ namespace Unity.AI.Navigation.Samples
             }
         }
 
-        // Esta función la llamaremos desde el script de VidaJugador
+        // Esta funciï¿½n la llamaremos desde el script de PersecutionManager
         public void RalentizarVampiro(float tiempo)
         {
             StartCoroutine(CorrutinaRalentizar(tiempo));

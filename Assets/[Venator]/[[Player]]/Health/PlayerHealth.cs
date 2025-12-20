@@ -12,7 +12,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private int healthyMin = 3;
     [SerializeField] private int hurtMin = 2;
     [SerializeField] private int criticalMin = 1;
-    [SerializeField] private int damagePerHit = 1;
+    
+    [Header("Vulnerability")]
+    [SerializeField] private bool isVulnerable = true;
 
     [Header("Debug")]
     [SerializeField] private int currentHealth;
@@ -27,6 +29,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
     /// Invoked when the health state changes. Parameter is the new state.
     /// </summary>
     public event Action<HealthState> OnStateChanged;
+
+    /// <summary>
+    /// Invoked when the player dies.
+    /// </summary>
+    public event Action OnDeath;
 
     /// <summary>
     /// Current health value.
@@ -55,18 +62,24 @@ public class PlayerHealth : MonoBehaviour, IHealth
     }
 
     /// <summary>
-    /// Applies damage to the player. Ignored if already dead. Damage amount is determined internally.
+    /// Gets whether the player can currently take damage.
     /// </summary>
-    public void ApplyDamage()
+    public bool IsVulnerable => isVulnerable && !IsDead;
+
+    /// <summary>
+    /// Applies damage to the player. Ignored if already dead or invulnerable.
+    /// </summary>
+    /// <param name="amount">The amount of damage to apply.</param>
+    public void ApplyDamage(int amount)
     {
-        if (IsDead)
+        if (!IsVulnerable)
         {
-            Debug.LogWarning("PlayerHealth: Attempted to damage a dead player.");
+            Debug.LogWarning("PlayerHealth: Cannot apply damage - player is invulnerable or dead.");
             return;
         }
 
-        currentHealth = Mathf.Max(0, currentHealth - damagePerHit);
-        OnDamaged?.Invoke(damagePerHit);
+        currentHealth = Mathf.Max(0, currentHealth - amount);
+        OnDamaged?.Invoke(amount);
 
         var newState = CalculateState(currentHealth);
         UpdateState(newState);
@@ -114,6 +127,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
         currentState = newState;
         OnStateChanged?.Invoke(currentState);
+
+        if (newState == HealthState.Dead)
+        {
+            OnDeath?.Invoke();
+        }
 
         Debug.Log($"PlayerHealth: State changed to {currentState} (Health: {currentHealth})");
     }
