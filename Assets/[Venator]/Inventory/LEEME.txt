@@ -1,0 +1,1 @@
+Para poder usar el inventario, reemplaza el "Right Controller" que ves aquí con el que haya en "XR Origin" dentro de "Camera Offset"

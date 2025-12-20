@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Enemigo
+  - Fixed
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Pistola
+  - Bala
   - 
   - 
   - 
