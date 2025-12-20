@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/[Venator]/[[Scenes]]/Video360.unity
     guid: eb655c33c5587754bb5a3ae96173120b
+  - enabled: 1
+    path: Assets/[Venator]/[[Scenes]]/Pantalla_Derrota.unity
+    guid: d11245d0f48473344ac1cfd42a79d268
+  - enabled: 1
+    path: Assets/[Venator]/[[Scenes]]/Pantalla_Victoria.unity
+    guid: a141847f8477a704cab152942f81ce42
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a852bca94c65339429c7c3417c68d6e5, type: 2}

@@ -1,33 +1,27 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
-using System.Collections; // Necesario para las Corrutinas
 
 public class VidaJugador : MonoBehaviour
 {
     [Header("Configuración de Vida")]
     public int vidas = 2;
 
-    [Header("Pantallas (Arrastra aquí los Canvas)")]
-    public GameObject panelDano;    // El panel rojo de sangre
-    public GameObject canvasDerrota; // El Canvas de Game Over
+    [Header("Interfaces (Arrastra los Canvas)")]
+    public GameObject panelDano;
+    public GameObject canvasDerrota;
 
     private bool haMuerto = false;
-    private Coroutine corrutinaParpadeo; // Para controlar el parpadeo
-    private CanvasGroup panelDanoCG;     // Para controlar la transparencia
+    private Coroutine corrutinaParpadeo;
+    private CanvasGroup panelDanoCG;
 
     private void Start()
     {
-        // 1. Configuramos el CanvasGroup del panel de daño
         if (panelDano != null)
         {
-            // Intentamos obtener el componente, si no existe, lo añadimos
             panelDanoCG = panelDano.GetComponent<CanvasGroup>();
-            if (panelDanoCG == null)
-            {
-                panelDanoCG = panelDano.AddComponent<CanvasGroup>();
-            }
+            if (panelDanoCG == null) panelDanoCG = panelDano.AddComponent<CanvasGroup>();
 
-            // Nos aseguramos de que empiece invisible
             panelDanoCG.alpha = 0;
             panelDano.SetActive(false);
         }
@@ -35,99 +29,57 @@ public class VidaJugador : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemigo") && !haMuerto)
-        {
-            RecibirDano();
-        }
+        if (collision.gameObject.CompareTag("Enemigo") && !haMuerto) RecibirDano();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemigo") && !haMuerto)
-        {
-            RecibirDano();
-        }
+        if (other.CompareTag("Enemigo") && !haMuerto) RecibirDano();
     }
 
     void RecibirDano()
     {
         vidas--;
 
+        // BUSCAMOS AL VAMPIRO PARA RALENTIZARLO
+        Unity.AI.Navigation.Samples.agentFollowPos scriptVampiro = FindFirstObjectByType<Unity.AI.Navigation.Samples.agentFollowPos>();
+        if (scriptVampiro != null)
+        {
+            scriptVampiro.RalentizarVampiro(10f); // 10 segundos de lentitud
+        }
+
         if (vidas == 1)
         {
-            // PRIMER GOLPE: Activamos el parpadeo
-            Debug.Log("¡Au! Primer golpe.");
+            // ... (aquí va tu código del parpadeo de sangre que ya tenías)
             if (panelDano != null)
             {
-                panelDano.SetActive(true); // Lo activamos
-                // Iniciamos la corrutina de parpadeo
+                panelDano.SetActive(true);
                 if (corrutinaParpadeo != null) StopCoroutine(corrutinaParpadeo);
                 corrutinaParpadeo = StartCoroutine(HacerParpadearSangre());
             }
         }
         else if (vidas <= 0)
         {
-            // SEGUNDO GOLPE: Fin del juego
             Morir();
         }
     }
 
-    // --- ESTA ES LA NUEVA FUNCIÓN DE PARPADEO ---
     IEnumerator HacerParpadearSangre()
     {
-        float velocidad = 3f; // Qué tan rápido parpadea
-
+        float velocidad = 3f;
         while (vidas == 1 && !haMuerto)
         {
-            // Usamos Mathf.Sin para crear una onda suave (pulso) entre 0.2 y 0.8 de opacidad
-            // Time.time hace que avance, * velocidad lo acelera.
-            // Abs lo hace positivo.
             float alpha = Mathf.Abs(Mathf.Sin(Time.time * velocidad));
-
-            // Ajustamos para que no sea totalmente transparente ni totalmente opaco (opcional)
-            // Esto hará que oscile entre 0.2 (casi transparente) y 0.7 (bastante rojo)
             float alphaAjustado = 0.2f + (alpha * 0.5f);
-
-            if (panelDanoCG != null)
-            {
-                panelDanoCG.alpha = alphaAjustado;
-            }
-
-            yield return null; // Espera al siguiente frame
+            if (panelDanoCG != null) panelDanoCG.alpha = alphaAjustado;
+            yield return null;
         }
     }
 
     void Morir()
     {
         haMuerto = true;
-        Debug.Log("¡Has muerto!");
-
-        // Detenemos el parpadeo si estaba activo
-        if (corrutinaParpadeo != null) StopCoroutine(corrutinaParpadeo);
-
-        // 1. Mostrar pantalla de derrota
-        if (canvasDerrota != null) canvasDerrota.SetActive(true);
-
-        // 2. Ocultar el panel de daño
-        if (panelDano != null) panelDano.SetActive(false);
-
-        // 3. Pausar el tiempo
-        Time.timeScale = 0;
+        Time.timeScale = 1; // ¡OJO! No pauses el tiempo aquí si quieres cambiar de escena
+        SceneManager.LoadScene("Pantalla_Derrota"); // Asegúrate de que el nombre coincida exactamente
     }
-
-    // --- FUNCIONES PARA LOS BOTONES ---
-
-    public void JugarOtraVez()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void SalirDelJuego()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
-    }
-
-    
 }
