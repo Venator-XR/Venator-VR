@@ -3,46 +3,55 @@ using UnityEngine.Events;
 
 public class ShakeDetector : MonoBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("Fuerza necesaria para detectar el agite. Prueba con valores entre 2.0 y 5.0")]
-    public float shakeThreshold = 3.5f;
-    [Tooltip("Tiempo mínimo entre sacudidas para evitar parpadeos")]
-    public float cooldownTime = 0.5f;
+    [Header("Shake Configuration")]
+    [SerializeField] private float shakeThreshold = 2.0f;
+    [SerializeField] private float minShakeDuration = 1f;
+    [SerializeField] private float shakeCooldown = 1.0f;
+    [SerializeField] private bool showDebugLogs = true;
 
-    [Header("Eventos")]
-    public UnityEvent OnShake;
+    [Header("Event")]
+    public UnityEvent OnShakeDetected;
 
-    // Variables internas para el cálculo
+    // Local variables
     private Vector3 lastPosition;
-    private Vector3 lastVelocity;
     private float lastShakeTime;
+    private float currentShakeTime = 0f;
 
     void Start()
     {
         lastPosition = transform.position;
-        lastVelocity = Vector3.zero;
     }
 
     void Update()
     {
-        // 1. Calculamos la velocidad actual basándonos en cuánto se ha movido
-        // (Esto funciona aunque sea Kinematic, porque leemos la posición real del mundo)
-        Vector3 currentVelocity = (transform.position - lastPosition) / Time.deltaTime;
-
-        // 2. Calculamos la aceleración (cambio de velocidad)
-        Vector3 acceleration = (currentVelocity - lastVelocity) / Time.deltaTime;
-
-        // 3. Detectamos el "Gesto"
-        // Si la aceleración es muy fuerte y ha pasado el tiempo de cooldown...
-        if (acceleration.magnitude > shakeThreshold && Time.time > lastShakeTime + cooldownTime)
-        {
-            Debug.Log("[SHAKE] ¡Agitación detectada!");
-            OnShake.Invoke();
-            lastShakeTime = Time.time;
-        }
-
-        // 4. Guardamos datos para el siguiente frame
+        // Calculate speed
+        float speed = Vector3.Distance(transform.position, lastPosition) / Time.deltaTime;
         lastPosition = transform.position;
-        lastVelocity = currentVelocity;
+
+        // Detection
+        if (speed > shakeThreshold)
+        {
+            currentShakeTime += Time.deltaTime;
+
+            if (currentShakeTime > minShakeDuration && Time.time > lastShakeTime + shakeCooldown)
+            {
+                TriggerShake();
+            }
+        }
+        else
+        {
+            // Reset if not shaking
+            currentShakeTime = 0f;
+        }
+    }
+
+    private void TriggerShake()
+    {
+        if (showDebugLogs) Debug.Log($"Shake detected on {gameObject.name}!");
+
+        OnShakeDetected.Invoke();
+
+        lastShakeTime = Time.time;
+        currentShakeTime = 0f;
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fixed
   - Item
+  - Enemigo
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Pistola
   - Bala
-  - 
+  - Castle
   - 
   - 
   - 
