@@ -5,55 +5,60 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: arch texture
-    second: {fileID: 2800000, guid: 2145464ca9ff8f04690e63c1aa3050fe, type: 3}
+      name: Material.002
+    second: {fileID: 2100000, guid: 7db2130437db0c24082730e4962ecbde, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 7432b1828a63f204798d0a875214b004, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: arch
+    second: {fileID: 2100000, guid: 78605d8a95568144e802bde5a71bf4ed, type: 2}
+  - first:
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: ladrillo
-    second: {fileID: 2800000, guid: 78c2709e4bf437243951f44c6443a004, type: 3}
+    second: {fileID: 2100000, guid: 99ec59348b59db541b0a0e2ae48937e5, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: ladrillo reventao
-    second: {fileID: 2800000, guid: b5ab16907d7091b42aeaa582eff287ca, type: 3}
+      name: ladrillo mal
+    second: {fileID: 2100000, guid: 1f9e9f0ded4918446976da1a64740a3b, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: madera
-    second: {fileID: 2800000, guid: 11a11dc786e3de24eb92b35e34b746df, type: 3}
+    second: {fileID: 2100000, guid: db8ea5828b1b8844aa5a2900e8bfe104, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: madera roto
-    second: {fileID: 2800000, guid: ae2e12c54ccbfa04f800a12c3c5f7d9f, type: 3}
+      name: madera 2
+    second: {fileID: 2100000, guid: 82251b1fdeadffb48abce04c2b2e166a, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: maderas
-    second: {fileID: 2800000, guid: c6a17f2c1e25d474dba4ed445d0501a1, type: 3}
+      name: madera 2 rota
+    second: {fileID: 2100000, guid: 0146f2d26addf6648ba299a737f9431c, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: suelo
-    second: {fileID: 2800000, guid: 46a6326afd162014c9a6368014c428ef, type: 3}
+    second: {fileID: 2100000, guid: 3a03e0a2ddc39c34ea5091b6860ac450, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: techo
-    second: {fileID: 2800000, guid: d99bce8103a5afe438974f5bdd6f633b, type: 3}
+    second: {fileID: 2100000, guid: c1dbc50405c2acb4d83ef90aedc2ffe3, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: techo roto
-    second: {fileID: 2800000, guid: 7c9fd4b1422e42042942ea29c1f6ddbc, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: textura
-    second: {fileID: 2800000, guid: feb90b61890484a4cb4f6066765fdb0e, type: 3}
+    second: {fileID: 2100000, guid: cc75676ef900d314b89fcfa71ec24dd1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -83,7 +88,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 1.1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -138,7 +143,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 1.1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
