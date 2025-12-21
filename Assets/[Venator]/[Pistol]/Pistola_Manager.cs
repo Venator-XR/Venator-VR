@@ -7,12 +7,12 @@ public class PistolaManager : MonoBehaviour
     public GameObject laserPrefab;
     public Transform firePoint;
 
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     public float projectileSpeed = 20f;
-    public float damage = 25f;
+    public int damage = 25;
 
     [Header("Input de Disparo (NUEVO)")]
-    // Arrastra aquí la acción "Activate" (Gatillo)
+    // Arrastra aquï¿½ la acciï¿½n "Activate" (Gatillo)
     [SerializeField] private InputActionProperty shootInput;
 
     private Collider myGunCollider;
@@ -29,8 +29,8 @@ public class PistolaManager : MonoBehaviour
 
     void Update()
     {
-        // AHORA DETECTAMOS EL DISPARO AQUÍ DIRECTAMENTE
-        // WasPressedThisFrame = Solo dispara una vez por clic (semi-automática)
+        // AHORA DETECTAMOS EL DISPARO AQUï¿½ DIRECTAMENTE
+        // WasPressedThisFrame = Solo dispara una vez por clic (semi-automï¿½tica)
         if (shootInput.action != null && shootInput.action.WasPressedThisFrame())
         {
             Fire();
@@ -48,7 +48,7 @@ public class PistolaManager : MonoBehaviour
         if (laserScript != null)
         {
             // Inicializar bala ignorando mi propio collider
-            laserScript.Initialize(firePoint.forward, projectileSpeed, damage, "Plasma", myGunCollider);
+            laserScript.Initialize(firePoint.forward, projectileSpeed, damage, myGunCollider);
         }
     }
 }
