@@ -22,7 +22,7 @@ public class RandomMovementStrategy : IMovementStrategy
         Transform nextWaypoint;
         do
         {
-            nextWaypoint = waypoints[Random.Range(0, waypoints.Count)];
+            nextWaypoint = waypoints[UnityEngine.Random.Range(0, waypoints.Count)];
         } 
         while (nextWaypoint == currentWaypoint);
 
