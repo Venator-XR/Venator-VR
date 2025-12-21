@@ -64,7 +64,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8264872165996090688}
-  - {fileID: 8485502009323308481}
   - {fileID: 2004450406331077419}
   - {fileID: 8450407842687219800}
   m_Father: {fileID: 0}
@@ -83,11 +82,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightSource: {fileID: 5572598189913220769}
   lightCone: {fileID: 4492760695530286820}
+  toggleButtonSource:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Toggle Button Source
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 9ee4cbed-8c6a-45d2-879a-c453cf2258ef
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6730069882215067947, guid: da2b439d1a2de5c46a4f428f8cf4fe19, type: 3}
   maxDistance: 8
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4294967295
   lerpSpeed: 10
+  showRaycast: 1
 --- !u!114 &531296700714035371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,11 +112,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b43b34ab11e76b42a5f86ae8a5d7d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashlight: {fileID: 0}
   shakeThreshold: 3.5
   minShakeDuration: 1
   shakeCooldown: 1
   showDebugLogs: 1
+  OnShakeDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4346636873046052980}
+        m_TargetAssemblyTypeName: FlashlightController, Assembly-CSharp
+        m_MethodName: TurnOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5572598189913220769
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +264,7 @@ GameObject:
   - component: {fileID: 5222885864676138931}
   - component: {fileID: 9038826317807683998}
   m_Layer: 0
-  m_Name: linterna
+  m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,52 +424,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6940442525864329098
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8485502009323308481}
-  - component: {fileID: 7283445813056768103}
-  m_Layer: 0
-  m_Name: Global Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8485502009323308481
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6940442525864329098}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02355274, y: 0.02785375, z: 0.28705832}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1512743508490912282}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7283445813056768103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6940442525864329098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 639d5fb7979b60346968dc8f8bd5edd7, type: 2}
