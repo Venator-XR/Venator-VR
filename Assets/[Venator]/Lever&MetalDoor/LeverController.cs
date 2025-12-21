@@ -9,12 +9,11 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class LeverController : MonoBehaviour
 {
     [Header("Configuración de Ángulos")]
-    [SerializeField] private float angleOn = 45f;  // Ángulo de activación (ej: abajo)
-    [SerializeField] private float angleOff = -45f; // Ángulo de reposo (ej: arriba)
-    [SerializeField] private float threshold = 0.5f; // 0.0 a 1.0 (50% del recorrido)
+    [SerializeField] private float angleOn = 45f;  // Ángulo de activación
+    [SerializeField] private float angleOff = -45f; // Ángulo de reposo
 
     [Header("Eventos")]
-    public UnityEvent OnLeverActivated; // IMPORTANTE: Conecta aquí tu futura animación <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public UnityEvent OnLeverActivated; // IMPORTANTE: Conecta aquí tu futura animación <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     private XRGrabInteractable interactable;
     private HingeJoint hinge;
