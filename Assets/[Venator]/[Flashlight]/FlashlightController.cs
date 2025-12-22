@@ -1,17 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // IMPORTANTE: Necesario para el input
+using UnityEngine.InputSystem;
 
 public class FlashlightController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject lightSource;
     [SerializeField] private GameObject lightCone;
+    [SerializeField] private Animator handAnim;
 
     [Header("Input Settings")]
-    public InputActionProperty toggleButtonSource; 
-
-    // public encapsulated state
-    
+    public InputActionProperty toggleButtonSource;
 
     [Header("Raycast Config")]
     public float maxDistance = 8f;
@@ -20,6 +18,22 @@ public class FlashlightController : MonoBehaviour
     public bool showRaycast = true;
 
     public bool IsOn { get; private set; } = true;
+
+
+    private void OnEnable()
+    {
+        // Si tienes la acción definida "a mano", hay que encenderla explícitamente
+        if (toggleButtonSource.action != null)
+            toggleButtonSource.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        // Y apagarla cuando el objeto se desactive para no dar errores
+        if (toggleButtonSource.action != null)
+            toggleButtonSource.action.Disable();
+    }
+    // -----------------------------
 
     void Start()
     {
@@ -31,6 +45,8 @@ public class FlashlightController : MonoBehaviour
         // Button input detection
         if (toggleButtonSource.action != null && toggleButtonSource.action.WasPressedThisFrame())
         {
+            Debug.Log("Flashlight button pressed!");
+            handAnim.Play("flashlightButton", -1, 0f);
             ToggleLight();
         }
 
@@ -76,10 +92,10 @@ public class FlashlightController : MonoBehaviour
         IsOn = !IsOn;
         UpdateLightVisuals();
     }
-    
-    public void TurnOn() 
+
+    public void TurnOff()
     {
-        if (IsOn) return;
-        if (!IsOn) ToggleLight();
+        if (!IsOn) return;
+        if (IsOn) ToggleLight();
     }
 }
