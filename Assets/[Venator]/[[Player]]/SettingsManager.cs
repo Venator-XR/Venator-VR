@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
+// Necesario para el botón personalizado
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class SettingsManager : MonoBehaviour
 {
     [Header("Settings")]
@@ -20,32 +25,48 @@ public class SettingsManager : MonoBehaviour
 
     public void ApplySettings()
     {
+        if (settings == null) 
+        {
+            Debug.LogError("¡Falta asignar el PlayerSettingsData!");
+            return;
+        }
+
         // MOVEMENT
         if (settings.useTeleport)
         {
-            rightController.smoothMotionEnabled = false;
-        } else if (!settings.useTeleport)
+            leftController.smoothMotionEnabled = false;
+        } 
+        else 
         {   
-            rightController.smoothMotionEnabled = true;
+            leftController.smoothMotionEnabled = true;
         }
 
         // CAMERA TURN
         if(settings.useSnapTurn)
         {
-            rightController.smoothTurnEnabled = true;
-            snapTurnProvider.turnAmount = settings.snapTurnAngle;
-        } else if (!settings.useSnapTurn)
+            rightController.smoothTurnEnabled = false; 
+            
+            if(snapTurnProvider != null) 
+                snapTurnProvider.turnAmount = settings.snapTurnAngle;
+        } 
+        else 
         {
-            rightController.smoothTurnEnabled = false;
+            rightController.smoothTurnEnabled = true;
         }
 
         // VIGNETTE
-        if(settings.useVignette)
+        if (vignette != null)
         {
-            vignette.SetActive(true);
-        } else if (!settings.useVignette)
-        {
-            vignette.SetActive(false);
+            if(settings.useVignette)
+            {
+                vignette.SetActive(true);
+            } 
+            else 
+            {
+                vignette.SetActive(false);
+            }
         }
+        
+        Debug.Log("Settings applied");
     }
 }
