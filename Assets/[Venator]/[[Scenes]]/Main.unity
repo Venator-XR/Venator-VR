@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 94769776}
   - component: {fileID: 94769780}
   m_Layer: 0
-  m_Name: floor
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -505,6 +505,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.10962531, y: 0.0025781288, z: 0.030728929}
   m_Center: {x: -0.010810444, y: -0.015000076, z: 0.01536446}
+--- !u!114 &1022744596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2811935123251820620, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_PrefabInstance: {fileID: 7422217271466095578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1079747211
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +737,91 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1432919401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1432919403}
+  - component: {fileID: 1432919402}
+  m_Layer: 0
+  m_Name: FadeTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!95 &1432919402
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432919401}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &1432919403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432919401}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.9312797, y: -2.3814788, z: 4.743302}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1526337083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526337084}
+  m_Layer: 8
+  m_Name: DebrisDestination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1526337084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526337083}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0052, y: -0.0088, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3410699607736078754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561023162
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +832,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1561023164}
   - component: {fileID: 1561023163}
+  - component: {fileID: 1561023166}
+  - component: {fileID: 1561023165}
   m_Layer: 0
   m_Name: CastleEventsManager
   m_TagString: Untagged
@@ -770,6 +868,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1561023165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561023162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 771afbb10474a8b4abdb036b86a070bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debrisDestination: {fileID: 1526337084}
+  debris: {fileID: 6125852147865344593}
+  fadeAnim: {fileID: 1432919402}
+  lightningAnim: {fileID: 715616568}
+  debrisAudioClip: {fileID: 0}
+  audioSource: {fileID: 7422217271466095579}
+--- !u!114 &1561023166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561023162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab879afc1928ac418c6338fb2b7a199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 618977811}
+  moveProvider: {fileID: 1600132626}
+  teleportProvider: {fileID: 1022744596}
+  snapTurnProvider: {fileID: 176343265}
+  contTurnProvider: {fileID: 176343264}
+--- !u!114 &1600132626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4425267341108958613, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_PrefabInstance: {fileID: 7422217271466095578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1e8c997df241c1a67045eeac79b41b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1848940783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1734,7 +1878,7 @@ GameObject:
   - component: {fileID: 543450651731869192}
   - component: {fileID: 919132147810231475}
   m_Layer: 8
-  m_Name: castle
+  m_Name: Castle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4529,6 +4673,8 @@ Transform:
   m_Children:
   - {fileID: 8016358097623083662}
   - {fileID: 6148272650834583651}
+  - {fileID: 1526337084}
+  - {fileID: 302587993}
   m_Father: {fileID: 543450651731869192}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3439431802286681336
@@ -9738,25 +9884,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7092397965917932631, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5684126
+    - target: {fileID: 6961361192246597906, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7092397965917932631, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5684126
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092397965917932631, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.4206033
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092397965917932631, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.4206033
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092397965917932631, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -17
+    - target: {fileID: 6961361192246597906, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -12289,6 +12423,9 @@ SceneRoots:
   - {fileID: 1280637779}
   - {fileID: 543450651731869192}
   - {fileID: 94769779}
+  - {fileID: 246967421}
+  - {fileID: 1432919403}
+  - {fileID: 715616569}
   - {fileID: 1079747212}
   - {fileID: 1561023164}
   - {fileID: 3127728407676174907}
