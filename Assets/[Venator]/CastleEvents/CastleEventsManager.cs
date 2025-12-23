@@ -5,6 +5,7 @@ public class CastleEventsManager : MonoBehaviour
 {
     // References in component
     DebrisSequence debrisSequence;
+    WardrobeSequence wardrobeSequence;
 
     //-----------------------
     private bool woodLeverActioned = false;
@@ -12,7 +13,8 @@ public class CastleEventsManager : MonoBehaviour
 
     void Start()
     {
-        debrisSequence = this.GetComponent<DebrisSequence>();
+        debrisSequence = GetComponent<DebrisSequence>();
+        wardrobeSequence = GetComponent<WardrobeSequence>();
     }
 
     // public void methods
@@ -24,7 +26,7 @@ public class CastleEventsManager : MonoBehaviour
             Debug.Log("Wood Lever actioned, starting coroutine");
             woodLeverActioned = true;
 
-            debrisSequence.StartDebrisCoroutine();
+            StartCoroutine(debrisSequence.DebrisCoroutine());
         }
     }
 
@@ -32,7 +34,7 @@ public class CastleEventsManager : MonoBehaviour
     {
         Debug.Log("Wardrobe actioned, starting coroutine");
 
-        // StartWardrobeCoroutine
+        StartCoroutine(wardrobeSequence.WardrobeCoroutine());
     }
 
 
