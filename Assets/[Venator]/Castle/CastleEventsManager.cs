@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class CastleEventsManager : MonoBehaviour
 {
-
+    private bool woodLeverActioned = false;
     // public void methods
-    public void PlayDebrisSequence()
+    public void PlayDebrisSequence(float value)
     {
-        Debug.Log("Wood Lever actioned, starting coroutine");
-
-        // StartDebrisCoroutine();
+    
+        if (value >= 0.6 && !woodLeverActioned)
+        {
+            Debug.Log("Wood Lever actioned, starting coroutine");
+            woodLeverActioned = true;
+            // StartDebrisCoroutine();
+        }
     }
 
     public void PlayWardrobeSequence()
@@ -66,7 +70,7 @@ public class CastleEventsManager : MonoBehaviour
         // fly through hole in debris
         // transform back inside the room where player clearly sees
         // leave through door closing it behind
-        
+
         // wait 2 seconds
 
         // fade to black
