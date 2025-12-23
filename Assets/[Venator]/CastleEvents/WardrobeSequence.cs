@@ -23,22 +23,22 @@ public class WardrobeSequence : MonoBehaviour
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
-    private IEnumerator StartWardrobeCoroutine()
+    public IEnumerator WardrobeCoroutine()
     {
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
 
         // fade to black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeIn");
 
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
 
         // play sfx: wardrobe opening | steps | wardrobe closing
-        audioSource.PlayOneShot(enteringAudioClip);
+        // audioSource.PlayOneShot(enteringAudioClip);
 
         // fade from black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeOut");
 
         // start vampire animation:
         // transform into bat
@@ -50,16 +50,16 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         // fade to black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeIn");
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
 
         // play sfx: wardrobe opening | steps | wardrobe closing
-        audioSource.PlayOneShot(exitingAudioClip);
+        // audioSource.PlayOneShot(exitingAudioClip);
 
         // fade from black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeOut");
 
         // InventoryTutorialManager.StartInventoryTutorial();
 
