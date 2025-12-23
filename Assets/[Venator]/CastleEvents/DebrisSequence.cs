@@ -22,28 +22,29 @@ public class DebrisSequence : MonoBehaviour
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
-    public IEnumerator StartDebrisCoroutine()
+    public IEnumerator DebrisCoroutine()
     {
+        Debug.Log("Coroutine started!");
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
 
         // fade to black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeIn");
 
         // TP player to designated transform
         playerMobilityManager.TeleportTo(destination);
 
         // Play SFXs audio track
-        audioSource.PlayOneShot(audioClip);
+        // audioSource.PlayOneShot(audioClip);
 
         // activate debris game object
         debris.SetActive(true);
 
         // wait until sfxs audio track ends
-        yield return new WaitWhile(() => audioSource.isPlaying);
+        // yield return new WaitWhile(() => audioSource.isPlaying);
 
         // fade from black
-        fadeAnim.SetTrigger("");
+        fadeAnim.Play("fadeOut");
 
         // enable movement, camera turning and collider
         playerMobilityManager.SetPlayerMobility(true, true);
