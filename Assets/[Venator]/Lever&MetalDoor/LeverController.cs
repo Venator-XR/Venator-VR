@@ -3,26 +3,141 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Filtering;
 
 [RequireComponent(typeof(XRGrabInteractable))]
 [RequireComponent(typeof(HingeJoint))]
-public class LeverController : MonoBehaviour
+public class LeverController : MonoBehaviour, IXRSelectFilter
 {
-    [Header("Configuración de Ángulos")]
-    [SerializeField] private float angleOn = 45f;  // Ángulo de activación
-    [SerializeField] private float angleOff = -45f; // Ángulo de reposo
+    [Header("Configuraciï¿½n de ï¿½ngulos")]
+    [SerializeField] private float angleOn = 45f;  // ï¿½ngulo de activaciï¿½n
+    [SerializeField] private float angleOff = -45f; // ï¿½ngulo de reposo
+
+    [Header("Restricciones")]
+    [SerializeField] private float maxGrabDistance = 0.3f; // Distancia mï¿½xima para agarrar (solo direct interactors)
+    [SerializeField] private float maxPullDistance = 0.15f; // Distancia mï¿½xima que se puede alejar del punto de anclaje
 
     [Header("Eventos")]
-    public UnityEvent OnLeverActivated; // IMPORTANTE: Conecta aquí tu futura animación <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public UnityEvent OnLeverActivated; // IMPORTANTE: Conecta aquï¿½ tu futura animaciï¿½n <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     private XRGrabInteractable interactable;
     private HingeJoint hinge;
+    private Rigidbody rb;
+    private Transform baseTransform;
+    private Vector3 anchorPosition;
     private bool isLocked = false;
 
     void Awake()
     {
         interactable = GetComponent<XRGrabInteractable>();
         hinge = GetComponent<HingeJoint>();
+        rb = GetComponent<Rigidbody>();
+        
+        // Encontrar la Base (el objeto padre o el ConnectedBody)
+        if (hinge.connectedBody != null)
+        {
+            baseTransform = hinge.connectedBody.transform;
+        }
+        else
+        {
+            // Buscar en el padre
+            Transform parent = transform.parent;
+            if (parent != null)
+            {
+                Rigidbody parentRb = parent.GetComponentInChildren<Rigidbody>();
+                if (parentRb != null && parentRb.isKinematic)
+                {
+                    baseTransform = parentRb.transform;
+                }
+            }
+        }
+        
+        // Guardar la posiciï¿½n inicial del anchor
+        anchorPosition = transform.position;
+        
+        // Agregar este script como filtro de selecciï¿½n
+        // Esto previene que ray interactors puedan seleccionar el objeto
+        var filters = interactable.startingSelectFilters;
+        if (!filters.Contains(this))
+        {
+            filters.Add(this);
+        }
+    }
+    
+    // Implementaciï¿½n de IXRSelectFilter para rechazar ray interactors
+    public bool canProcess => true;
+    
+    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
+    {
+        // Rechazar completamente los ray interactors
+        if (interactor is XRRayInteractor)
+        {
+            return false;
+        }
+        
+        // Para direct interactors, verificar distancia
+        if (interactor is XRDirectInteractor)
+        {
+            if (interactor.transform != null)
+            {
+                float distance = Vector3.Distance(interactor.transform.position, transform.position);
+                return distance <= maxGrabDistance;
+            }
+        }
+        
+        // Permitir otros tipos de interactors (como hand interactors) si estï¿½n cerca
+        if (interactor.transform != null)
+        {
+            float distance = Vector3.Distance(interactor.transform.position, transform.position);
+            return distance <= maxGrabDistance;
+        }
+        
+        // Por defecto, permitir si no podemos verificar distancia
+        return true;
+    }
+    
+    void FixedUpdate()
+    {
+        // Si estï¿½ siendo agarrado, limitar la distancia desde el punto de anclaje del HingeJoint
+        if (interactable.isSelected && baseTransform != null && !isLocked)
+        {
+            // Obtener la posiciï¿½n del anchor del HingeJoint en espacio mundial
+            Vector3 anchorWorldPosition = baseTransform.TransformPoint(hinge.connectedAnchor);
+            Vector3 currentPosition = transform.TransformPoint(hinge.anchor);
+            
+            // Calcular la distancia desde el anchor
+            float distanceFromAnchor = Vector3.Distance(currentPosition, anchorWorldPosition);
+            
+            // Si se aleja demasiado del anchor, aplicar fuerza para traerlo de vuelta
+            if (distanceFromAnchor > maxPullDistance)
+            {
+                Vector3 directionToAnchor = (anchorWorldPosition - currentPosition).normalized;
+                float excessDistance = distanceFromAnchor - maxPullDistance;
+                
+                // Aplicar fuerza hacia el anchor (mï¿½s suave para evitar vibraciones)
+                rb.AddForce(directionToAnchor * excessDistance * 30f, ForceMode.Force);
+                
+                // Reducir velocidad lineal y angular para evitar vibraciones
+                rb.linearVelocity *= 0.9f;
+                rb.angularVelocity *= 0.85f;
+            }
+            
+            // Asegurar que el HingeJoint mantenga sus lï¿½mites
+            // Esto ayuda a prevenir que se estire demasiado
+            JointLimits limits = hinge.limits;
+            float currentAngle = hinge.angle;
+            
+            // Si el ï¿½ngulo estï¿½ fuera de los lï¿½mites, aplicar fuerza de correcciï¿½n
+            if (currentAngle < limits.min || currentAngle > limits.max)
+            {
+                float targetAngle = Mathf.Clamp(currentAngle, limits.min, limits.max);
+                float angleError = targetAngle - currentAngle;
+                
+                // Aplicar torque para corregir el ï¿½ngulo
+                rb.AddTorque(transform.up * angleError * 10f, ForceMode.Force);
+            }
+        }
     }
     public void OnReleaseLever()
     {
@@ -30,15 +145,15 @@ public class LeverController : MonoBehaviour
 
         float currentAngle = GetCurrentAngle();
 
-        // Debug para ver qué está pasando realmente
-        //Debug.Log($"Ángulo actual: {currentAngle} | Distancia a OFF: {Mathf.Abs(currentAngle - angleOff)} | Distancia a ON: {Mathf.Abs(currentAngle - angleOn)}");
+        // Debug para ver quï¿½ estï¿½ pasando realmente
+        //Debug.Log($"ï¿½ngulo actual: {currentAngle} | Distancia a OFF: {Mathf.Abs(currentAngle - angleOff)} | Distancia a ON: {Mathf.Abs(currentAngle - angleOn)}");
 
-        // LÓGICA DE DISTANCIA: ¿A quién estoy más cerca?
+        // Lï¿½GICA DE DISTANCIA: ï¿½A quiï¿½n estoy mï¿½s cerca?
         // Calculamos la distancia absoluta (sin signos) a cada punto
         float distToOff = Mathf.Abs(currentAngle - angleOff);
         float distToOn = Mathf.Abs(currentAngle - angleOn);
 
-        // Si estoy más cerca de ON que de OFF...
+        // Si estoy mï¿½s cerca de ON que de OFF...
         if (distToOn < distToOff)
         {
             StartCoroutine(SnapTo(angleOn, true)); // Ir a ON
@@ -51,8 +166,8 @@ public class LeverController : MonoBehaviour
 
     private IEnumerator SnapTo(float targetAngle, bool lockAfter)
     {
-        // Desactivamos la física un momento para moverlo suavemente por código
-        // O simplemente usamos motores, pero mover el Spring es más fácil para snapping visual
+        // Desactivamos la fï¿½sica un momento para moverlo suavemente por cï¿½digo
+        // O simplemente usamos motores, pero mover el Spring es mï¿½s fï¿½cil para snapping visual
         JointSpring spring = hinge.spring;
         spring.spring = 100f; // Fuerza para empujar
         spring.damper = 5f;
@@ -78,17 +193,17 @@ public class LeverController : MonoBehaviour
     {
         isLocked = true;
 
-        // 1. Desactivar interacción (ya no se puede agarrar)
+        // 1. Desactivar interacciï¿½n (ya no se puede agarrar)
         interactable.enabled = false;
 
-        // 2. Lanzar evento (Animación futura, sonido, luces...)
-        Debug.Log("¡Palanca Activada y Bloqueada!");
+        // 2. Lanzar evento (Animaciï¿½n futura, sonido, luces...)
+        Debug.Log("ï¿½Palanca Activada y Bloqueada!");
         OnLeverActivated.Invoke();
 
         // Opcional: Cambiar material a "Encendido" o emitir un sonido de 'Clack'
     }
 
-    // Utilidad para obtener el ángulo limpio del HingeJoint
+    // Utilidad para obtener el ï¿½ngulo limpio del HingeJoint
     private float GetCurrentAngle()
     {
         return hinge.angle;
