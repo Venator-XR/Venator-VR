@@ -9521,8 +9521,72 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 8715934259385690117, guid: 637103bd737562943b4e560c8263cfde, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1457792026112001258, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7422217271466095582}
+    - targetCorrespondingSourceObject: {fileID: 1457792026112001258, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7422217271466095581}
+    - targetCorrespondingSourceObject: {fileID: 1457792026112001258, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7422217271466095580}
   m_SourcePrefab: {fileID: 100100000, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+--- !u!1 &7422217271466095579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1457792026112001258, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_PrefabInstance: {fileID: 7422217271466095578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7422217271466095580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7422217271466095579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53f24b4d0c31d74bb1f489552bf19b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 7422217271466095581}
+  persecutionDamage: 2
+  defeatSceneName: Pantalla_Derrota
+  vampireSlowdownDuration: 10
+--- !u!114 &7422217271466095581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7422217271466095579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeaf038526dd04d4f9eb57b9c1342bb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  healthyMin: 3
+  hurtMin: 2
+  criticalMin: 1
+  isVulnerable: 1
+  currentHealth: 0
+  currentState: 0
+--- !u!114 &7422217271466095582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7422217271466095579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f1cd89af613a4458d9568f3ed75747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 7422217271466095581}
+  damagePanel: {fileID: 0}
+  bloodPulseSpeed: 3
 --- !u!33 &7439692450121481574
 MeshFilter:
   m_ObjectHideFlags: 0
