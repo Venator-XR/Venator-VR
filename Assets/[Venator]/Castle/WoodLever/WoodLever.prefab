@@ -118,6 +118,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4727314159531957473}
   - component: {fileID: 3069397935376611737}
+  - component: {fileID: 4282737422034616998}
+  - component: {fileID: 6238728997732069408}
+  - component: {fileID: 8145069147113550540}
   m_Layer: 0
   m_Name: WoodLever
   m_TagString: Untagged
@@ -222,10 +225,61 @@ MonoBehaviour:
   m_MinAngle: -10
   m_AngleIncrement: 0
   m_PositionTrackedRadius: 0.1
-  m_TwistSensitivity: 1.5
+  m_TwistSensitivity: 0.01
   m_OnValueChange:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4282737422034616998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994782940601059761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.57489353, b: 0, a: 0.7490196}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!65 &6238728997732069408
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994782940601059761}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2580177, y: 1.9115543, z: 0.5817904}
+  m_Center: {x: 0.12900889, y: 0.90211225, z: 0.20910487}
+--- !u!114 &8145069147113550540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994782940601059761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d660a923be8fe884a854e2025e634816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9171725829944929168
 GameObject:
   m_ObjectHideFlags: 0
