@@ -30,6 +30,7 @@ public class DebrisSequence : MonoBehaviour
 
         // fade to black
         fadeAnim.Play("fadeIn");
+        yield return new WaitForSeconds(0.5f);
 
         // TP player to designated transform
         playerMobilityManager.TeleportTo(destination);
@@ -45,9 +46,10 @@ public class DebrisSequence : MonoBehaviour
 
         // fade from black
         fadeAnim.Play("fadeOut");
-
         // enable movement, camera turning and collider
         playerMobilityManager.SetPlayerMobility(true, true);
+        yield return new WaitForSeconds(1.5f);
+
 
         // play lightning animation + sfx
         lightningAnim.Play("");

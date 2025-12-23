@@ -9,9 +9,14 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] Transform insideDestination;
     [SerializeField] Transform outsideDestination;
     [SerializeField] Animator fadeAnim;
-    
+
     [Header("Vampire References")]
+    [SerializeField] GameObject vampire;
     [SerializeField] ShapeshiftManager shapeshiftManager;
+    [SerializeField] Transform vampireDestination;
+    [SerializeField] Transform batDestination;
+    [SerializeField] Transform vampFinalDestination;
+
 
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
@@ -29,7 +34,9 @@ public class WardrobeSequence : MonoBehaviour
         playerMobilityManager.SetPlayerMobility(false, false);
 
         // fade to black
+        
         fadeAnim.Play("fadeIn");
+        yield return new WaitForSeconds(0.5f);
 
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
@@ -37,20 +44,20 @@ public class WardrobeSequence : MonoBehaviour
         // play sfx: wardrobe opening | steps | wardrobe closing
         // audioSource.PlayOneShot(enteringAudioClip);
 
+        // tp vampire
+        vampire.transform.position = vampireDestination.position;
+        vampire.transform.rotation = Quaternion.Euler(0, vampireDestination.eulerAngles.y, 0);
+
         // fade from black
         fadeAnim.Play("fadeOut");
+        yield return new WaitForSeconds(0.5f);
 
-        // start vampire animation:
-        // transform into bat
-        // fly through hole in debris
-        // transform back inside the room where player clearly sees
-        // leave through door closing it behind
-
-        // wait 2 seconds
-        yield return new WaitForSeconds(2);
+        // wait until VampireCoroutine completes
+        yield return StartCoroutine(VampireCoroutine());
 
         // fade to black
         fadeAnim.Play("fadeIn");
+        yield return new WaitForSeconds(0.5f);
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
@@ -60,9 +67,36 @@ public class WardrobeSequence : MonoBehaviour
 
         // fade from black
         fadeAnim.Play("fadeOut");
+        yield return new WaitForSeconds(0.5f);
 
         // InventoryTutorialManager.StartInventoryTutorial();
 
+        yield break;
+    }
+
+    private IEnumerator VampireCoroutine()
+    {
+        Debug.Log("VampireCoroutine end");
+
+        // transform into bat
+        shapeshiftManager.Shapeshift();
+        yield return new WaitForSeconds(1.5f);
+
+        // fly through hole in debris to batDestination
+        
+        yield return new WaitForSeconds(3f); // time it takes to arrive
+
+        // transform back inside the room where player clearly sees
+        shapeshiftManager.Shapeshift();
+        yield return new WaitForSeconds(1.5f);
+
+        // leave through door closing it behind
+        // move using navmesh to vampFinalDestination
+        // open and close door with trigger comparing tag with vampire 
+
+        yield return new WaitForSeconds(1.5f); // time it takes until door closed + extra 1s
+
+        Debug.Log("VampireCoroutine end");
         yield break;
     }
 }

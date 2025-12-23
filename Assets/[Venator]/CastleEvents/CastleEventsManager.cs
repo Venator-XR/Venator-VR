@@ -9,6 +9,7 @@ public class CastleEventsManager : MonoBehaviour
 
     //-----------------------
     private bool woodLeverActioned = false;
+    private bool wardrobeActioned = false;
 
 
     void Start()
@@ -17,7 +18,6 @@ public class CastleEventsManager : MonoBehaviour
         wardrobeSequence = GetComponent<WardrobeSequence>();
     }
 
-    // public void methods
     public void PlayDebrisSequence(float value)
     {
 
@@ -30,15 +30,14 @@ public class CastleEventsManager : MonoBehaviour
         }
     }
 
-    public void PlayWardrobeSequence()
+    public void PlayWardrobeSequence(float value)
     {
-        Debug.Log("Wardrobe actioned, starting coroutine");
+        if (value >= 0.6 && !wardrobeActioned)
+        {
+            Debug.Log("Wardrobe actioned, starting coroutine");
+            wardrobeActioned = true;
 
-        StartCoroutine(wardrobeSequence.WardrobeCoroutine());
+            StartCoroutine(wardrobeSequence.WardrobeCoroutine());
+        }
     }
-
-
-
-    //----------------------
-    // COROUTINES
 }
