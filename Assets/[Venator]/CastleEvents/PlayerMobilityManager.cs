@@ -31,6 +31,6 @@ public class PlayerMobilityManager : MonoBehaviour
     public void TeleportTo(Transform destination)
     {
         player.transform.position = destination.position;
-        player.transform.rotation = destination.rotation;
+        player.transform.rotation = Quaternion.Euler(0, destination.eulerAngles.y, 0);
     }
 }
