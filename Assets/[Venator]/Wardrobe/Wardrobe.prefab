@@ -115,7 +115,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.93188447, w: 0.36275527}
   m_LocalPosition: {x: 0.006623269, y: -0.009226624, z: -0.000049902883}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.0043410743, y: 0.0043410743, z: 0.0043410743}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2692892453805887870}
@@ -417,7 +417,7 @@ MonoBehaviour:
   playerHand: {fileID: 0}
   objectHand: {fileID: 2723513256865109023}
   m_Handle: {fileID: 606603054896676592}
-  m_Value: 1
+  m_Value: 0
   m_ClampedMotion: 1
   m_MaxAngle: 50
   m_MinAngle: 0
@@ -426,7 +426,19 @@ MonoBehaviour:
   m_TwistSensitivity: 0.01
   m_OnValueChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CastleEventsManager, Assembly-CSharp
+        m_MethodName: PlayWardrobeSequence
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3497509343611973272
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4911746551445803362}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.4226183, z: 0, w: 0.9063078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -975,7 +987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4204078465097203112, guid: 325ec57287f708e4293a17cd54ad43c3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4422255409723931943, guid: 325ec57287f708e4293a17cd54ad43c3, type: 3}
       propertyPath: m_LocalRotation.w

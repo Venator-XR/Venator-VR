@@ -21,7 +21,7 @@ public class CastleEventsManager : MonoBehaviour
     public void PlayDebrisSequence(float value)
     {
 
-        if (value >= 0.6 && !woodLeverActioned)
+        if (value >= 0.4 && !woodLeverActioned)
         {
             Debug.Log("Wood Lever actioned, starting coroutine");
             woodLeverActioned = true;
@@ -32,7 +32,7 @@ public class CastleEventsManager : MonoBehaviour
 
     public void PlayWardrobeSequence(float value)
     {
-        if (value >= 0.6 && !wardrobeActioned)
+        if (value >= 0.4 && !wardrobeActioned)
         {
             Debug.Log("Wardrobe actioned, starting coroutine");
             wardrobeActioned = true;

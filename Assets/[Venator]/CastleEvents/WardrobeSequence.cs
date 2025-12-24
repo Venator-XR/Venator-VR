@@ -45,15 +45,15 @@ public class WardrobeSequence : MonoBehaviour
         // audioSource.PlayOneShot(enteringAudioClip);
 
         // tp vampire
-        vampire.transform.position = vampireDestination.position;
-        vampire.transform.rotation = Quaternion.Euler(0, vampireDestination.eulerAngles.y, 0);
+        // vampire.transform.position = vampireDestination.position;
+        // vampire.transform.rotation = Quaternion.Euler(0, vampireDestination.eulerAngles.y, 0);
 
         // fade from black
         fadeAnim.Play("fadeOut");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3.5f); // should be 0.5f, using more for testing
 
         // wait until VampireCoroutine completes
-        yield return StartCoroutine(VampireCoroutine());
+        // yield return StartCoroutine(VampireCoroutine());
 
         // fade to black
         fadeAnim.Play("fadeIn");
@@ -92,7 +92,7 @@ public class WardrobeSequence : MonoBehaviour
 
         // leave through door closing it behind
         // move using navmesh to vampFinalDestination
-        // open and close door with trigger comparing tag with vampire 
+        // play door close SFX
 
         yield return new WaitForSeconds(1.5f); // time it takes until door closed + extra 1s
 
