@@ -52,7 +52,7 @@ public class DebrisSequence : MonoBehaviour
 
 
         // play lightning animation + sfx
-        lightningAnim.Play("");
+        // lightningAnim.Play("");
 
         yield break;
     }

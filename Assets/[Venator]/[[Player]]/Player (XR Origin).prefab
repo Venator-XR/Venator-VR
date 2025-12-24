@@ -3335,8 +3335,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2004450406331077419, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004450406331077419, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0483
+      value: 0.056
       objectReference: {fileID: 0}
     - target: {fileID: 2004450406331077419, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3362,6 +3366,14 @@ PrefabInstance:
       propertyPath: m_Cookie
       value: 
       objectReference: {fileID: 2800000, guid: 3bfa6f2c74793cd45a0d69cb1a0d1964, type: 3}
+    - target: {fileID: 2608194021767308973, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_SpotAngle
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608194021767308973, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4346636873046052980, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: handAnim
       value: 

@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 4798982541408090682}
   - component: {fileID: 1195405570760864089}
   m_Layer: 0
-  m_Name: hand
+  m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
