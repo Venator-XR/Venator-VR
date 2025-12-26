@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class SettingsCanvas : MonoBehaviour
 {
     [Header("Data & Logic")]
     public PlayerSettingsData settings;
     public SettingsManager settingsManager;
+
+    [Header("Player")]
+    [SerializeField] NearFarInteractor nearFarInteractor;
 
     [Header("UI References - Movement")]
     [SerializeField] private Button teleportButton;
@@ -15,7 +19,6 @@ public class SettingsCanvas : MonoBehaviour
     [SerializeField] private Button snapCamButton;
     [SerializeField] private Button smoothCamButton;
     [SerializeField] Slider turnAmountSlider;
-    // [SerializeField] GameObject snapAngleSliderObject;
 
     [Header ("UI References - Comfort")]
     [SerializeField] Toggle vignetteToggle;
@@ -30,6 +33,18 @@ public class SettingsCanvas : MonoBehaviour
     private void Start()
     {
         InitializeUI();
+    }
+
+    void OnEnable()
+    {
+        if(nearFarInteractor == null) Debug.LogError("nearFarInteractor not assigned");
+        else nearFarInteractor.enableFarCasting = true;
+    }
+
+    void OnDisable()
+    {
+        if(nearFarInteractor == null) Debug.LogError("nearFarInteractor not assigned");
+        else nearFarInteractor.enableFarCasting = false;
     }
 
     private void InitializeUI()
@@ -98,7 +113,6 @@ public class SettingsCanvas : MonoBehaviour
             SetButtonState(snapCamButton, false);
             SetButtonState(smoothCamButton, true);
             turnAmountSlider.interactable = false;
-            // snapAngleSliderObject.SetActive(false);
         }
     }
 
