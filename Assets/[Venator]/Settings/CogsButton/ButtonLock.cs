@@ -23,64 +23,48 @@ public class ButtonLock : MonoBehaviour
 
     void Start()
     {
-        // Buscamos el componente interactable en este objeto
         interactable = GetComponent<XRBaseInteractable>();
 
-        // Nos suscribimos al evento de pulsar
+        xRPokeFollowAffordance = GetComponent<XRPokeFollowAffordance>();
+        xRPokeFilter = GetComponent<XRPokeFilter>();
+
+        // Listen to OnPressed Event
         if (interactable != null)
         {
             interactable.selectEntered.AddListener(OnPressed);
         }
 
-        // Guardamos la altura actual como la "original" por si acaso
         if (visualButtonObject != null)
             originalHeightY = visualButtonObject.localPosition.y;
-
-        xRPokeFollowAffordance = GetComponent<XRPokeFollowAffordance>();
-        xRPokeFilter = GetComponent<XRPokeFilter>();
 
         Debug.Log("found: " + xRPokeFilter + xRPokeFollowAffordance);
     }
 
+
     void OnPressed(SelectEnterEventArgs args)
     {
-        // Al pulsar, activamos el bloqueo
         isLocked = true;
         Debug.LogWarning("isLocked: " + isLocked);
 
+        // disable every script interacting with button
         xRPokeFollowAffordance.enabled = false;
         xRPokeFilter.enabled = false;
         interactable.enabled = false;
 
+        // lock button down
         Vector3 targetPosition = visualButtonObject.localPosition;
         targetPosition.y = lockedHeightY;
         visualButtonObject.localPosition = targetPosition;
     }
 
-    // LateUpdate ocurre DESPUÉS de las físicas. 
-    // Aquí forzamos la posición para anular cualquier muelle que intente subirlo.
-    // void LateUpdate()
-    // {
-    //     if (isLocked && visualButtonObject != null)
-    //     {
-    //         Vector3 targetPosition = visualButtonObject.localPosition;
-    //         targetPosition.y = lockedHeightY;
-    //         visualButtonObject.localPosition = targetPosition;
-    //     }
-    // }
-
-    // --- FUNCION PARA LLAMAR DESDE TU UI (Botón Cerrar Ajustes) ---
+    // Method call when closing settings
     public void UnlockButton()
     {
         isLocked = false;
         xRPokeFollowAffordance.enabled = true;
         xRPokeFilter.enabled = true;
         interactable.enabled = true;
-        // Al soltar el lock, el script de física original del botón
-        // (el que no encontramos) volverá a tomar el control y lo subirá.
-        // Vector3 targetPosition = visualButtonObject.localPosition;
-        // targetPosition.y = originalHeightY;
-        // visualButtonObject.localPosition = targetPosition;
+
         Debug.LogWarning("isLocked: " + isLocked);
     }
 }

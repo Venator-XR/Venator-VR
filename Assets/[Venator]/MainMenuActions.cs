@@ -23,9 +23,9 @@ public class MainMenuActions : MonoBehaviour
         QualitySettings.vSyncCount = 1;
     }
 
-    // Se ejecuta cada frame
     private void Update()
     {
+        // if settings animate cogs manually 
         if (settings)
         {
             // Calculate how much to rotate cogs
@@ -34,7 +34,7 @@ public class MainMenuActions : MonoBehaviour
             // Rotate big cog
             bigCog.Rotate(0, 0, step);
 
-            // Rotate small cogs on reverse and x2 fast
+            // Rotate small cogs on reverse and x2 so it aligns
             smallCog1.Rotate(0, 0, -step * 2);
             smallCog2.Rotate(0, 0, -step * 2);
         }

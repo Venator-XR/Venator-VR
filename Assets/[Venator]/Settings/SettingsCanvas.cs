@@ -105,7 +105,6 @@ public class SettingsCanvas : MonoBehaviour
             SetButtonState(snapCamButton, true);
             SetButtonState(smoothCamButton, false);
             turnAmountSlider.interactable = true;
-            // snapAngleSliderObject.SetActive(true);
         }
         else
         {
