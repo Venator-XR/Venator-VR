@@ -14,6 +14,9 @@ public class MainMenuActions : MonoBehaviour
     [SerializeField] Transform smallCog2;
     [SerializeField] float rotationSpeed = 100f;
 
+    public GameObject painting;
+    private bool paintingActive = false;
+
     private bool settings = false;
 
     void Start()
@@ -45,6 +48,12 @@ public class MainMenuActions : MonoBehaviour
     {
         Debug.Log("[MENU] PlayGame -> " + mainSceneName);
         SceneManager.LoadScene(mainSceneName);
+    }
+
+    public void TogglePainting()
+    {
+        paintingActive = !paintingActive;
+        painting.SetActive(paintingActive);
     }
 
     // 360 Video Scene

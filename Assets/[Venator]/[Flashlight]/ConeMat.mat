@@ -175,7 +175,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 2
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.82536685, b: 0.43867916, a: 0}
+    - _BaseColor: {r: 0.6320754, g: 0.5166731, b: 0.2653524, a: 0}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0.003921569}
