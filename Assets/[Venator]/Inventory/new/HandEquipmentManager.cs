@@ -1,85 +1,151 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class HandEquipmentManager : MonoBehaviour
 {
     [Header("Dependencies")]
-    public XRBaseInteractor handInteractor; // Arrastra tu Direct Interactor
-    public Transform itemSpawnPoint; // Un hijo vacío en la palma de la mano
+    public XRBaseInteractor handInteractor;
+    public Transform itemSpawnPoint;
 
-    // Mantenemos el dato de qué hay en la mano
+    [Header("Visuals")]
+    public GameObject realHandModel;
+
     private GameObject currentModel;
     private bool isLockedItem = false;
+    private GameObject currentEquippedObject;
 
-    public void EquipItem(InventoryItemData itemData)
+
+    void OnEnable()
     {
-        // 1. Limpiar mano actual
+        // Nos suscribimos a los eventos de la mano
+        handInteractor.selectEntered.AddListener(OnObjectGrabbed);
+        handInteractor.selectExited.AddListener(OnObjectReleased);
+    }
+
+    void OnDisable()
+    {
+        // Nos desuscribimos al apagar para evitar errores
+        handInteractor.selectEntered.RemoveListener(OnObjectGrabbed);
+        handInteractor.selectExited.RemoveListener(OnObjectReleased);
+    }
+
+    private void OnObjectGrabbed(SelectEnterEventArgs args)
+    {
+        // ¡Aquí está la clave! 
+        // Cuando coges algo (del suelo o del inventario), guardamos la referencia
+        currentEquippedObject = args.interactableObject.transform.gameObject;
+        if (realHandModel != null) realHandModel.SetActive(false);
+        Debug.Log("Objeto detectado en mano: " + currentEquippedObject.name);
+    }
+
+    private void OnObjectReleased(SelectExitEventArgs args)
+    {
+        // Solo ponemos a null si el objeto que se suelta es el que tenemos registrado
+        // Si ya es null porque UnequipCurrent lo está gestionando, no pasa nada.
+        if (currentEquippedObject != null && currentEquippedObject == args.interactableObject.transform.gameObject)
+        {
+            currentEquippedObject = null;
+            if (realHandModel != null) realHandModel.SetActive(true);
+            Debug.Log("Mano liberada por el jugador (Grip o Drop).");
+        }
+    }
+
+
+    public void EquipItem(InventoryItemData data)
+    {
+        if (data == null || data.modelPrefab == null) return;
+
         UnequipCurrent();
 
-        if (itemData == null) return;
+        Debug.Log("EquipItem(" + data + ")");
+        // Ahora currentEquippedObject ya existe y puede guardar la referencia
+        GameObject newObject = Instantiate(data.modelPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
+        currentEquippedObject = newObject;
 
-        // 2. Instanciar nuevo
-        currentModel = Instantiate(itemData.modelPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
-        
-        // 3. Configurar físicas para que NO colisione al nacer
-        // (Opcional: ignorar colisiones con el player momentáneamente)
+        IXRSelectInteractable interactable = newObject.GetComponentInChildren<IXRSelectInteractable>();
 
-        // 4. FORZAR AGARRE (La clave)
-        var interactable = currentModel.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
         if (interactable != null)
         {
-            handInteractor.interactionManager.SelectEnter((IXRSelectInteractor)handInteractor, interactable);
+            Debug.Log("Found! forcing select on " + ((MonoBehaviour)interactable).name);
+            handInteractor.interactionManager.SelectEnter(handInteractor, interactable);
         }
-
-        // 5. Guardar estado
-        isLockedItem = !itemData.isDroppable;
+        else
+        {
+            Debug.LogError("ERROR: prefab " + data.modelPrefab.name + " doesnt have XR Grab / Locked Interactable");
+        }
     }
 
     public void UnequipCurrent()
     {
-        if (currentModel == null) return;
-
-        // Si es el objeto bloqueado (Pistola), usamos nuestro truco para soltarlo
-        if (isLockedItem)
+        if (currentEquippedObject != null)
         {
-            var locked = currentModel.GetComponent<LockedInteractable>();
-            if (locked) locked.ForceDrop((IXRSelectInteractor)handInteractor);
-        }
-        else
-        {
-            // Soltado normal
-            handInteractor.interactionManager.SelectExit((IXRSelectInteractor)handInteractor, currentModel.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>());
-        }
+            // 1. Guardamos una referencia LOCAL al objeto que queremos destruir
+            // Así, aunque 'currentEquippedObject' se vuelva null en el evento, 'tempObj' sigue vivo
+            GameObject tempObj = currentEquippedObject;
 
-        // Si estamos desequipando para guardar, destruimos el objeto visual
-        // (Si quisiéramos tirarlo al suelo, no haríamos Destroy)
-        Destroy(currentModel);
-        currentModel = null;
+            Debug.Log("Forzando desequipado de: " + tempObj.name);
+
+            // 2. Si el interactor lo tiene seleccionado, lo soltamos legalmente
+            if (handInteractor.hasSelection)
+            {
+                // Buscamos cuál de los objetos seleccionados es el nuestro
+                var selected = handInteractor.interactablesSelected[0];
+
+                // Al ejecutar esta línea, se disparará OnObjectReleased y currentEquippedObject será NULL
+                handInteractor.interactionManager.SelectExit(handInteractor, selected);
+            }
+
+            // 3. Ahora destruimos la referencia local que guardamos al principio
+            // Esto garantiza que el objeto desaparece del mundo
+            Destroy(tempObj);
+
+            // 4. Aseguramos que la global esté limpia
+            currentEquippedObject = null;
+
+            Debug.Log("Objeto destruido con éxito.");
+        }
     }
-    
-    // Método para soltar físicamente al suelo (Basura o Swap)
+
+    // Actual drop of item
     public void DropToWorld()
     {
-        if (currentModel == null || isLockedItem) return; // La pistola no se tira
+        Debug.Log("DropToWorld()");
 
-        // Simplemente forzamos soltar, NO destruimos. Unity reactivará físicas.
-         handInteractor.interactionManager.SelectExit((IXRSelectInteractor)handInteractor, currentModel.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>());
-        
-        currentModel.transform.SetParent(null); // Desvincular
+        if (currentModel == null || isLockedItem) return; // Return if locked item (cant drop it)
+
+        // Force select exit
+        handInteractor.interactionManager.SelectExit((IXRSelectInteractor)handInteractor, currentModel.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>());
+
+        currentModel.transform.SetParent(null);
         currentModel = null;
     }
 
     public bool IsHoldingItem() => handInteractor.hasSelection;
-    
-    // Devuelve el DATA del objeto que tenemos en la mano (si tiene)
+
+    //-------------------------
     public InventoryItemData GetHeldItemData()
     {
-        if (!IsHoldingItem()) return null;
-        // Asumimos que los objetos del mundo tienen un componente simple "ItemReference"
-        // Tienes que crear un script pequeñito "ItemReference" que solo tenga "public InventoryItemData data;"
-        var obj = handInteractor.interactablesSelected[0].transform.gameObject;
-        var refScript = obj.GetComponent<ItemReference>();
-        return refScript ? refScript.data : null;
+        if (handInteractor.interactablesSelected.Count == 0)
+        {
+            Debug.Log("GetHeldItemData: No hay nada seleccionado en el Interactor.");
+            return null;
+        }
+
+        GameObject obj = handInteractor.interactablesSelected[0].transform.gameObject;
+
+        var refScript = obj.GetComponentInChildren<ItemReference>();
+
+        if (refScript != null)
+        {
+            Debug.Log("GetHeldItemData: Detectado item -> " + refScript.data.ID);
+            return refScript.data;
+        }
+        else
+        {
+            Debug.LogWarning("GetHeldItemData: El objeto " + obj.name + " no tiene ItemReference en raíz ni hijos.");
+            return null;
+        }
     }
 }

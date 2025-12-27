@@ -146,6 +146,37 @@ Transform:
   - {fileID: 5032776407046026594}
   m_Father: {fileID: 5942978530868232298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1326033772150679852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062171037674839136}
+  m_Layer: 0
+  m_Name: itemSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062171037674839136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326033772150679852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0178, z: 0.0041}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6752181544074131594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1457792026112001258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,7 +1160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handInteractor: {fileID: 6091483384375479234}
-  itemSpawnPoint: {fileID: 6752181544074131594}
+  itemSpawnPoint: {fileID: 1062171037674839136}
 --- !u!135 &5708179822836007696
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2354,7 +2385,7 @@ MonoBehaviour:
   type: 1
   iconImage: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 0.5}
-  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  highlightColor: {r: 0.22314622, g: 1, b: 0.015686274, a: 1}
 --- !u!65 &4707326935876310479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2744,7 +2775,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6198762657912298691, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1062171037674839136}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
 --- !u!4 &6752181544074131594 stripped

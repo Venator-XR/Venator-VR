@@ -25,22 +25,30 @@ public class InventorySlot : MonoBehaviour
     // Detect collision with PlayerHand
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision detected");
         if (other.CompareTag("PlayerHand"))
         {
-            Debug.Log("Collision with hand");
             if (bgImage) bgImage.color = highlightColor;
             controller.OnSlotHover(this);
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerHand"))
+        if (other == null || other.CompareTag("PlayerHand"))
         {
-            if (bgImage) bgImage.color = normalColor;
-            controller.OnSlotExit(this);
+            ResetSlot();
         }
+    }
+
+    public void OnSlotExit(Collider other = null)
+    {
+        ResetSlot();
+    }
+
+    private void ResetSlot()
+    {
+        if (bgImage != null) bgImage.color = normalColor;
+        if (controller != null) controller.OnSlotExit(this);
     }
 
     // Update pocket icon
