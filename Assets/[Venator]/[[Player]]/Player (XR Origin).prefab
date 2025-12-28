@@ -1161,6 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handInteractor: {fileID: 6091483384375479234}
   itemSpawnPoint: {fileID: 1062171037674839136}
+  realHandModel: {fileID: 0}
 --- !u!135 &5708179822836007696
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1345,7 +1346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3102517644941818946
 Transform:
   m_ObjectHideFlags: 0
@@ -3970,6 +3971,10 @@ PrefabInstance:
     - target: {fileID: 2004450406331077419, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608194021767308973, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_Range
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2608194021767308973, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_Cookie

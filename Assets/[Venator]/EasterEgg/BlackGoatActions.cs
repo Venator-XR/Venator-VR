@@ -1,15 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class BlackGoatActions : MonoBehaviour
 {
+    XRBaseInteractable grab;
     AudioSource audioSource;
     public AudioClip[] audioClips;
     public GameObject hand;
 
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        grab = GetComponent<XRBaseInteractable>();
+        grab.selectEntered.AddListener(Selected);
+        grab.selectEntered.AddListener(Deselected);
     }
 
     public void PlaySound()
@@ -20,13 +26,13 @@ public class BlackGoatActions : MonoBehaviour
         if (randomIndex == 5) KillVampire();
     }
 
-    public void Selected()
+    public void Selected(SelectEnterEventArgs args)
     {
         transform.position += new Vector3(0, -1f, 0);
         hand.SetActive(true);
     }
 
-    public void Deselected()
+    public void Deselected(SelectEnterEventArgs args)
     {
         hand.SetActive(false);
     }
