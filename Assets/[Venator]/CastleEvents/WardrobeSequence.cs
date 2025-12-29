@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class WardrobeSequence : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] Transform insideDestination;
     [SerializeField] Transform outsideDestination;
     [SerializeField] Animator fadeAnim;
+    public XRBaseInteractor handInteractor;
+    [SerializeField] GameObject wardrobe;
 
     [Header("Vampire References")]
     [SerializeField] GameObject vampire;
@@ -17,14 +21,16 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] Transform batDestination;
     [SerializeField] Transform vampFinalDestination;
 
-
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
     [SerializeField] AudioClip exitingAudioClip;
     [SerializeField] AudioSource audioSource;
 
+    private XRKnobLever targetLever;
+
     void Start()
     {
+        targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
@@ -34,9 +40,11 @@ public class WardrobeSequence : MonoBehaviour
         playerMobilityManager.SetPlayerMobility(false, false);
 
         // fade to black
-        
+
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
+
+        ForceRelease();
 
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
@@ -83,7 +91,7 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         // fly through hole in debris to batDestination
-        
+
         yield return new WaitForSeconds(3f); // time it takes to arrive
 
         // transform back inside the room where player clearly sees
@@ -98,5 +106,17 @@ public class WardrobeSequence : MonoBehaviour
 
         Debug.Log("VampireCoroutine end");
         yield break;
+    }
+
+    void ForceRelease()
+    {
+        if (targetLever != null && targetLever.isSelected)
+        {
+            // Obtenemos el manager y el interactor que la tiene agarrada
+            var manager = targetLever.interactionManager;
+            var interactor = targetLever.interactorsSelecting[0]; // La primera mano que lo agarra
+
+            manager.SelectExit(interactor, targetLever);
+        }
     }
 }

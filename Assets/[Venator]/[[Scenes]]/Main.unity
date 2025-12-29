@@ -774,6 +774,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4727314159531957473, guid: b30c9c88ce31e344d95fd85dcf583a83, type: 3}
   m_PrefabInstance: {fileID: 1131165140}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1131165142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3069397935376611737, guid: b30c9c88ce31e344d95fd85dcf583a83, type: 3}
+  m_PrefabInstance: {fileID: 1131165140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dfb63fd8d804a94397f277c66526ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1280637778
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,6 +944,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 1526337084}
   debris: {fileID: 6125852147865344593}
+  handInteractor: {fileID: 7422217271466095581}
+  targetLever: {fileID: 1131165142}
   fadeAnim: {fileID: 1432919402}
   lightningAnim: {fileID: 1894587396}
   audioClip: {fileID: 0}
@@ -969,6 +982,8 @@ MonoBehaviour:
   insideDestination: {fileID: 1284089015}
   outsideDestination: {fileID: 1050394599}
   fadeAnim: {fileID: 1432919402}
+  handInteractor: {fileID: 7422217271466095581}
+  wardrobe: {fileID: 5896849080916734289}
   vampire: {fileID: 0}
   shapeshiftManager: {fileID: 605924687}
   vampireDestination: {fileID: 0}
@@ -7626,6 +7641,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7d7d3f4bdef51246810a7663e9303ab, type: 3}
+--- !u!1 &5896849080916734289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 792883382350071512, guid: f7d7d3f4bdef51246810a7663e9303ab, type: 3}
+  m_PrefabInstance: {fileID: 5896849080916734288}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &5897442938944053423
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9694,6 +9714,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6917471418132065552, guid: 637103bd737562943b4e560c8263cfde, type: 3}
   m_PrefabInstance: {fileID: 7422217271466095578}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7422217271466095581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6091483384375479234, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_PrefabInstance: {fileID: 7422217271466095578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a07ef133a37d140a87cdf1f1c75fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &7422217271466095583 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2390931281982993842, guid: 637103bd737562943b4e560c8263cfde, type: 3}

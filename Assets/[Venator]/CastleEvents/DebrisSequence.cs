@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class DebrisSequence : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class DebrisSequence : MonoBehaviour
     [Header("References")]
     [SerializeField] Transform destination;
     [SerializeField] GameObject debris;
+    public XRBaseInteractor handInteractor;
+    [SerializeField] private XRKnobLever targetLever;
 
     [Header("Animators")]
     [SerializeField] Animator fadeAnim;
@@ -32,6 +36,9 @@ public class DebrisSequence : MonoBehaviour
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
 
+        // deselect (force hand to let go)
+        ForceRelease();
+
         // TP player to designated transform
         playerMobilityManager.TeleportTo(destination);
 
@@ -55,5 +62,17 @@ public class DebrisSequence : MonoBehaviour
         // lightningAnim.Play("");
 
         yield break;
+    }
+
+    void ForceRelease()
+    {
+        if (targetLever != null && targetLever.isSelected)
+        {
+            // get manager and interactor
+            var manager = targetLever.interactionManager;
+            var interactor = targetLever.interactorsSelecting[0];
+
+            manager.SelectExit(interactor, targetLever);
+        }
     }
 }
