@@ -3,62 +3,7 @@ guid: ca33e70b014545242a4cfba497b26b61
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 7db2130437db0c24082730e4962ecbde, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.006
-    second: {fileID: 2100000, guid: 7432b1828a63f204798d0a875214b004, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: arch
-    second: {fileID: 2100000, guid: 78605d8a95568144e802bde5a71bf4ed, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ladrillo
-    second: {fileID: 2100000, guid: 99ec59348b59db541b0a0e2ae48937e5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ladrillo mal
-    second: {fileID: 2100000, guid: 1f9e9f0ded4918446976da1a64740a3b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: madera
-    second: {fileID: 2100000, guid: db8ea5828b1b8844aa5a2900e8bfe104, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: madera 2
-    second: {fileID: 2100000, guid: 82251b1fdeadffb48abce04c2b2e166a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: madera 2 rota
-    second: {fileID: 2100000, guid: 0146f2d26addf6648ba299a737f9431c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: suelo
-    second: {fileID: 2100000, guid: 3a03e0a2ddc39c34ea5091b6860ac450, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: techo
-    second: {fileID: 2100000, guid: c1dbc50405c2acb4d83ef90aedc2ffe3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: techo roto
-    second: {fileID: 2100000, guid: cc75676ef900d314b89fcfa71ec24dd1, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +33,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.1
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -143,7 +88,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1.1
+    globalScale: 0.01
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
