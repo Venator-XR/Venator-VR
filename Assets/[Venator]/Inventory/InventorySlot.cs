@@ -8,17 +8,11 @@ public class InventorySlot : MonoBehaviour
 
     [Header("Visuals")]
     public Image iconImage;
-    public Color normalColor = new Color(1, 1, 1, 0.5f);
-    public Color highlightColor = Color.yellow;
-
-    private Image bgImage;
+    public Color normalColor = new Color(0, 0, 0, 0.8f);
+    public Color highlightColor = new Color(75, 0, 0, 0.8f);
+    public Image hoverImage;
+    
     private InventoryController controller;
-
-    void Awake()
-    {
-        bgImage = GetComponent<Image>();
-        if (bgImage) bgImage.color = normalColor;
-    }
 
     public void Setup(InventoryController ctrl) => controller = ctrl;
 
@@ -27,7 +21,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (other.CompareTag("PlayerHand"))
         {
-            if (bgImage) bgImage.color = highlightColor;
+            if (hoverImage) hoverImage.color = highlightColor;
             controller.OnSlotHover(this);
         }
     }
@@ -47,7 +41,7 @@ public class InventorySlot : MonoBehaviour
 
     private void ResetSlot()
     {
-        if (bgImage != null) bgImage.color = normalColor;
+        if (hoverImage != null) hoverImage.color = normalColor;
         if (controller != null) controller.OnSlotExit(this);
     }
 

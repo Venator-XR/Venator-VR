@@ -20,6 +20,7 @@ public class InventoryController : MonoBehaviour
     public InventorySlot slotPistol;
     public InventorySlot slotPocket;
     public InventorySlot slotHand;
+    public Sprite emptyIcon;
 
     private InventorySlot currentHoveredSlot;
 
@@ -59,12 +60,12 @@ public class InventoryController : MonoBehaviour
         uiCanvas.SetActive(true);
 
         // Position in front of the hand
-        uiCanvas.transform.position = rightHandPosition.position + (Vector3.up * 0.1f) + (Vector3.forward * -0.05f);
+        uiCanvas.transform.position = rightHandPosition.position + (Vector3.up * 0.05f) + (Vector3.forward * -0.075f);
 
         Vector3 directionToHead = headCamera.position - uiCanvas.transform.position;
         directionToHead.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(directionToHead);
-        Quaternion tiltUp = Quaternion.Euler(-20f, 0f, 0f); // Adjust -30f for desired tilt angle
+        Quaternion tiltUp = Quaternion.Euler(-20f, 0f, 0f);
         uiCanvas.transform.rotation = lookRotation * tiltUp;
     }
 
@@ -73,10 +74,9 @@ public class InventoryController : MonoBehaviour
         Debug.Log("Inventory closed");
         uiCanvas.SetActive(false);
 
-        // IMPORTANTE: Si el slot se quedó iluminado, lo forzamos a apagarse
         if (currentHoveredSlot != null)
         {
-            currentHoveredSlot.OnSlotExit(null); // Esto forzará al slot a resetear su color
+            currentHoveredSlot.OnSlotExit(null);
         }
 
         currentHoveredSlot = null;
@@ -92,21 +92,19 @@ public class InventoryController : MonoBehaviour
     switch (currentHoveredSlot.type)
     {
         case InventorySlot.SlotType.Pistol:
-            // --- NUEVA LÓGICA DE AUTO-GUARDADO ---
             InventoryItemData heldItem = handManager.GetHeldItemData();
             
-            // Si tengo algo que NO es la pistola y el bolsillo está libre, lo guardamos
+            // heldItem is NOT pistol and pocket empty, store item
             if (heldItem != null && heldItem != pistolData)
             {
                 if (currentPocketItem == null)
                 {
                     currentPocketItem = heldItem;
                     UpdatePocketUI();
-                    // No hace falta llamar a UnequipCurrent aquí porque EquipItem lo hará luego
                 }
                 else
                 {
-                    // Si el bolsillo está ocupado, lo soltamos al suelo para no borrarlo
+                    // pocket had something, drop it
                     handManager.DropToWorld(); 
                 }
             }
@@ -130,34 +128,35 @@ public class InventoryController : MonoBehaviour
         InventoryItemData heldItem = handManager.GetHeldItemData();
         InventoryItemData pocketItem = currentPocketItem;
 
-        // Caso 1: Tengo la PISTOLA en la mano
+        // Pistol held
         if (heldItem != null && heldItem == pistolData)
         {
-            // Simplemente la guardamos (desaparece)
+            // unequip pistol
             handManager.UnequipCurrent();
 
-            // Y si el bolsillo tenía algo, lo sacamos a la mano
+            // if pocket had something equip it
             if (pocketItem != null)
             {
                 handManager.EquipItem(pocketItem);
                 currentPocketItem = null;
             }
         }
-        // Caso 2: Tengo un OBJETO COMÚN (llave, etc.) en la mano
+
+        // item held (not pistol)
         else if (heldItem != null)
         {
-            // Si el bolsillo ya tenía algo, ese objeto viejo se cae al suelo (Swap)
+            // if pocket had item, drop it
             if (pocketItem != null)
             {
                 Vector3 spawnPos = rightHandPosition.position + (headCamera.forward * 0.2f);
                 Instantiate(pocketItem.modelPrefab, spawnPos, Quaternion.identity);
             }
 
-            // El objeto que tenía en la mano pasa a ser el nuevo objeto del bolsillo
+            // held item now is the new pocket item
             currentPocketItem = heldItem;
             handManager.UnequipCurrent();
         }
-        // Caso 3: Mano VACÍA
+        // empty hand
         else
         {
             if (pocketItem != null)
@@ -207,6 +206,6 @@ public class InventoryController : MonoBehaviour
     void UpdatePocketUI()
     {
         if (currentPocketItem != null) slotPocket.SetIcon(currentPocketItem.icon);
-        else slotPocket.SetIcon(null);
+        else slotPocket.SetIcon(emptyIcon);
     }
 }

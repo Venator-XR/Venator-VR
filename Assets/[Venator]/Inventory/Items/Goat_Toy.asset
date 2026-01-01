@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Goat_Toy
   m_EditorClassIdentifier: 
   ID: BlackGoatToy
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a2279e971d5acd644a823910228fd9a5, type: 3}
   modelPrefab: {fileID: 6419445080823418533, guid: 1578052d482c19c4fb2a8bc2df620005, type: 3}
   isDroppable: 1
