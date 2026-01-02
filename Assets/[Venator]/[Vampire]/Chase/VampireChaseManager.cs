@@ -55,8 +55,12 @@ public class VampireChaseManager : MonoBehaviour
     {
         float targetIntensity = light.intensity;
         light.intensity = 0f;
-        float duration = 1.5f;
+        float duration = 1f;
         float elapsed = 0f;
+
+        
+        vampireAgent.speed = approachSpeed;
+        vampireAgent.SetDestination(approachDestination.position);
 
         while (elapsed < duration)
         {

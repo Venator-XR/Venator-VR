@@ -15,6 +15,7 @@ public class WardrobeSequence : MonoBehaviour
     public XRBaseInteractor handInteractor;
     [SerializeField] GameObject wardrobe;
     public FlashlightController flashlightController;
+    public GameObject candles;
 
     [Header("Vampire References")]
     GameObject vampire;
@@ -27,13 +28,14 @@ public class WardrobeSequence : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
     [SerializeField] AudioClip exitingAudioClip;
+    [SerializeField] AudioClip doorShutAudio;
     [SerializeField] AudioSource audioSource;
 
     private XRKnobLever targetLever;
 
     void Start()
     {
-        
+
         targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
@@ -66,13 +68,18 @@ public class WardrobeSequence : MonoBehaviour
         // play sfx: wardrobe opening | steps | wardrobe closing
         // audioSource.PlayOneShot(enteringAudioClip);
 
-        // tp vampire
+        // tp vampire, disable nav agent to evade smooth movement for this
+        vampireNavAgent.enabled = false;
         vampire.transform.position = vampireStart.position;
         vampire.transform.rotation = Quaternion.Euler(0, vampireStart.eulerAngles.y, 0);
+        vampireNavAgent.enabled = true;
+
+        // transform into bat
+        shapeshiftManager.Shapeshift();
 
         // fade from black
         fadeAnim.Play("fadeOut");
-        yield return new WaitForSeconds(0.5f); // should be 0.5f, using more for testing
+        yield return new WaitForSeconds(2f);
 
         // wait until VampireCoroutine completes
         yield return StartCoroutine(VampireCoroutine());
@@ -101,31 +108,32 @@ public class WardrobeSequence : MonoBehaviour
 
     private IEnumerator VampireCoroutine()
     {
-        Debug.Log("VampireCoroutine end");
-
-        // transform into bat
-        shapeshiftManager.Shapeshift();
-        yield return new WaitForSeconds(1.5f);
+        Debug.Log("VampireCoroutine start");
 
         // fly through hole in debris to batDestination
         vampireNavAgent.speed = 1f;
         vampireNavAgent.SetDestination(batDestination.position);
 
-        yield return new WaitForSeconds(3f); // time it takes to arrive
+        yield return new WaitForSeconds(4f);
 
         // transform back inside the room where player clearly sees
         shapeshiftManager.Shapeshift();
-        yield return new WaitForSeconds(1.5f);
+        // turn off candles
+        candles.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
 
         // move to vampireDestination
         vampireNavAgent.speed = 1.5f;
         vampireNavAgent.SetDestination(vampireDestination.position);
+        yield return new WaitForSeconds(2f);
 
         // play door close SFX
+        audioSource.PlayOneShot(doorShutAudio);
 
+        yield return new WaitForSeconds(2f);
 
-        yield return new WaitForSeconds(1.5f); // time it takes until door closed + extra 1s
-
+        vampire.SetActive(false);
         Debug.Log("VampireCoroutine end");
         yield break;
     }

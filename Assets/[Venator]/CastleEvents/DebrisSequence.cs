@@ -3,6 +3,7 @@ using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class DebrisSequence : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DebrisSequence : MonoBehaviour
     [SerializeField] GameObject debris;
     public XRBaseInteractor handInteractor;
     [SerializeField] private XRKnobLever targetLever;
+    public DynamicMoveProvider dynamicMoveProvider;
 
     [Header("Animators")]
     [SerializeField] Animator fadeAnim;
@@ -33,9 +35,15 @@ public class DebrisSequence : MonoBehaviour
     {
         Debug.Log("Coroutine started!");
 
+        dynamicMoveProvider.moveSpeed = 1.2f;
+
         // Stop Vampire movement
         followPlayerAgent = GameObject.FindGameObjectWithTag("Enemy").GetComponent<FollowPlayerAgent>();
-        if(followPlayerAgent != null) followPlayerAgent.enabled = false;
+        if (followPlayerAgent != null)
+        {
+            followPlayerAgent.enabled = false;
+            Debug.Log("FollowPlayer stopped");
+        }
         else Debug.LogWarning("FollowPlayerAgent not found");
 
         // disable movement and camera turning
