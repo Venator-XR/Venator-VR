@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -21,6 +22,8 @@ public class DebrisSequence : MonoBehaviour
     [SerializeField] AudioClip audioClip;
     [SerializeField] AudioSource audioSource;
 
+    FollowPlayerAgent followPlayerAgent;
+
     void Start()
     {
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
@@ -29,6 +32,12 @@ public class DebrisSequence : MonoBehaviour
     public IEnumerator DebrisCoroutine()
     {
         Debug.Log("Coroutine started!");
+
+        // Stop Vampire movement
+        followPlayerAgent = GameObject.FindGameObjectWithTag("Enemy").GetComponent<FollowPlayerAgent>();
+        if(followPlayerAgent != null) followPlayerAgent.enabled = false;
+        else Debug.LogWarning("FollowPlayerAgent not found");
+
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
 
@@ -55,8 +64,7 @@ public class DebrisSequence : MonoBehaviour
         fadeAnim.Play("fadeOut");
         // enable movement, camera turning and collider
         playerMobilityManager.SetPlayerMobility(true, true);
-        yield return new WaitForSeconds(1.5f);
-
+        yield return new WaitForSeconds(1f);
 
         // play lightning animation + sfx
         // lightningAnim.Play("");

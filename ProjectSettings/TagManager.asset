@@ -8,7 +8,6 @@ TagManager:
   - Item
   - Enemy
   - PlayerHand
-  - Enemigo
   - Bullet
   layers:
   - Default
@@ -20,7 +19,7 @@ TagManager:
   - Pistol
   - Bullet
   - Castle
-  - 
+  - NavMeshIgnore
   - 
   - 
   - 

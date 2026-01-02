@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
@@ -16,11 +17,12 @@ public class WardrobeSequence : MonoBehaviour
     public FlashlightController flashlightController;
 
     [Header("Vampire References")]
-    [SerializeField] GameObject vampire;
-    [SerializeField] ShapeshiftManager shapeshiftManager;
-    [SerializeField] Transform vampireDestination;
+    GameObject vampire;
+    ShapeshiftManager shapeshiftManager;
+    NavMeshAgent vampireNavAgent;
+    [SerializeField] Transform vampireStart;
     [SerializeField] Transform batDestination;
-    [SerializeField] Transform vampFinalDestination;
+    [SerializeField] Transform vampireDestination;
 
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
@@ -31,17 +33,26 @@ public class WardrobeSequence : MonoBehaviour
 
     void Start()
     {
+        
         targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
     public IEnumerator WardrobeCoroutine()
     {
+        // search for vampire
+        vampire = GameObject.FindGameObjectWithTag("Enemy");
+        if (vampire == null) Debug.LogWarning("vampire not found by tag");
+        else
+        {
+            shapeshiftManager = vampire.GetComponentInChildren<ShapeshiftManager>();
+            vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
+        }
+
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
 
         // fade to black
-
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
 
@@ -56,15 +67,15 @@ public class WardrobeSequence : MonoBehaviour
         // audioSource.PlayOneShot(enteringAudioClip);
 
         // tp vampire
-        // vampire.transform.position = vampireDestination.position;
-        // vampire.transform.rotation = Quaternion.Euler(0, vampireDestination.eulerAngles.y, 0);
+        vampire.transform.position = vampireStart.position;
+        vampire.transform.rotation = Quaternion.Euler(0, vampireStart.eulerAngles.y, 0);
 
         // fade from black
         fadeAnim.Play("fadeOut");
-        yield return new WaitForSeconds(3.5f); // should be 0.5f, using more for testing
+        yield return new WaitForSeconds(0.5f); // should be 0.5f, using more for testing
 
         // wait until VampireCoroutine completes
-        // yield return StartCoroutine(VampireCoroutine());
+        yield return StartCoroutine(VampireCoroutine());
 
         // fade to black
         fadeAnim.Play("fadeIn");
@@ -97,6 +108,8 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         // fly through hole in debris to batDestination
+        vampireNavAgent.speed = 1f;
+        vampireNavAgent.SetDestination(batDestination.position);
 
         yield return new WaitForSeconds(3f); // time it takes to arrive
 
@@ -104,9 +117,12 @@ public class WardrobeSequence : MonoBehaviour
         shapeshiftManager.Shapeshift();
         yield return new WaitForSeconds(1.5f);
 
-        // leave through door closing it behind
-        // move using navmesh to vampFinalDestination
+        // move to vampireDestination
+        vampireNavAgent.speed = 1.5f;
+        vampireNavAgent.SetDestination(vampireDestination.position);
+
         // play door close SFX
+
 
         yield return new WaitForSeconds(1.5f); // time it takes until door closed + extra 1s
 

@@ -71,7 +71,7 @@ public class PersecutionManager : MonoBehaviour
         Unity.AI.Navigation.Samples.FollowPlayerAgent scriptVampiro = FindFirstObjectByType<Unity.AI.Navigation.Samples.FollowPlayerAgent>();
         if (scriptVampiro != null)
         {
-            scriptVampiro.RalentizarVampiro(vampireSlowdownDuration);
+            scriptVampiro.StunVampire(vampireSlowdownDuration);
         }
     }
 
