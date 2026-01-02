@@ -4678,19 +4678,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.0045689433
+      value: 0.0025383017
       objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0045689433
+      value: 0.0025383017
       objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.0045689433
+      value: 0.0025383017
       objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.013711867
+      value: 0.01306
       objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4727,6 +4727,38 @@ PrefabInstance:
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3165821248939995118}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MetalDoorActions, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864557631521783597, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: OnLeverActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8199,7 +8231,10 @@ GameObject:
   - component: {fileID: 3165821248939995115}
   - component: {fileID: 1472979858450719100}
   - component: {fileID: 1270864714218107098}
+  - component: {fileID: 3165821248939995119}
   - component: {fileID: 3165821248939995116}
+  - component: {fileID: 3165821248939995117}
+  - component: {fileID: 3165821248939995118}
   m_Layer: 0
   m_Name: MetalDoor
   m_TagString: Untagged
@@ -8842,7 +8877,7 @@ Transform:
   m_GameObject: {fileID: 2821700246020428689}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00000008146034, w: 1}
-  m_LocalPosition: {x: -0.015043758, y: 0.0015983118, z: -0.00004536137}
+  m_LocalPosition: {x: -0.01504376, y: 0.001598312, z: 0}
   m_LocalScale: {x: 0.63430756, y: 0.45689437, z: 0.45689437}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8867,8 +8902,65 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
+  m_Size: {x: 0.2713088, y: 0.15913634, z: 0.025926325}
+  m_Center: {x: 0.12965828, y: -0.010164241, z: 0.0129631655}
+--- !u!95 &3165821248939995117
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821700246020428689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fcbb069dc922e8d40a88adfc6bd10cff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3165821248939995118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821700246020428689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1259d69d4a956ea419aae53cecc006e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 3165821248939995119}
+  otherDoor: {fileID: 6346229084395108958}
+--- !u!65 &3165821248939995119
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821700246020428689}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
   m_Size: {x: 0.0014949931, y: 0.030371416, z: 0.025926325}
-  m_Center: {x: 0, y: 0.0000000013969839, z: 0.012963163}
+  m_Center: {x: 0, y: -4.656613e-10, z: 0.012963163}
 --- !u!4 &3178118203541081567
 Transform:
   m_ObjectHideFlags: 0
