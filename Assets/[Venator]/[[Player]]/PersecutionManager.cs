@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,8 @@ public class PersecutionManager : MonoBehaviour
     [SerializeField] private int persecutionDamage = 2;
     [SerializeField] private string defeatSceneName = "Pantalla_Derrota";
     [SerializeField] private float vampireSlowdownDuration = 10f;
+    [SerializeField] float cooldownTime = 3f;
+    private bool cooldown = false;
 
     private void Awake()
     {
@@ -47,10 +50,13 @@ public class PersecutionManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy") && playerHealth != null)
+        if (other.CompareTag("Enemy") && playerHealth != null)
         {
-            Debug.Log("Trigger enter, applying dmg");
-            ApplyEnemyDamage();
+            if (!cooldown)
+            {
+                Debug.Log("Trigger enter, applying dmg");
+                ApplyEnemyDamage();
+            }
         }
     }
 
@@ -59,12 +65,20 @@ public class PersecutionManager : MonoBehaviour
     /// </summary>
     private void ApplyEnemyDamage()
     {
+        cooldown = true;
+        StartCoroutine(Cooldown(cooldownTime));
         playerHealth.ApplyDamage(persecutionDamage);
 
         // Slow down the vampire on hit
         FollowPlayerAgent scriptVampiro = FindFirstObjectByType<FollowPlayerAgent>();
         if (scriptVampiro == null) Debug.Log("followPlayerAgent not found");
         else scriptVampiro.StunVampire(vampireSlowdownDuration);
+    }
+
+    private IEnumerator Cooldown(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        cooldown = false;
     }
 
     /// <summary>
