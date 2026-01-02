@@ -13,6 +13,7 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] Animator fadeAnim;
     public XRBaseInteractor handInteractor;
     [SerializeField] GameObject wardrobe;
+    public FlashlightController flashlightController;
 
     [Header("Vampire References")]
     [SerializeField] GameObject vampire;
@@ -45,6 +46,8 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         ForceRelease();
+        flashlightController.TurnOff();
+        flashlightController.enabled = false;
 
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
@@ -66,6 +69,9 @@ public class WardrobeSequence : MonoBehaviour
         // fade to black
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
+
+        flashlightController.enabled = true;
+        flashlightController.ToggleLight();
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
