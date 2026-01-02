@@ -12,7 +12,6 @@ namespace UnityEngine.XR.Content.Interaction
     public class XRKnobLever : XRBaseInteractable
     {   
         [Header("Hand GameObjects")]
-        public GameObject playerHand;
         public GameObject objectHand;
 
         const float k_ModeSwitchDeadZone = 0.1f; // Prevents rapid switching between the different rotation tracking modes
@@ -221,9 +220,8 @@ namespace UnityEngine.XR.Content.Interaction
         void StartGrab(SelectEnterEventArgs args)
         {
             // change hands
-            if (playerHand != null && objectHand != null)
+            if (objectHand != null)
             {
-                playerHand.SetActive(false);
                 objectHand.SetActive(true);
             }
 
@@ -240,9 +238,8 @@ namespace UnityEngine.XR.Content.Interaction
         void EndGrab(SelectExitEventArgs args)
         {
             // change hands
-            if (playerHand != null && objectHand != null)
+            if (objectHand != null)
             {
-                playerHand.SetActive(true);
                 objectHand.SetActive(false);
             }
 

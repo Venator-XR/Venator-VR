@@ -14,10 +14,8 @@ namespace UnityEngine.XR.Content.Interaction
         public GameObject handFront;
         [Tooltip("Hand negative local Z)")]
         public GameObject handBack;
-        public GameObject playerHand;
 
         private GameObject m_CurrentActiveHand;
-        private GameObject m_CurrentPlayerVisual;
 
         const float k_ModeSwitchDeadZone = 0.1f; 
 
@@ -87,8 +85,6 @@ namespace UnityEngine.XR.Content.Interaction
 
         private void HandleHandVisuals(IXRSelectInteractor interactor)
         {
-            // Hide player hand
-            playerHand.SetActive(false);
 
             // Calculate relative position to know which side to activate
             Vector3 localHandPos = transform.InverseTransformPoint(interactor.transform.position);
@@ -106,7 +102,6 @@ namespace UnityEngine.XR.Content.Interaction
 
         private void ResetHandVisuals()
         {
-            playerHand.SetActive(true);
             if (m_CurrentActiveHand != null) m_CurrentActiveHand.SetActive(false);
             m_CurrentActiveHand = null;
         }
