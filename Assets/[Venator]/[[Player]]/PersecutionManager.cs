@@ -1,3 +1,4 @@
+using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,18 +45,11 @@ public class PersecutionManager : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy") && playerHealth != null)
+        if(other.CompareTag("Enemy") && playerHealth != null)
         {
-            ApplyEnemyDamage();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy") && playerHealth != null)
-        {
+            Debug.Log("Trigger enter, applying dmg");
             ApplyEnemyDamage();
         }
     }
@@ -68,11 +62,9 @@ public class PersecutionManager : MonoBehaviour
         playerHealth.ApplyDamage(persecutionDamage);
 
         // Slow down the vampire on hit
-        Unity.AI.Navigation.Samples.FollowPlayerAgent scriptVampiro = FindFirstObjectByType<Unity.AI.Navigation.Samples.FollowPlayerAgent>();
-        if (scriptVampiro != null)
-        {
-            scriptVampiro.StunVampire(vampireSlowdownDuration);
-        }
+        FollowPlayerAgent scriptVampiro = FindFirstObjectByType<FollowPlayerAgent>();
+        if (scriptVampiro == null) Debug.Log("followPlayerAgent not found");
+        else scriptVampiro.StunVampire(vampireSlowdownDuration);
     }
 
     /// <summary>
