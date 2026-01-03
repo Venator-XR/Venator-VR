@@ -14,8 +14,6 @@ public class BlackGoatActions : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         grab = GetComponent<XRBaseInteractable>();
-        grab.selectEntered.AddListener(Selected);
-        grab.selectEntered.AddListener(Deselected);
     }
 
     public void PlaySound()
@@ -26,13 +24,13 @@ public class BlackGoatActions : MonoBehaviour
         if (randomIndex == 5) KillVampire();
     }
 
-    public void Selected(SelectEnterEventArgs args)
+    public void Selected()
     {
         transform.position += new Vector3(0, -1f, 0);
         hand.SetActive(true);
     }
 
-    public void Deselected(SelectEnterEventArgs args)
+    public void Deselected()
     {
         hand.SetActive(false);
     }

@@ -16,6 +16,7 @@ public class HandEquipmentManager : MonoBehaviour
     private bool isLockedItem = false;
     private GameObject currentEquippedObject;
 
+    bool isUnequipping = false;
 
     void OnEnable()
     {
@@ -41,16 +42,37 @@ public class HandEquipmentManager : MonoBehaviour
     }
 
     private void OnObjectReleased(SelectExitEventArgs args)
+{
+    // FIX: If we are running the Unequip function, stop here. 
+    // Do not run drop logic, do not re-grab, do not pass go.
+    if (isUnequipping) return;
+
+    GameObject releasedObj = args.interactableObject.transform.gameObject;
+    var refData = releasedObj.GetComponentInChildren<ItemReference>();
+
+    // Always restore the hand first
+    if (realHandModel != null)
+        realHandModel.SetActive(true);
+
+    // pistol not droppable
+    if (refData != null && refData.data != null && refData.data.isDroppable == false)
     {
-        // Solo ponemos a null si el objeto que se suelta es el que tenemos registrado
-        // Si ya es null porque UnequipCurrent lo está gestionando, no pasa nada.
-        if (currentEquippedObject != null && currentEquippedObject == args.interactableObject.transform.gameObject)
+        // block manual drop by reselecting it
+        IXRSelectInteractable interactable = releasedObj.GetComponent<IXRSelectInteractable>();
+        // Check if interactable is still valid before re-selecting
+        if (interactable != null) 
         {
-            currentEquippedObject = null;
-            if (realHandModel != null) realHandModel.SetActive(true);
-            Debug.Log("Mano liberada por el jugador (Grip o Drop).");
+             handInteractor.interactionManager.SelectEnter(handInteractor, interactable);
         }
+        return;
     }
+
+    if (currentEquippedObject == releasedObj)
+    {
+        currentEquippedObject = null;
+    }
+}
+
 
 
     public void EquipItem(InventoryItemData data)
@@ -78,35 +100,39 @@ public class HandEquipmentManager : MonoBehaviour
     }
 
     public void UnequipCurrent()
+{
+    if (currentEquippedObject != null)
     {
-        if (currentEquippedObject != null)
+        GameObject tempObj = currentEquippedObject;
+        Debug.Log("Forzando desequipado de: " + tempObj.name);
+
+        if (handInteractor.hasSelection)
         {
-            // 1. Guardamos una referencia LOCAL al objeto que queremos destruir
-            // Así, aunque 'currentEquippedObject' se vuelva null en el evento, 'tempObj' sigue vivo
-            GameObject tempObj = currentEquippedObject;
+            // 1. Raise the flag so OnObjectReleased ignores this event
+            isUnequipping = true; 
 
-            Debug.Log("Forzando desequipado de: " + tempObj.name);
-
-            // 2. Si el interactor lo tiene seleccionado, lo soltamos legalmente
-            if (handInteractor.hasSelection)
-            {
-                // Buscamos cuál de los objetos seleccionados es el nuestro
-                var selected = handInteractor.interactablesSelected[0];
-
-                // Al ejecutar esta línea, se disparará OnObjectReleased y currentEquippedObject será NULL
-                handInteractor.interactionManager.SelectExit(handInteractor, selected);
-            }
-
-            // 3. Ahora destruimos la referencia local que guardamos al principio
-            // Esto garantiza que el objeto desaparece del mundo
-            Destroy(tempObj);
-
-            // 4. Aseguramos que la global esté limpia
-            currentEquippedObject = null;
-
-            Debug.Log("Objeto destruido con éxito.");
+            var selected = handInteractor.interactablesSelected[0];
+            handInteractor.interactionManager.SelectExit(handInteractor, selected);
+            
+            // 2. Lower the flag immediately after the event fires
+            isUnequipping = false; 
         }
+
+        // 3. Clear the reference
+        currentEquippedObject = null;
+
+        // 4. IMPORTANT: Since we skipped OnObjectReleased, we must manually show the hand here
+        if (realHandModel != null)
+        {
+            realHandModel.SetActive(true);
+        }
+
+        // 5. Now it is safe to destroy
+        Destroy(tempObj);
+
+        Debug.Log("Objeto destruido con éxito.");
     }
+}
 
     // Actual drop of item
     public void DropToWorld()
@@ -133,7 +159,16 @@ public class HandEquipmentManager : MonoBehaviour
             return null;
         }
 
-        GameObject obj = handInteractor.interactablesSelected[0].transform.gameObject;
+        var selected = handInteractor.interactablesSelected[0];
+
+        if (selected == null || selected.transform == null)
+        {
+            Debug.Log("Held reference dead, cleaning");
+            return null;
+        }
+
+        GameObject obj = selected.transform.gameObject;
+
 
         var refScript = obj.GetComponentInChildren<ItemReference>();
 

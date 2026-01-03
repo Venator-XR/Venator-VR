@@ -60,7 +60,7 @@ public class InventoryController : MonoBehaviour
         uiCanvas.SetActive(true);
 
         // Position in front of the hand
-        uiCanvas.transform.position = rightHandPosition.position + (Vector3.up * 0.05f) + (Vector3.forward * -0.075f);
+        uiCanvas.transform.position = rightHandPosition.position + (Vector3.up * 0.05f) + (Vector3.forward * 0f);
 
         Vector3 directionToHead = headCamera.position - uiCanvas.transform.position;
         directionToHead.y = 0;
