@@ -19,7 +19,7 @@ public class WardrobeSequence : MonoBehaviour
     public XRKnobDoor finalDoorScript;
 
     [Header("Vampire References")]
-    GameObject vampire;
+    public GameObject vampire;
     ShapeshiftManager shapeshiftManager;
     NavMeshAgent vampireNavAgent;
     [SerializeField] Transform vampireStart;
@@ -43,14 +43,8 @@ public class WardrobeSequence : MonoBehaviour
 
     public IEnumerator WardrobeCoroutine()
     {
-        // search for vampire
-        vampire = GameObject.FindGameObjectWithTag("Enemy");
-        if (vampire == null) Debug.LogWarning("vampire not found by tag");
-        else
-        {
-            shapeshiftManager = vampire.GetComponentInChildren<ShapeshiftManager>();
-            vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
-        }
+        shapeshiftManager = vampire.GetComponentInChildren<ShapeshiftManager>();
+        vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
 
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
@@ -103,6 +97,7 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // InventoryTutorialManager.StartInventoryTutorial();
+        playerMobilityManager.SetPlayerMobility(true, true);
 
         // DoorToFinalScene ennabling now that player's passed this part of the game
         finalDoorScript.enabled = true;
@@ -151,6 +146,7 @@ public class WardrobeSequence : MonoBehaviour
             var interactor = targetLever.interactorsSelecting[0]; // La primera mano que lo agarra
 
             manager.SelectExit(interactor, targetLever);
+            wardrobe.GetComponentInChildren<XRKnobLever>().value = 0;
         }
     }
 }

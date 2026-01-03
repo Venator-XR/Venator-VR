@@ -25,6 +25,10 @@ public class MetalDoorActions : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        Close();
+        if(other.CompareTag("Player"))
+        {
+            Close();
+            trigger.enabled = false;
+        }
     }
 }

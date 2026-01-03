@@ -15,6 +15,7 @@ public class DebrisSequence : MonoBehaviour
     public XRBaseInteractor handInteractor;
     [SerializeField] private XRKnobLever targetLever;
     public DynamicMoveProvider dynamicMoveProvider;
+    public GameObject vampireGameObject;
 
     [Header("Animators")]
     [SerializeField] Animator fadeAnim;
@@ -38,7 +39,7 @@ public class DebrisSequence : MonoBehaviour
         dynamicMoveProvider.moveSpeed = 1.2f;
 
         // Stop Vampire movement
-        followPlayerAgent = GameObject.FindGameObjectWithTag("Enemy").GetComponent<FollowPlayerAgent>();
+        followPlayerAgent = vampireGameObject.GetComponent<FollowPlayerAgent>();
         if (followPlayerAgent != null)
         {
             followPlayerAgent.enabled = false;
