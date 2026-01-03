@@ -96,6 +96,12 @@ public class FlashlightController : MonoBehaviour
     public void TurnOff()
     {
         if (!IsOn) return;
-        if (IsOn) ToggleLight();
+        ToggleLight();
+    }
+    
+    public void TurnOn()
+    {
+        if (IsOn) return;
+        ToggleLight();
     }
 }

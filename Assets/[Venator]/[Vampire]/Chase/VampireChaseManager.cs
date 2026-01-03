@@ -74,6 +74,7 @@ public class VampireChaseManager : MonoBehaviour
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);
         yield return new WaitForSeconds(2f);
+        flashlightController.TurnOn();
         dynamicMoveProvider.moveSpeed = 3f;
         approachStarted = true;
     }

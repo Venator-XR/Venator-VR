@@ -84,7 +84,7 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         flashlightController.enabled = true;
-        flashlightController.ToggleLight();
+        flashlightController.TurnOn();
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
