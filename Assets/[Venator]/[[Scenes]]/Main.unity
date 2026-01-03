@@ -816,11 +816,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5454421215739613436, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: DoorToFinalScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454421215739613436, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
       propertyPath: m_Value
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1561023163}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CastleEventsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -832,6 +868,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4195922591384189183, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
   m_PrefabInstance: {fileID: 468135642}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &468135644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+  m_PrefabInstance: {fileID: 468135642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4b3c159e674a74cb257494ab9be109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &484959880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2927,6 +2974,7 @@ GameObject:
   - component: {fileID: 1106431089}
   - component: {fileID: 1106431092}
   - component: {fileID: 1106431091}
+  - component: {fileID: 1106431093}
   m_Layer: 0
   m_Name: Darkness
   m_TagString: Untagged
@@ -3002,6 +3050,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106431088}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1106431093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106431088}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+  m_Center: {x: 0.0000009536743, y: 0.0000017881393, z: -0.000000059604645}
 --- !u!1001 &1130886338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3997,6 +4066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7443cec444527a747b5c4b3f7f08408d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalScene: Final
 --- !u!4 &1561023164
 Transform:
   m_ObjectHideFlags: 0
@@ -4069,6 +4139,7 @@ MonoBehaviour:
   wardrobe: {fileID: 332187185}
   flashlightController: {fileID: 7422217271466095582}
   candles: {fileID: 1767238473}
+  finalDoorScript: {fileID: 468135644}
   vampireStart: {fileID: 546728052}
   batDestination: {fileID: 203509720}
   vampireDestination: {fileID: 431067178}
@@ -4898,7 +4969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

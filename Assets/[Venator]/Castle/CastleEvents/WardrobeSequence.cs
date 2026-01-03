@@ -16,6 +16,7 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] GameObject wardrobe;
     public FlashlightController flashlightController;
     public GameObject candles;
+    public XRKnobDoor finalDoorScript;
 
     [Header("Vampire References")]
     GameObject vampire;
@@ -102,6 +103,9 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // InventoryTutorialManager.StartInventoryTutorial();
+
+        // DoorToFinalScene ennabling now that player's passed this part of the game
+        finalDoorScript.enabled = true;
 
         yield break;
     }

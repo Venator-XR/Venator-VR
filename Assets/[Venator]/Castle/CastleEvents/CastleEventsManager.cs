@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CastleEventsManager : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class CastleEventsManager : MonoBehaviour
     //-----------------------
     private bool woodLeverActioned = false;
     private bool wardrobeActioned = false;
-
+    //-----------------------
+    public string finalScene = "Final";
 
     void Start()
     {
@@ -38,6 +40,14 @@ public class CastleEventsManager : MonoBehaviour
             wardrobeActioned = true;
 
             StartCoroutine(wardrobeSequence.WardrobeCoroutine());
+        }
+    }
+
+    public void ChangeScene(float value)
+    {
+        if(value > 0.7 || value < 0.3)
+        {
+            SceneManager.LoadScene(finalScene);
         }
     }
 }
