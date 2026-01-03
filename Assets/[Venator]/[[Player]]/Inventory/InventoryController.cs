@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class InventoryController : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class InventoryController : MonoBehaviour
     public Sprite emptyIcon;
 
     private InventorySlot currentHoveredSlot;
+
+    public event Action OnInventoryOpened;
+    public event Action OnInventoryClosed;
 
     void Start()
     {
@@ -67,11 +71,14 @@ public class InventoryController : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(directionToHead);
         Quaternion tiltUp = Quaternion.Euler(-20f, 0f, 0f);
         uiCanvas.transform.rotation = lookRotation * tiltUp;
+
+        OnInventoryOpened?.Invoke();
     }
 
     void CloseInventory()
     {
         Debug.Log("Inventory closed");
+
         uiCanvas.SetActive(false);
 
         if (currentHoveredSlot != null)
@@ -80,6 +87,8 @@ public class InventoryController : MonoBehaviour
         }
 
         currentHoveredSlot = null;
+
+        OnInventoryClosed?.Invoke();
     }
 
     public void OnSlotHover(InventorySlot slot) => currentHoveredSlot = slot;

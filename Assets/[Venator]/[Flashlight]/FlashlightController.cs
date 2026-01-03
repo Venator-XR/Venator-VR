@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,7 @@ public class FlashlightController : MonoBehaviour
     public bool showRaycast = true;
 
     public bool IsOn { get; private set; } = true;
+    public event Action OnFlashlightToggle;
 
 
     private void OnEnable()
@@ -91,6 +93,7 @@ public class FlashlightController : MonoBehaviour
     {
         IsOn = !IsOn;
         UpdateLightVisuals();
+        OnFlashlightToggle?.Invoke();
     }
 
     public void TurnOff()

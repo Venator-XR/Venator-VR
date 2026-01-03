@@ -17,6 +17,7 @@ public class WardrobeSequence : MonoBehaviour
     public FlashlightController flashlightController;
     public GameObject candles;
     public XRKnobDoor finalDoorScript;
+    public TutorialManager inventoryTutorialManager;
 
     [Header("Vampire References")]
     public GameObject vampire;
@@ -84,7 +85,6 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         flashlightController.enabled = true;
-        flashlightController.TurnOn();
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
@@ -96,8 +96,7 @@ public class WardrobeSequence : MonoBehaviour
         fadeAnim.Play("fadeOut");
         yield return new WaitForSeconds(0.5f);
 
-        // InventoryTutorialManager.StartInventoryTutorial();
-        playerMobilityManager.SetPlayerMobility(true, true);
+        inventoryTutorialManager.enabled = true;
 
         // DoorToFinalScene ennabling now that player's passed this part of the game
         finalDoorScript.enabled = true;
