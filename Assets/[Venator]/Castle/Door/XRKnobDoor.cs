@@ -14,6 +14,7 @@ namespace UnityEngine.XR.Content.Interaction
         public GameObject handFront;
         [Tooltip("Hand negative local Z)")]
         public GameObject handBack;
+        public Transform knob;
 
         private GameObject m_CurrentActiveHand;
 
@@ -87,7 +88,8 @@ namespace UnityEngine.XR.Content.Interaction
         {
 
             // Calculate relative position to know which side to activate
-            Vector3 localHandPos = transform.InverseTransformPoint(interactor.transform.position);
+            Vector3 localHandPos = knob.transform.InverseTransformPoint(interactor.transform.position);
+            Debug.LogWarning(localHandPos);
 
             // Local Z positive, infront | Local Z negative, back
             if (localHandPos.z >= 0)
