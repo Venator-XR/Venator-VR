@@ -5,6 +5,7 @@ public class MetalDoorActions : MonoBehaviour
     private Animator animator;
     public Collider trigger;
     public GameObject otherDoor;
+    public GameObject candelabra;
 
     void Awake()
     {
@@ -15,11 +16,13 @@ public class MetalDoorActions : MonoBehaviour
     {
         animator.SetTrigger("open");
         trigger.enabled = true;
-        otherDoor.transform.position = new Vector3(otherDoor.transform.position.x, otherDoor.transform.position.y, 0);
+        otherDoor.GetComponent<Animator>().SetTrigger("close1");
+        candelabra.SetActive(false);
     }
 
     private void Close()
     {
+        Debug.LogWarning("Metal door closed");
         animator.SetTrigger("close");
     }
 
