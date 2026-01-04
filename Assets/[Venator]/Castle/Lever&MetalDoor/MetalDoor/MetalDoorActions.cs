@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
 
 public class MetalDoorActions : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class MetalDoorActions : MonoBehaviour
     public Collider trigger;
     public GameObject otherDoor;
     public GameObject candelabra;
+    public XRKnobDoor finalDoorScript;
+    public GameObject mainHall;
+    public GameObject[] pastRooms;
 
     void Awake()
     {
@@ -14,6 +18,7 @@ public class MetalDoorActions : MonoBehaviour
 
     public void Open()
     {
+        mainHall.SetActive(true);
         animator.SetTrigger("open");
         trigger.enabled = true;
         otherDoor.GetComponent<Animator>().SetTrigger("close1");
@@ -23,6 +28,8 @@ public class MetalDoorActions : MonoBehaviour
     private void Close()
     {
         Debug.LogWarning("Metal door closed");
+        finalDoorScript.enabled = true;
+        foreach(GameObject room in pastRooms) room.SetActive(false);
         animator.SetTrigger("close");
     }
 

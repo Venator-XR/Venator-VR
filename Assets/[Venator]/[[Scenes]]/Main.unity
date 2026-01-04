@@ -3182,6 +3182,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
       propertyPath: playerHand
       value: 
       objectReference: {fileID: 7422217271466095580}
@@ -3195,6 +3199,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4195922591384189183, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
   m_PrefabInstance: {fileID: 877627622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &877627624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+  m_PrefabInstance: {fileID: 877627622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4b3c159e674a74cb257494ab9be109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &878298770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5209,6 +5224,10 @@ MonoBehaviour:
   targetLever: {fileID: 1131165142}
   dynamicMoveProvider: {fileID: 1600132626}
   vampireGameObject: {fileID: 607796563}
+  pastRooms:
+  - {fileID: 7101386507644593388}
+  - {fileID: 5707367687087501931}
+  - {fileID: 9142404809927305651}
   fadeAnim: {fileID: 1432919402}
   lightningAnim: {fileID: 1894587396}
   audioClip: {fileID: 0}
@@ -5249,7 +5268,7 @@ MonoBehaviour:
   wardrobe: {fileID: 332187185}
   flashlightController: {fileID: 7422217271466095582}
   candles: {fileID: 1767238473}
-  finalDoorScript: {fileID: 468135644}
+  nextDoorScript: {fileID: 877627624}
   inventoryTutorialManager: {fileID: 2076517973}
   normalCurtainsMat: {fileID: 2100000, guid: 9609fb1ff6cb11345bc4e81965be1ef0, type: 2}
   curtains: {fileID: 853634052}
@@ -5257,6 +5276,9 @@ MonoBehaviour:
   vampireStart: {fileID: 546728052}
   batDestination: {fileID: 203509720}
   vampireDestination: {fileID: 431067178}
+  nextRooms:
+  - {fileID: 6459938569421330700}
+  - {fileID: 8077643548404993996}
   enteringAudioClip: {fileID: 0}
   exitingAudioClip: {fileID: 0}
   doorShutAudio: {fileID: 0}
@@ -10341,6 +10363,15 @@ MonoBehaviour:
   trigger: {fileID: 3165821248939995116}
   otherDoor: {fileID: 6346229084395108958}
   candelabra: {fileID: 18876968}
+  finalDoorScript: {fileID: 468135644}
+  mainHall: {fileID: 7101386507644593388}
+  pastRooms:
+  - {fileID: 5707367687087501931}
+  - {fileID: 9142404809927305651}
+  - {fileID: 8044356728833944740}
+  - {fileID: 4183954186558038824}
+  - {fileID: 6459938569421330700}
+  - {fileID: 8077643548404993996}
 --- !u!65 &3165821248939995119
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10459,9 +10490,7 @@ Transform:
   - {fileID: 4311679577708872012}
   - {fileID: 4497431613902676796}
   - {fileID: 5858214391789746214}
-  - {fileID: 4960510915435542248}
   - {fileID: 4640934645540329994}
-  - {fileID: 3353448215179966160}
   - {fileID: 6816672480159362630}
   - {fileID: 6924656807009455418}
   m_Father: {fileID: 624937016794208700}
@@ -10524,9 +10553,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2707846961269446606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.74033195, w: 0.67224145}
-  m_LocalPosition: {x: -0.16346931, y: 0.040182117, z: 0.0000004970056}
-  m_LocalScale: {x: 1.8310686, y: 1.8310686, z: 1.4512125}
+  m_LocalRotation: {x: -0, y: -0, z: -0.6722414, w: -0.7403321}
+  m_LocalPosition: {x: 0.058146406, y: 0.0035983166, z: -0.000045027627}
+  m_LocalScale: {x: 0.99203706, y: 0.9920368, z: 0.9920373}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7151807273716071632}
@@ -10561,7 +10590,7 @@ Transform:
   - {fileID: 5038814714177477162}
   - {fileID: 3834006640611660950}
   - {fileID: 297502633610976461}
-  m_Father: {fileID: 3234830151364603979}
+  m_Father: {fileID: 9130575821436917662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3370458781252746191
 MeshRenderer:
@@ -12662,12 +12691,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165885424569492529}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09994586, y: -0.09220188, z: -0.3380085, w: 0.9312679}
-  m_LocalPosition: {x: -0.14956, y: 0.036257945, z: 0}
-  m_LocalScale: {x: 0.9718731, y: 0.9884473, z: 1.0953718}
+  m_LocalRotation: {x: -0.09220192, y: -0.09994584, z: -0.9312679, w: -0.3380087}
+  m_LocalPosition: {x: 0.050610602, y: 0.0057243602, z: -0.000045367495}
+  m_LocalScale: {x: 0.5280371, y: 0.544176, z: 0.737511}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3234830151364603979}
+  m_Father: {fileID: 9130575821436917662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4960510915435542249
 BoxCollider:
@@ -14896,7 +14925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &6462258186447012415
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17273,7 +17302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &8077643548404993997
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -18880,6 +18909,8 @@ Transform:
   - {fileID: 505063289}
   - {fileID: 1756324521}
   - {fileID: 1608972644}
+  - {fileID: 4960510915435542248}
+  - {fileID: 3353448215179966160}
   m_Father: {fileID: 624937016794208700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &9130575821436917663

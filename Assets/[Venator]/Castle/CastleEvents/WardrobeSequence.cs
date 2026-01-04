@@ -16,7 +16,7 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] GameObject wardrobe;
     public FlashlightController flashlightController;
     public GameObject candles;
-    public XRKnobDoor finalDoorScript;
+    public XRKnobDoor nextDoorScript;
     public TutorialManager inventoryTutorialManager;
     public Material normalCurtainsMat;
     public GameObject curtains;
@@ -28,6 +28,9 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] Transform vampireStart;
     [SerializeField] Transform batDestination;
     [SerializeField] Transform vampireDestination;
+
+    [Header("Next rooms")]
+    public GameObject[] nextRooms;
 
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
@@ -100,8 +103,9 @@ public class WardrobeSequence : MonoBehaviour
 
         inventoryTutorialManager.enabled = true;
 
-        // DoorToFinalScene ennabling now that player's passed this part of the game
-        finalDoorScript.enabled = true;
+        // next door and rooms ennabled now
+        nextDoorScript.enabled = true;
+        foreach (GameObject room in nextRooms) room.SetActive(true);
 
         yield break;
     }

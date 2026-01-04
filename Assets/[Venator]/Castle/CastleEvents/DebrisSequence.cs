@@ -17,6 +17,9 @@ public class DebrisSequence : MonoBehaviour
     public DynamicMoveProvider dynamicMoveProvider;
     public GameObject vampireGameObject;
 
+    [Header("Past rooms")]
+    public GameObject[] pastRooms;
+
     [Header("Animators")]
     [SerializeField] Animator fadeAnim;
     [SerializeField] Animator lightningAnim;
@@ -77,6 +80,9 @@ public class DebrisSequence : MonoBehaviour
 
         // play lightning animation + sfx
         // lightningAnim.Play("");
+
+        // deactivate past rooms
+        foreach (GameObject room in pastRooms) room.SetActive(false);
 
         yield break;
     }
