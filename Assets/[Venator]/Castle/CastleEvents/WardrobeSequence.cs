@@ -18,6 +18,8 @@ public class WardrobeSequence : MonoBehaviour
     public GameObject candles;
     public XRKnobDoor finalDoorScript;
     public TutorialManager inventoryTutorialManager;
+    public Material normalCurtainsMat;
+    public GameObject curtains;
 
     [Header("Vampire References")]
     public GameObject vampire;
@@ -125,6 +127,11 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent.speed = 1.5f;
         vampireNavAgent.SetDestination(vampireDestination.position);
         yield return new WaitForSeconds(2f);
+
+        // play curtains moving SFX and change material
+        curtains.GetComponent<Renderer>().material = normalCurtainsMat;
+
+        yield return new WaitForSeconds(1f);
 
         // play door close SFX
         audioSource.PlayOneShot(doorShutAudio);
