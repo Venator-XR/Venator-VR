@@ -12,16 +12,19 @@ public class VampireFightMovementManager : MonoBehaviour
     [SerializeField] private float baseSpeed = 7f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float rotationSpeed = 150f;
+    [SerializeField] private float slowdownDistance = 1f;
+    [SerializeField] private float arrivalPrecision = 0.1f;
 
     [Header("Player Reference")]
     [SerializeField] private Transform playerTransform;
 
     private NavMeshAgent _agent;
+    private bool isMoving;
 
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        if(_agent == null) Debug.LogError("NavMeshAgent not found");
+        if (_agent == null) Debug.LogError("NavMeshAgent not found");
         else
         {
             _agent.acceleration = acceleration;
@@ -37,6 +40,35 @@ public class VampireFightMovementManager : MonoBehaviour
     {
         get => baseSpeed;
         set => baseSpeed = Mathf.Max(0, value);
+    }
+
+    void Update()
+    {
+        // agent braking
+        if (navMeshMovmement)
+        {
+            if (!isMoving) return;
+
+            if (!_agent.pathPending)
+            {
+                float distance = _agent.remainingDistance;
+
+                if (distance <= slowdownDistance)
+                {
+                    float newSpeed = Mathf.Lerp(_agent.speed, 0.5f, Time.deltaTime * 5f);
+
+                    _agent.speed = newSpeed;
+
+                    if (distance <= arrivalPrecision)
+                    {
+                        _agent.isStopped = true;
+                        isMoving = false;
+                    }
+                }
+            }
+
+        }
+        else return;
     }
 
     /// <summary>
@@ -78,11 +110,9 @@ public class VampireFightMovementManager : MonoBehaviour
         }
         else
         {
-            _agent.SetDestination(target.position);
-            while (_agent.pathPending || _agent.remainingDistance > _agent.stoppingDistance)
-            {
-                yield return null;
-            }
+            isMoving = true;
+            MoveTo(target.position);
+            while (isMoving) yield return null;
         }
 
         transform.position = target.position;
@@ -98,5 +128,15 @@ public class VampireFightMovementManager : MonoBehaviour
 
         }
         else Debug.LogError("playerTransform not assigned, vampire not rotating torwards player");
+    }
+
+    public void MoveTo(Vector3 targetPosition)
+    {
+        _agent.enabled = true;
+        _agent.isStopped = false;
+
+        // reset speed
+        _agent.speed = baseSpeed;
+        _agent.SetDestination(targetPosition);
     }
 }

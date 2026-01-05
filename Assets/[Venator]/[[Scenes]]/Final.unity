@@ -823,21 +823,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 316676088390583171, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1853507790679004899, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: acceleration
+      value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1853507790679004899, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1397862235}
+    - target: {fileID: 1853507790679004899, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: slowdownDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883453817167868422, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: _currentWaypoint
+      value: 
+      objectReference: {fileID: 1513333447}
+    - target: {fileID: 1883453817167868422, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: _waypointsManager
+      value: 
+      objectReference: {fileID: 52256278}
     - target: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
       propertyPath: m_Name
       value: Vampire
-      objectReference: {fileID: 0}
-    - target: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923187350792583149, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5497779881445748910, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -882,89 +890,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953249471}
-    - targetCorrespondingSourceObject: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953249470}
-    - targetCorrespondingSourceObject: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953249469}
-    - targetCorrespondingSourceObject: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953249472}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
---- !u!1 &953249468 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1900310419257922468, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
-  m_PrefabInstance: {fileID: 953249467}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &953249469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953249468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e29d9973b9d250041b0f479fe993aa60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swarmCount: 3
-  timeBetweenShots: 2
-  postAttackDelay: 1
-  attackProbability: 0.6
---- !u!114 &953249470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953249468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b329576341309d0429708b4ca5cc8b7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navMeshMovmement: 1
-  baseSpeed: 5
-  acceleration: 10
-  rotationSpeed: 150
-  playerTransform: {fileID: 1397862235}
---- !u!114 &953249471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953249468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 901c2d52d2349de4983f48169c42b522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vulnerableWindowDuration: 2
-  initialDelay: 2
-  shapeshiftDelay: 1.5
-  _currentWaypoint: {fileID: 1513333447}
-  _waypointsManager: {fileID: 52256278}
---- !u!114 &953249472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953249468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8001f54a9c541ab41930c08ac9156c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  startVulnerable: 1
 --- !u!1 &959738839
 GameObject:
   m_ObjectHideFlags: 0
