@@ -12,8 +12,12 @@ GameObject:
   - component: {fileID: 124141978441554324}
   - component: {fileID: 4828290084156326162}
   - component: {fileID: 6564993408494444614}
+  - component: {fileID: 1883453817167868422}
+  - component: {fileID: 1853507790679004899}
+  - component: {fileID: 7714364492965381639}
+  - component: {fileID: 1813835217968636941}
   m_Layer: 0
-  m_Name: vampire
+  m_Name: Vampire
   m_TagString: Enemy
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -91,6 +95,70 @@ MonoBehaviour:
   shapeshiftPS: {fileID: 947339983553122165}
   shapeshiftDelayMs: 600
   currentForm: 0
+--- !u!114 &1883453817167868422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901c2d52d2349de4983f48169c42b522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vulnerableWindowDuration: 2
+  initialDelay: 2
+  shapeshiftDelay: 1.5
+  _currentWaypoint: {fileID: 0}
+  _waypointsManager: {fileID: 0}
+--- !u!114 &1853507790679004899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b329576341309d0429708b4ca5cc8b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshMovmement: 1
+  baseSpeed: 5
+  acceleration: 10
+  rotationSpeed: 150
+  playerTransform: {fileID: 0}
+--- !u!114 &7714364492965381639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29d9973b9d250041b0f479fe993aa60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swarmCount: 3
+  timeBetweenShots: 2
+  postAttackDelay: 1
+  attackProbability: 0.6
+--- !u!114 &1813835217968636941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8001f54a9c541ab41930c08ac9156c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  startVulnerable: 1
 --- !u!1 &5646360952683997422
 GameObject:
   m_ObjectHideFlags: 0

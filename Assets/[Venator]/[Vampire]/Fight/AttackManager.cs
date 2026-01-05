@@ -71,6 +71,7 @@ public class AttackManager : MonoBehaviour
         {
             // TODO: Instantiate bat projectile here
             // Example: Instantiate(batProjectilePrefab, transform.position, Quaternion.identity);
+            // IMPORTANT: instantiate prefabs in random position between three options (forward left right)
             Debug.Log($"Bat projectile {i + 1}/{swarmCount} launched!");
             
             yield return new WaitForSeconds(timeBetweenShots);

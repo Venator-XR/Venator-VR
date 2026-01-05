@@ -11,7 +11,7 @@ public class ChangePainting : MonoBehaviour
 
     void Start()
     {
-        m_Renderer = GetComponent<MeshRenderer>();
+        m_Renderer = GetComponentInChildren<MeshRenderer>();
         m_Renderer.material = normalMaterial;
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Handles vampire movement with dynamic speed and flight patterns.
@@ -7,10 +8,27 @@ using UnityEngine;
 public class VampireFightMovementManager : MonoBehaviour
 {
     [Header("Movement Settings")]
+    [SerializeField] bool navMeshMovmement = true;
     [SerializeField] private float baseSpeed = 7f;
-    [SerializeField] private AnimationCurve speedCurve = AnimationCurve.EaseInOut(0, 1, 1, 0.5f);
-    [SerializeField] private float waveIntensity = 0.5f;
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float rotationSpeed = 150f;
+
+    [Header("Player Reference")]
+    [SerializeField] private Transform playerTransform;
+
+    private NavMeshAgent _agent;
+
+    void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        if(_agent == null) Debug.LogError("NavMeshAgent not found");
+        else
+        {
+            _agent.acceleration = acceleration;
+            _agent.speed = baseSpeed;
+            _agent.angularSpeed = rotationSpeed;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the base movement speed.
@@ -37,30 +55,48 @@ public class VampireFightMovementManager : MonoBehaviour
         float travelTime = distance / baseSpeed;
         float elapsed = 0;
 
-        while (elapsed < travelTime)
+        if (!navMeshMovmement)
         {
-            elapsed += Time.deltaTime;
-            float normalizedTime = elapsed / travelTime;
-            
-            // Linear interpolation with speed curve
-            float currentSpeed = speedCurve.Evaluate(normalizedTime) * baseSpeed;
-            Vector3 linearPos = Vector3.Lerp(startPos, target.position, normalizedTime);
-
-            // Add sinusoidal wave for bat-like flight pattern
-            float wave = Mathf.Sin(normalizedTime * Mathf.PI * 3) * waveIntensity;
-            transform.position = linearPos + Vector3.up * wave;
-
-            // Smooth rotation towards movement direction
-            Vector3 direction = (target.position - transform.position).normalized;
-            if (direction != Vector3.zero)
+            while (elapsed < travelTime)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
+                elapsed += Time.deltaTime;
+                float normalizedTime = elapsed / travelTime;
 
-            yield return null;
+                // movement
+                transform.position = Vector3.Lerp(startPos, target.position, normalizedTime);
+
+                // Smooth rotation towards movement direction
+                Vector3 direction = (target.position - transform.position).normalized;
+                if (direction != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+
+                yield return null;
+            }
+        }
+        else
+        {
+            _agent.SetDestination(target.position);
+            while (_agent.pathPending || _agent.remainingDistance > _agent.stoppingDistance)
+            {
+                yield return null;
+            }
         }
 
         transform.position = target.position;
+
+        if (playerTransform != null)
+        {
+            // Calculate direction to player
+            Vector3 lookPos = playerTransform.position - transform.position;
+            lookPos.y = 0;
+
+            // inmediate rotation
+            if (lookPos != Vector3.zero) transform.rotation = Quaternion.LookRotation(lookPos);
+
+        }
+        else Debug.LogError("playerTransform not assigned, vampire not rotating torwards player");
     }
 }

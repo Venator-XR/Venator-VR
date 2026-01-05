@@ -7,29 +7,38 @@ using UnityEngine;
 /// </summary>
 public class VampireFightBrain : MonoBehaviour
 {
-    [Header("Dependencies")]
-    [SerializeField] private WaypointsManager waypointManager;
-    [SerializeField] private VampireFightMovementManager movement;
-    [SerializeField] private ShapeshiftManager shapeshifter;
-    [SerializeField] private AttackManager attackManager;
-    
     [Header("Combat Settings")]
-    [SerializeField] private float waitTimeAfterLanding = 0.5f;
     [SerializeField] private float vulnerableWindowDuration = 2.0f;
     [SerializeField] private float initialDelay = 2f;
-    
-    private VampireHealth _health;
-    private IMovementStrategy _movementStrategy;
-    private Transform _currentWaypoint;
+    [SerializeField] private float shapeshiftDelay;
 
-    public bool IsInBatForm => shapeshifter != null && shapeshifter.currentForm == ShapeState.Bat;
+    [Header("First Waypoint")]
+    [SerializeField] private Transform _currentWaypoint;
+    private IMovementStrategy _movementStrategy;
+
+    // all classes below have to be inside vampire gameobject, which has VampireFightBrain (this script)
+    private VampireHealth _health;
+    [SerializeField] private WaypointsManager _waypointsManager;
+    private VampireFightMovementManager _movement;
+    private ShapeshiftManager _shapeshifter;
+    private AttackManager _attackManager;
+
+    public bool IsInBatForm => _shapeshifter != null && _shapeshifter.currentForm == ShapeState.Bat;
 
     private void Awake()
     {
+        if (_movementStrategy == null)
+        {
+            _movementStrategy = new RandomMovementStrategy();
+        }
+
         _health = GetComponent<VampireHealth>();
-        _movementStrategy = new RandomMovementStrategy();
-        
-        if (waypointManager == null || movement == null || shapeshifter == null || attackManager == null)
+        _movement = GetComponent<VampireFightMovementManager>();
+        _shapeshifter = GetComponent<ShapeshiftManager>();
+        _attackManager = GetComponent<AttackManager>();
+
+
+        if (_waypointsManager == null || _movement == null || _shapeshifter == null || _attackManager == null)
         {
             Debug.LogError("Missing critical references in VampireFightBrain!");
             enabled = false;
@@ -51,30 +60,33 @@ public class VampireFightBrain : MonoBehaviour
     {
         yield return new WaitForSeconds(initialDelay);
 
+        Debug.Log("ComatLoop()");
+
         while (_health != null)
         {
             // === PHASE 1: BAT FORM - INVULNERABLE MOVEMENT ===
             TransformToBat();
-            
-            Transform nextPoint = _movementStrategy.GetNextTarget(waypointManager.Waypoints, _currentWaypoint);
-            if (nextPoint == null) yield break;
-            
-            yield return StartCoroutine(movement.MoveToCoroutine(nextPoint));
+            yield return new WaitForSeconds(shapeshiftDelay);
+
+            Transform nextPoint = _movementStrategy.GetNextTarget(_waypointsManager.Waypoints, _currentWaypoint);
+            if (nextPoint == null) { Debug.LogError("nextPoint null"); yield break; }
+
+            yield return StartCoroutine(_movement.MoveToCoroutine(nextPoint));
             _currentWaypoint = nextPoint;
 
             // === PHASE 2: LANDING TRANSITION ===
             TransformToHuman();
-            yield return new WaitForSeconds(waitTimeAfterLanding);
+            yield return new WaitForSeconds(shapeshiftDelay);
 
             // === PHASE 3: VULNERABLE WINDOW ===
             MakeVulnerable();
-            
+
             // Decide whether to attack or just wait
-            bool didAttack = attackManager.TryExecuteAttack();
+            bool didAttack = _attackManager.TryExecuteAttack();
             if (didAttack)
             {
                 // Wait until attack finishes
-                yield return new WaitUntil(() => !attackManager.IsAttacking);
+                yield return new WaitUntil(() => !_attackManager.IsAttacking);
             }
             else
             {
@@ -90,17 +102,17 @@ public class VampireFightBrain : MonoBehaviour
 
     private void TransformToBat()
     {
-        if (shapeshifter.currentForm != ShapeState.Bat)
-            shapeshifter.Shapeshift();
-        
+        if (_shapeshifter.currentForm != ShapeState.Bat)
+            _shapeshifter.Shapeshift();
+
         if (_health != null)
             _health.SetVulnerability(false);
     }
 
     private void TransformToHuman()
     {
-        if (shapeshifter.currentForm != ShapeState.Vampire)
-            shapeshifter.Shapeshift();
+        if (_shapeshifter.currentForm != ShapeState.Vampire)
+            _shapeshifter.Shapeshift();
     }
 
     private void MakeVulnerable()
