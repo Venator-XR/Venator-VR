@@ -18,10 +18,10 @@ EditorBuildSettings:
     path: Assets/[Venator]/[[Scenes]]/Video360.unity
     guid: eb655c33c5587754bb5a3ae96173120b
   - enabled: 1
-    path: Assets/[Venator]/[[Scenes]]/Pantalla_Derrota.unity
+    path: Assets/[Venator]/[[Scenes]]/Defeat.unity
     guid: d11245d0f48473344ac1cfd42a79d268
   - enabled: 1
-    path: Assets/[Venator]/[[Scenes]]/Pantalla_Victoria.unity
+    path: Assets/[Venator]/[[Scenes]]/Victory.unity
     guid: a141847f8477a704cab152942f81ce42
   - enabled: 1
     path: Assets/[Venator]/[[Scenes]]/Final.unity
