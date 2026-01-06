@@ -15,6 +15,7 @@ public class TutorialManager : MonoBehaviour
     [Header("References")]
     public PlayerMobilityManager playerMobilityManager;
     public InventoryController inventoryController;
+    public GameObject inventoryGameObj;
     public FlashlightController flashlightController;
     public HandEquipmentManager handManager;
     public InventoryItemData pistolData;
@@ -67,6 +68,7 @@ public class TutorialManager : MonoBehaviour
         // enable inventory to continue tutorial
         inventoryText1.SetActive(true);
         inventoryController.enabled = true;
+        inventoryGameObj.SetActive(true);
     }
 
     // Inventory Opened

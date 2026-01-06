@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 7422217271466095578}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874342733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8517c26378c129a4d9465a768091e094, type: 3}
   m_Name: 
@@ -4720,6 +4720,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4481416748730426365, guid: 9f0fd16452b02dd40844e70f4b441f36, type: 3}
   m_PrefabInstance: {fileID: 1345430813}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1353749624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4970799595461842072, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_PrefabInstance: {fileID: 7422217271466095578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1355707985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6782,6 +6787,7 @@ MonoBehaviour:
   inventoryText4: {fileID: 168997472}
   playerMobilityManager: {fileID: 1561023166}
   inventoryController: {fileID: 511834645}
+  inventoryGameObj: {fileID: 1353749624}
   flashlightController: {fileID: 7422217271466095582}
   handManager: {fileID: 511834644}
   pistolData: {fileID: 11400000, guid: babc1611ee4c2f94e8c5ffd50e46c50c, type: 2}
@@ -16456,6 +16462,14 @@ PrefabInstance:
     - target: {fileID: 1457792026112001258, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_Name
       value: Player (XR Origin)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970799595461842072, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447031559837819597, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalPosition.x
