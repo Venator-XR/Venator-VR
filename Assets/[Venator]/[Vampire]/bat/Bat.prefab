@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1841367886590891381}
   - component: {fileID: 4949523771137163555}
   - component: {fileID: 4581240815687795825}
-  - component: {fileID: 2659632113729006273}
+  - component: {fileID: 2743291131866949432}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -813,7 +813,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.01
+      scalar: -0.03
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4980,8 +4980,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &2659632113729006273
-BoxCollider:
+--- !u!135 &2743291131866949432
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4999,8 +4999,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.76102054, y: 0.47392356, z: 0.15576185}
-  m_Center: {x: 0.007965982, y: 0.24445099, z: -0.09426411}
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &1222128053850367883
 GameObject:
   m_ObjectHideFlags: 0

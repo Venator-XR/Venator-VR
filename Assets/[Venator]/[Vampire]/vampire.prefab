@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1326847380478589090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2784538153968340817}
+  m_Layer: 0
+  m_Name: ProjectileSpawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2784538153968340817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326847380478589090}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 3.313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1295726179414994263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1900310419257922468
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +179,12 @@ MonoBehaviour:
   timeBetweenShots: 2
   postAttackDelay: 1
   attackProbability: 0.6
+  batProjectile: {fileID: 3251109217374789518, guid: e5b4bd30b1bdfe248b0266a0f334379b, type: 3}
+  projectileSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerTransform: {fileID: 0}
 --- !u!114 &1813835217968636941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +217,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 388b530fb8074e24e952d25b51c26305, type: 2}
   - {fileID: 11400000, guid: 97031490ccfa0734e83f54bf7fee1b0e, type: 2}
   - {fileID: 11400000, guid: 770ce03a433c14f4ca5b7255586e35dc, type: 2}
+--- !u!1 &3349654670564977935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4268252373344085816}
+  m_Layer: 0
+  m_Name: ProjectileSpawn3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4268252373344085816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3349654670564977935}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: -0, z: 3.313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1295726179414994263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5646360952683997422
 GameObject:
   m_ObjectHideFlags: 0
@@ -5022,6 +5090,37 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &8592751547172298796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9157617015894591516}
+  m_Layer: 0
+  m_Name: ProjectileSpawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9157617015894591516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592751547172298796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: -0, z: 3.313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1295726179414994263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &920202999065773842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5166,12 +5265,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1294892128559850198, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_Color.b
+      value: 0.0051053604
+      objectReference: {fileID: 0}
+    - target: {fileID: -1294892128559850198, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6509434
+      objectReference: {fileID: 0}
+    - target: {fileID: -1294892128559850198, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Intensity
-      value: 0.002
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: -1294892128559850198, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Lightmapping
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1294892128559850198, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Name
@@ -5186,16 +5297,37 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8912049515002365231, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_Color.b
+      value: 0.0051053604
+      objectReference: {fileID: 0}
+    - target: {fileID: 8912049515002365231, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 8912049515002365231, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Intensity
-      value: 0.002
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 8912049515002365231, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Lightmapping
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8912049515002365231, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2784538153968340817}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9157617015894591516}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4268252373344085816}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       insertIndex: -1
@@ -5795,7 +5927,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.01
+      scalar: -0.02
       minScalar: 0
       maxCurve:
         serializedVersion: 2
