@@ -15,6 +15,8 @@ public class VampireHealth : MonoBehaviour, IHealth
     private bool _isDead;
 
     public event Action OnDeath;
+    
+    public event Action<int> OnHealthChanged;
 
     public bool IsVulnerable => _isVulnerable;
 
@@ -44,12 +46,15 @@ public class VampireHealth : MonoBehaviour, IHealth
         _currentHealth -= amount;
         _currentHealth = Mathf.Max(0, _currentHealth);
 
+
         Debug.Log($"Vampire took {amount} damage. Health: {_currentHealth}/{maxHealth}");
 
         if (_currentHealth <= 0)
         {
             Kill();
         }
+        
+        OnHealthChanged?.Invoke(_currentHealth);
     }
 
     public void Kill()

@@ -12,7 +12,7 @@ public class PersecutionManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerHealth playerHealth;
 
-    [Header("Persecution Configuration")]
+    [Header("Configuration")]
     [SerializeField] private int persecutionDamage = 2;
     [SerializeField] private string defeatSceneName = "Pantalla_Derrota";
     [SerializeField] private float vampireSlowdownDuration = 10f;

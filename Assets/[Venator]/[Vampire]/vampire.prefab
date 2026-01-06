@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1853507790679004899}
   - component: {fileID: 7714364492965381639}
   - component: {fileID: 1813835217968636941}
+  - component: {fileID: 4061670090455004140}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: Enemy
@@ -161,6 +162,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   startVulnerable: 1
+--- !u!114 &4061670090455004140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900310419257922468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f8e4062a0f4f14eb98a1c98786c50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurt: 75
+  critical: 25
+  phases:
+  - {fileID: 11400000, guid: 388b530fb8074e24e952d25b51c26305, type: 2}
+  - {fileID: 11400000, guid: 97031490ccfa0734e83f54bf7fee1b0e, type: 2}
+  - {fileID: 11400000, guid: 770ce03a433c14f4ca5b7255586e35dc, type: 2}
 --- !u!1 &5646360952683997422
 GameObject:
   m_ObjectHideFlags: 0

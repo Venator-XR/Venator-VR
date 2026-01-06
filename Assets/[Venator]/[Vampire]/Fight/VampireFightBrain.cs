@@ -7,23 +7,32 @@ using UnityEngine;
 /// </summary>
 public class VampireFightBrain : MonoBehaviour
 {
-    [Header("Combat Settings")]
+    [Header("Combat configuration")]
     [SerializeField] private float vulnerableWindowDuration = 2.0f;
     [SerializeField] private float initialDelay = 2f;
-    [SerializeField] private float shapeshiftDelay;
+    [SerializeField] private float shapeshiftDelay = 1.5f;
 
     [Header("First Waypoint")]
     [SerializeField] private Transform _currentWaypoint;
     private IMovementStrategy _movementStrategy;
 
+    [Header("References")]
+    [SerializeField] private WaypointsManager _waypointsManager;
     // all classes below have to be inside vampire gameobject, which has VampireFightBrain (this script)
     private VampireHealth _health;
-    [SerializeField] private WaypointsManager _waypointsManager;
     private VampireFightMovementManager _movement;
     private ShapeshiftManager _shapeshifter;
     private AttackManager _attackManager;
 
     public bool IsInBatForm => _shapeshifter != null && _shapeshifter.currentForm == ShapeState.Bat;
+
+    public float VulnerableWindowDuration
+    {
+        get => vulnerableWindowDuration;
+        set => vulnerableWindowDuration = value;
+    }
+
+    private bool init = false;
 
     private void Awake()
     {
@@ -56,9 +65,47 @@ public class VampireFightBrain : MonoBehaviour
         StartCoroutine(CombatLoop());
     }
 
+    public void TriggerPhaseInterruption(int phaseIndex)
+    {
+        if (IsInBatForm) return;
+
+        Debug.Log("!!! PHASE CHANGE - STOPPING COROUTINES !!!");
+
+        StopAllCoroutines();
+        _attackManager.StopAttack();
+
+
+        StartCoroutine(PhaseChangeSequence(phaseIndex));
+    }
+
+    private IEnumerator PhaseChangeSequence(int phase)
+    {
+        // invunerable while animation 
+        _health.SetVulnerability(false);
+
+        // start animation & SFX
+        if (phase == 1)
+        {
+            // animator.SetTrigger("laugh");
+            // audioSource.PlayOneShot(laughSound);
+        }
+        else if (phase == 2)
+        {
+            // animator.SetTrigger("scream");
+            // audioSource.PlayOneShot(screamSound);
+        }
+
+        // wait for animation
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("Done! Restarting combat loop...");
+
+        // Restart Coroutine from 0 so it flies away directly
+        StartCoroutine(CombatLoop());
+    }
+
     private IEnumerator CombatLoop()
     {
-        yield return new WaitForSeconds(initialDelay);
+        if (!init) { yield return new WaitForSeconds(initialDelay); init = true; }
 
         Debug.Log("ComatLoop()");
 

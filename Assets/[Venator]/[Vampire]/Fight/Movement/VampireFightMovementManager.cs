@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// </summary>
 public class VampireFightMovementManager : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("Configuration")]
     [SerializeField] bool navMeshMovmement = true;
     [SerializeField] private float baseSpeed = 7f;
     [SerializeField] private float acceleration = 10f;
@@ -40,6 +40,15 @@ public class VampireFightMovementManager : MonoBehaviour
     {
         get => baseSpeed;
         set => baseSpeed = Mathf.Max(0, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the movement acceleration.
+    /// </summary>
+    public float Acceleration
+    {
+        get => acceleration;
+        set => acceleration = Mathf.Max(0, value);
     }
 
     void Update()

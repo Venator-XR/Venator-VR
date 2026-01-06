@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class AttackManager : MonoBehaviour
 {
-    [Header("Attack Settings")]
+    [Header("Configuration")]
     [SerializeField] private int swarmCount = 10;
     [SerializeField] private float timeBetweenShots = 0.2f;
     [SerializeField] private float postAttackDelay = 1f;
@@ -26,6 +26,24 @@ public class AttackManager : MonoBehaviour
     {
         get => swarmCount;
         set => swarmCount = Mathf.Max(1, value);
+    }
+
+    /// <summary>
+    /// Gets or sets 
+    /// </summary>
+    public float TimeBetweenShots
+    {
+        get => timeBetweenShots;
+        set => timeBetweenShots = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the number of projectiles in a swarm attack.
+    /// </summary>
+    public float AttackProbability
+    {
+        get => attackProbability;
+        set => attackProbability = value;
     }
 
     /// <summary>
