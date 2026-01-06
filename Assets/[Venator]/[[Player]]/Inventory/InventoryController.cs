@@ -95,42 +95,42 @@ public class InventoryController : MonoBehaviour
     public void OnSlotExit(InventorySlot slot) { if (currentHoveredSlot == slot) currentHoveredSlot = null; }
 
     void ExecuteAction()
-{
-    if (currentHoveredSlot == null) return;
-
-    switch (currentHoveredSlot.type)
     {
-        case InventorySlot.SlotType.Pistol:
-            InventoryItemData heldItem = handManager.GetHeldItemData();
-            
-            // heldItem is NOT pistol and pocket empty, store item
-            if (heldItem != null && heldItem != pistolData)
-            {
-                if (currentPocketItem == null)
+        if (currentHoveredSlot == null) return;
+
+        switch (currentHoveredSlot.type)
+        {
+            case InventorySlot.SlotType.Pistol:
+                InventoryItemData heldItem = handManager.GetHeldItemData();
+
+                // heldItem is NOT pistol and pocket empty, store item
+                if (heldItem != null && heldItem != pistolData)
                 {
-                    currentPocketItem = heldItem;
-                    UpdatePocketUI();
+                    if (currentPocketItem == null)
+                    {
+                        currentPocketItem = heldItem;
+                        UpdatePocketUI();
+                    }
+                    else
+                    {
+                        // pocket had something, drop it
+                        handManager.DropToWorld();
+                    }
                 }
-                else
-                {
-                    // pocket had something, drop it
-                    handManager.DropToWorld(); 
-                }
-            }
-            // ---------------------------------------
+                // ---------------------------------------
 
-            handManager.EquipItem(pistolData);
-            break;
+                handManager.EquipItem(pistolData);
+                break;
 
-        case InventorySlot.SlotType.Pocket:
-            HandlePocketInteraction();
-            break;
+            case InventorySlot.SlotType.Pocket:
+                HandlePocketInteraction();
+                break;
 
-        case InventorySlot.SlotType.Hand:
-            UnequipAndHolster();
-            break;
+            case InventorySlot.SlotType.Hand:
+                UnequipAndHolster();
+                break;
+        }
     }
-}
 
     void HandlePocketInteraction()
     {
@@ -216,5 +216,10 @@ public class InventoryController : MonoBehaviour
     {
         if (currentPocketItem != null) slotPocket.SetIcon(currentPocketItem.icon);
         else slotPocket.SetIcon(emptyIcon);
+    }
+
+    void OnDisable()
+    {
+        uiCanvas.SetActive(false);
     }
 }

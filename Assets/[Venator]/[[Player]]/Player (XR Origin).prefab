@@ -1335,7 +1335,7 @@ GameObject:
   - component: {fileID: 142308223336410164}
   - component: {fileID: 5708179822836007696}
   - component: {fileID: 3583778061560600758}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Right Controller
   m_TagString: PlayerHand
   m_Icon: {fileID: 0}
@@ -1661,7 +1661,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1719798467363765044
 RectTransform:
   m_ObjectHideFlags: 0

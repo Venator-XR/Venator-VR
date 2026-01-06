@@ -8,9 +8,15 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class FinalFightManager : MonoBehaviour
 {
-    [Header("Actor References")]
+    [Header("Vampire Brain")]
     [SerializeField] private VampireFightBrain vampireBrain;
-    [SerializeField] private MonoBehaviour playerController;
+
+    [Header("Player References")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private Transform playerFightStartPos;
+    [SerializeField] private InventoryItemData pistolData;
+    [SerializeField] private HandEquipmentManager handEquipmentManager;
+
 
     [Header("Screens")]
     [SerializeField] private string victorySceneName = "";
@@ -28,15 +34,26 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private AudioClip bossMusic;
 
     private IHealth _vampireHealth;
+    // player privates
     private IHealth _playerHealth;
+    private PlayerMobilityManager _playerMobilityManager;
+    private InventoryController _inventoryController;
+
 
     private void Awake()
     {
-        if (vampireBrain != null)
-            _vampireHealth = vampireBrain.GetComponent<IHealth>();
 
-        if (playerController != null)
-            _playerHealth = playerController.GetComponent<IHealth>();
+        if (vampireBrain == null) Debug.LogError("vampireBrain not assigned");
+        else _vampireHealth = vampireBrain.GetComponent<IHealth>();
+
+        if (player == null) Debug.LogError("player not assigned");
+        else
+        {
+            _playerHealth = player.GetComponent<IHealth>();
+            _inventoryController = player.GetComponent<InventoryController>();
+        }
+
+        _playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
     private void OnEnable()
@@ -57,16 +74,32 @@ public class FinalFightManager : MonoBehaviour
             _playerHealth.OnDeath -= OnPlayerDefeated;
     }
 
-    private void Start()
+    public void StartFight()
     {
         StartCoroutine(IntroSequence());
     }
 
     private IEnumerator IntroSequence()
     {
-        // Disable combat during intro
+        transiton.Play("fadeIn");
+        yield return new WaitForSeconds(1f);
+
+        // Disable player Mobility
+        _playerMobilityManager.SetPlayerMobility(false, true);
+
+        // Set player pos and rotation
+        player.transform.SetPositionAndRotation(playerFightStartPos.position, playerFightStartPos.rotation);
+
+        // equip pistol and disable inventory
+        handEquipmentManager.EquipItem(pistolData);
+        _inventoryController.enabled = false;
+
+        // Make sure brain is disabled
         if (vampireBrain != null)
             vampireBrain.enabled = false;
+
+        transiton.Play("fadeOut");
+        yield return new WaitForSeconds(1f);
 
         Debug.Log("Coffin opening...");
         // TODO: Trigger coffin opening animation
