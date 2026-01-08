@@ -6,10 +6,12 @@ public class PistolManager : MonoBehaviour
     [Header("References")]
     public GameObject projectilePrefab;
     public Transform firePoint;
+    public Animator mainAnim;
+    public Animator modelAnim;
+    public Animator handAnim;
     //--------------
     private AudioSource audioSource;
     private ParticleSystem muzzleFlashPS;
-    private Animator animator;
 
     [Header("Settings")]
     public float projectileSpeed = 20f;
@@ -20,7 +22,6 @@ public class PistolManager : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         muzzleFlashPS = GetComponent<ParticleSystem>();
     }
@@ -34,7 +35,9 @@ public class PistolManager : MonoBehaviour
             if (projectilePrefab == null || firePoint == null) return;
 
             // Play animation, SFX and FX
-            if (animator) animator.Play("Shoot");
+            if (mainAnim) mainAnim.SetTrigger("shoot");
+            if (modelAnim) modelAnim.SetTrigger("shoot");
+            if (handAnim) handAnim.SetTrigger("shoot");
             if (audioSource) audioSource.Play();
             if (muzzleFlashPS) muzzleFlashPS.Play();
 
@@ -55,8 +58,6 @@ public class PistolManager : MonoBehaviour
 
     private IEnumerator Reload()
     {
-        if (animator) animator.Play("Reload");
-
         Debug.Log("Reloading...");
 
         yield return new WaitForSeconds(interval);
