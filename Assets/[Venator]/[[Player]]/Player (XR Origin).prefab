@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1030365765587591826}
   persecutionDamage: 1
-  defeatSceneName: Pantalla_Derrota
+  defeatSceneName: Defeat
   vampireSlowdownDuration: 10
   cooldownTime: 3
 --- !u!114 &5447031559837819597
