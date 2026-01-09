@@ -7,14 +7,14 @@ public class ControladorEscenas : MonoBehaviour
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
         CheckpointState.SpawnAtCheckpoint = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Main");
     }
 
     public void JugarOtraVezVictoria()
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
         CheckpointState.SpawnAtCheckpoint = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Main");
     }
 
     public void SalirAlMenu()
