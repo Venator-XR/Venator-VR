@@ -36,6 +36,18 @@ public class BatProjectile : MonoBehaviour
             } else if (health == null) Debug.LogError("PlayerHealth not reached");
         }
 
+        ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+        
+        if (ps != null)
+        {
+            ps.transform.parent = null; 
+            
+            ps.Stop(); 
+            
+            float destroyDelay = ps.main.duration + ps.main.startLifetime.constantMax;
+            Destroy(ps.gameObject, destroyDelay);
+        }
+
         Destroy(gameObject);
     }
 }
