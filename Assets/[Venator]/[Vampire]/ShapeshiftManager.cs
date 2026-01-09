@@ -8,6 +8,7 @@ public class ShapeshiftManager : MonoBehaviour
     [SerializeField] GameObject vampireForm;
     [SerializeField] GameObject batForm;
     [SerializeField] ParticleSystem shapeshiftPS;
+    
 
     [Header("Shapeshift Variables")]
     [SerializeField] int shapeshiftDelayMs = 600; // its in milliseconds

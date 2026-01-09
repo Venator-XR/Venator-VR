@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public class AttackManager : MonoBehaviour
 {
+    [Header("Refs")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private ParticleSystem attackPS;
+    [SerializeField] private Animator flashlightAnim;
+
     [Header("Configuration")]
     [SerializeField] private int swarmCount = 10;
     [SerializeField] private float timeBetweenShots = 0.2f;
@@ -88,7 +93,16 @@ public class AttackManager : MonoBehaviour
     /// </summary>
     private IEnumerator SwarmRoutine()
     {
+        Debug.Log("SwarmRoutine()");
         _isAttacking = true;
+
+        flashlightAnim.SetBool("dimmed", true);
+
+        animator.SetBool("isAttacking", true);
+        attackPS.Play();
+
+        yield return new WaitForSeconds(1);
+
         Debug.Log($"Launching swarm attack with {swarmCount} projectiles!");
 
         // use cameraTransform to take into account player height
@@ -101,12 +115,14 @@ public class AttackManager : MonoBehaviour
             Vector3 directionToPlayer = (cameraTransform.position - selectedSpawnPoint.position).normalized;
 
             Instantiate(batProjectile, selectedSpawnPoint.position, Quaternion.LookRotation(directionToPlayer));
-            
+
             Debug.Log($"Bat projectile {i + 1}/{swarmCount} launched!");
 
             yield return new WaitForSeconds(timeBetweenShots);
-
         }
+
+        attackPS.Stop();
+        animator.SetBool("isAttacking", false);
 
         // Post-attack cooldown
         yield return new WaitForSeconds(postAttackDelay);
@@ -123,6 +139,11 @@ public class AttackManager : MonoBehaviour
         if (_isAttacking)
         {
             StopAllCoroutines();
+
+            // just to be sure
+            attackPS.Stop();
+            animator.SetBool("isAttacking", false);
+
             _isAttacking = false;
         }
     }

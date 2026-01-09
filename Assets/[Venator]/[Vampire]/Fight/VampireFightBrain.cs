@@ -18,11 +18,13 @@ public class VampireFightBrain : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private WaypointsManager _waypointsManager;
+    [SerializeField] private Animator _animator;
     // all classes below have to be inside vampire gameobject, which has VampireFightBrain (this script)
     private VampireHealth _health;
     private VampireFightMovementManager _movement;
     private ShapeshiftManager _shapeshifter;
     private AttackManager _attackManager;
+    
 
     public bool IsInBatForm => _shapeshifter != null && _shapeshifter.currentForm == ShapeState.Bat;
 
@@ -86,12 +88,12 @@ public class VampireFightBrain : MonoBehaviour
         // start animation & SFX
         if (phase == 1)
         {
-            // animator.SetTrigger("laugh");
+            _animator.SetTrigger("laugh");
             // audioSource.PlayOneShot(laughSound);
         }
         else if (phase == 2)
         {
-            // animator.SetTrigger("scream");
+            _animator.SetTrigger("scream");
             // audioSource.PlayOneShot(screamSound);
         }
 
