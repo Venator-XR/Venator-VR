@@ -58,7 +58,9 @@ public class CastleEventsManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        CheckpointState.FinalSceneReached = true;
         SceneManager.LoadScene(finalScene);
+        
         yield break;
     }
 }

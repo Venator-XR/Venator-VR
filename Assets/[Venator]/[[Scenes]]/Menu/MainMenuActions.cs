@@ -51,6 +51,8 @@ public class MainMenuActions : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("[MENU] PlayGame -> " + mainSceneName);
+        CheckpointState.SpawnAtCheckpoint = false;
+        CheckpointState.FinalSceneReached = false;
         StartCoroutine(SceneChangeCoroutine(mainSceneName));
     }
 

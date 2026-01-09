@@ -3,10 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscenas : MonoBehaviour
 {
-    public void JugarOtraVez()
+    public void JugarOtraVezDerrota()
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CheckpointState.SpawnAtCheckpoint = true;
+        if (CheckpointState.FinalSceneReached)
+            SceneManager.LoadScene("Final");
+        else
+        SceneManager.LoadScene("Main");
+    }
+
+    public void JugarOtraVezVictoria()
+    {
+        Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
+        CheckpointState.SpawnAtCheckpoint = false;
+        CheckpointState.FinalSceneReached = false;
+        SceneManager.LoadScene("Main");
     }
 
     public void SalirAlMenu()

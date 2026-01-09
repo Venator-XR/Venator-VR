@@ -568,7 +568,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1050442254}
         m_TargetAssemblyTypeName: ControladorEscenas, Assembly-CSharp
-        m_MethodName: JugarOtraVez
+        m_MethodName: JugarOtraVezDerrota
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

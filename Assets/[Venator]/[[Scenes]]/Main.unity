@@ -3828,6 +3828,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f365cf844c03449bc8973eead2c3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1011920382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011920383}
+  m_Layer: 0
+  m_Name: Checkpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1011920383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011920382}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.01, y: 0, z: 0.0025}
+  m_LocalScale: {x: 0.0045689433, y: 0.0045689433, z: 0.0045689433}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 4216849758195960986}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &1022744596 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2811935123251820620, guid: 637103bd737562943b4e560c8263cfde, type: 3}
@@ -5442,6 +5473,7 @@ GameObject:
   - component: {fileID: 1561023166}
   - component: {fileID: 1561023165}
   - component: {fileID: 1561023167}
+  - component: {fileID: 1561023168}
   m_Layer: 0
   m_Name: CastleEventsManager
   m_TagString: Untagged
@@ -5555,6 +5587,20 @@ MonoBehaviour:
   exitingAudioClip: {fileID: 0}
   doorShutAudio: {fileID: 0}
   audioSource: {fileID: 7422217271466095579}
+--- !u!114 &1561023168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561023162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288f7d5c33bd9ac46b14f8ff1df2b9e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobilityManager: {fileID: 1561023166}
+  checkpointPosition: {fileID: 1011920383}
 --- !u!1001 &1562712929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12114,6 +12160,7 @@ Transform:
   - {fileID: 1494229322}
   - {fileID: 869707218}
   - {fileID: 1586062807}
+  - {fileID: 1011920383}
   - {fileID: 1476962408}
   - {fileID: 67229907}
   - {fileID: 717733417}
