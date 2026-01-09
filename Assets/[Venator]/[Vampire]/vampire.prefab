@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784538153968340817}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ProjectileSpawn1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 7714364492965381639}
   - component: {fileID: 1813835217968636941}
   - component: {fileID: 4061670090455004140}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Vampire
   m_TagString: Enemy
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -126,8 +126,6 @@ MonoBehaviour:
   vampireForm: {fileID: 1923187350792583149}
   batForm: {fileID: 316676088390583171}
   shapeshiftPS: {fileID: 947339983553122165}
-  vampireAnim: {fileID: 5442778976524262615}
-  batAnim: {fileID: 3699392630489547619}
   shapeshiftDelayMs: 600
   currentForm: 0
 --- !u!114 &1883453817167868422
@@ -137,7 +135,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900310419257922468}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 901c2d52d2349de4983f48169c42b522, type: 3}
   m_Name: 
@@ -181,15 +179,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5442778976524262615}
   attackPS: {fileID: 1929789804901601684}
+  flashlightAnim: {fileID: 0}
   swarmCount: 3
   timeBetweenShots: 2
   postAttackDelay: 1
   attackProbability: 0.6
   batProjectile: {fileID: 3251109217374789518, guid: e5b4bd30b1bdfe248b0266a0f334379b, type: 3}
   projectileSpawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2784538153968340817}
+  - {fileID: 9157617015894591516}
+  - {fileID: 8759240830493174431}
   cameraTransform: {fileID: 0}
 --- !u!114 &1813835217968636941
 MonoBehaviour:
@@ -233,7 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8759240830493174431}
   m_Layer: 0
-  m_Name: ProjectileSpawn2 (1)
+  m_Name: ProjectileSpawn3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,7 +264,7 @@ GameObject:
   - component: {fileID: 1187097180680173049}
   - component: {fileID: 4464771378789774557}
   - component: {fileID: 947339983553122165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ShapeshiftSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5461,7 +5460,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.5
-      minScalar: 1
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6043,7 +6042,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9947,7 +9946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9157617015894591516}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ProjectileSpawn2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10017,9 +10016,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 583350640440775853, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 621559394667136145, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_Name
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 621559394667136145, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 621559394667136145, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_IsActive
@@ -10028,6 +10035,14 @@ PrefabInstance:
     - target: {fileID: 621559394667136145, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222128053850367883, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878506587249009850, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2536794852575820784, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10045,6 +10060,34 @@ PrefabInstance:
       propertyPath: m_BounceIntensity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3175519807295680936, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616705437258247941, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5352070060639212257, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386089883895208330, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608177853611635813, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7333258038660154623, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035218305315350116, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10058,11 +10101,6 @@ GameObject:
 --- !u!4 &1094057594430019897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 282574855411424811, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
-  m_PrefabInstance: {fileID: 920202999065773842}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &3699392630489547619 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4581240815687795825, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
   m_PrefabInstance: {fileID: 920202999065773842}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1617321565723626172
@@ -10140,6 +10178,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_Name
       value: vampire
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fb50d75c0bae67840b19dfdf9a872e79, type: 3}
       propertyPath: m_IsActive
@@ -10923,7 +10965,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1.3
+      value: 1.4
       mode: 0
       spread: 0
       speed:
@@ -15025,9 +15067,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Height: 3.5
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1.06, z: 0}
+  m_Center: {x: 0, y: 1.12, z: 0}
 --- !u!95 &5442778976524262615
 Animator:
   serializedVersion: 7

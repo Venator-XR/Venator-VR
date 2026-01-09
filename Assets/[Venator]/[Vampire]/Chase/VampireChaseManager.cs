@@ -18,6 +18,7 @@ public class VampireChaseManager : MonoBehaviour
     [Header("Player")]
     public DynamicMoveProvider dynamicMoveProvider;
     public FlashlightController flashlightController;
+    public Animator flashlightAnim;
 
     private bool chaseStarted = false;
     private bool approachStarted = false;
@@ -36,13 +37,7 @@ public class VampireChaseManager : MonoBehaviour
 
     public void StartApproach()
     {
-        flashlightController.TurnOff();
-        vampire.SetActive(true);
-        Light[] pointLights = vampire.GetComponentsInChildren<Light>();
-        foreach (Light light in pointLights)
-        {
-            StartCoroutine(ApproachCoroutine(light));
-        }
+        StartCoroutine(ApproachCoroutine());
     }
 
     public void StartChase()
@@ -51,30 +46,21 @@ public class VampireChaseManager : MonoBehaviour
         followScript.enabled = true;
     }
 
-    private System.Collections.IEnumerator ApproachCoroutine(Light light)
+    private System.Collections.IEnumerator ApproachCoroutine()
     {
-        float targetIntensity = light.intensity;
-        light.intensity = 0f;
-        float duration = 1f;
-        float elapsed = 0f;
+        flashlightAnim.SetBool("dimmmed", true);
+        yield return new WaitForSeconds(.5f);
+        flashlightController.TurnOff();
+        vampire.SetActive(true);
 
-        
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            light.intensity = Mathf.Lerp(0f, targetIntensity, elapsed / duration);
-            yield return null;
-        }
-
-        light.intensity = targetIntensity;
 
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);
         yield return new WaitForSeconds(2f);
         flashlightController.TurnOn();
+        flashlightAnim.SetBool("dimmed", false);
         dynamicMoveProvider.moveSpeed = 3f;
         approachStarted = true;
     }

@@ -129,6 +129,8 @@ public class AttackManager : MonoBehaviour
 
         _isAttacking = false;
         Debug.Log("Swarm attack completed.");
+
+        flashlightAnim.SetBool("dimmed", false);
     }
 
     /// <summary>
