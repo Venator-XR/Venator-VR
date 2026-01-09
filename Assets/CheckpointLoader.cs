@@ -7,7 +7,7 @@ public class CheckpointLoader : MonoBehaviour
 
     void Start()
     {
-        if (GameState.SpawnAtCheckpoint)
+        if (CheckpointState.SpawnAtCheckpoint)
         {
             Debug.Log("teleporting to checkpoint");
             mobilityManager.TeleportTo(checkpointPosition);
