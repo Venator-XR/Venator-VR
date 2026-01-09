@@ -53,7 +53,7 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
 
         // disable movement and camera turning
-        playerMobilityManager.SetPlayerMobility(false, false);
+        playerMobilityManager.SetPlayerMobility(false, true);
 
         // fade to black
         fadeAnim.Play("fadeIn");
@@ -80,7 +80,7 @@ public class WardrobeSequence : MonoBehaviour
 
         // fade from black
         fadeAnim.Play("fadeOut");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
 
         // wait until VampireCoroutine completes
         yield return StartCoroutine(VampireCoroutine());
@@ -118,11 +118,12 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent.speed = 1f;
         vampireNavAgent.SetDestination(batDestination.position);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(5f);
 
         // transform back inside the room where player clearly sees
         shapeshiftManager.Shapeshift();
         // turn off candles
+        yield return new WaitForSeconds(1f);
         candles.SetActive(false);
 
         yield return new WaitForSeconds(2f);
@@ -135,7 +136,7 @@ public class WardrobeSequence : MonoBehaviour
         // play curtains moving SFX and change material
         curtains.GetComponent<Renderer>().material = normalCurtainsMat;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         // play door close SFX
         audioSource.PlayOneShot(doorShutAudio);
