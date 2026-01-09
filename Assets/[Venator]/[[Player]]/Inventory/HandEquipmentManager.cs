@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class HandEquipmentManager : MonoBehaviour
 {
@@ -16,7 +17,16 @@ public class HandEquipmentManager : MonoBehaviour
     private bool isLockedItem = false;
     private GameObject currentEquippedObject;
 
+    private XRDirectInteractor directHand;
+
     bool isUnequipping = false;
+
+    void Awake()
+    {
+        directHand = handInteractor as XRDirectInteractor;
+
+        SetGripMode(0);
+    }
 
     void OnEnable()
     {
@@ -34,44 +44,42 @@ public class HandEquipmentManager : MonoBehaviour
 
     private void OnObjectGrabbed(SelectEnterEventArgs args)
     {
-        // ¡Aquí está la clave! 
-        // Cuando coges algo (del suelo o del inventario), guardamos la referencia
         currentEquippedObject = args.interactableObject.transform.gameObject;
         if (realHandModel != null) realHandModel.SetActive(false);
         Debug.Log("Objeto detectado en mano: " + currentEquippedObject.name);
     }
 
     private void OnObjectReleased(SelectExitEventArgs args)
-{
-    // FIX: If we are running the Unequip function, stop here. 
-    // Do not run drop logic, do not re-grab, do not pass go.
-    if (isUnequipping) return;
-
-    GameObject releasedObj = args.interactableObject.transform.gameObject;
-    var refData = releasedObj.GetComponentInChildren<ItemReference>();
-
-    // Always restore the hand first
-    if (realHandModel != null)
-        realHandModel.SetActive(true);
-
-    // pistol not droppable
-    if (refData != null && refData.data != null && refData.data.isDroppable == false)
     {
-        // block manual drop by reselecting it
-        IXRSelectInteractable interactable = releasedObj.GetComponent<IXRSelectInteractable>();
-        // Check if interactable is still valid before re-selecting
-        if (interactable != null) 
+        if (isUnequipping) return;
+
+        GameObject releasedObj = args.interactableObject.transform.gameObject;
+        var refData = releasedObj.GetComponentInChildren<ItemReference>();
+
+        // Always restore the hand first
+        if (realHandModel != null)
+            realHandModel.SetActive(true);
+
+        // pistol not droppable
+        if (refData != null && refData.data != null && refData.data.isDroppable == false)
         {
-             handInteractor.interactionManager.SelectEnter(handInteractor, interactable);
-        }
-        return;
-    }
+            // block manual drop by reselecting it
+            IXRSelectInteractable interactable = releasedObj.GetComponent<IXRSelectInteractable>();
 
-    if (currentEquippedObject == releasedObj)
-    {
-        currentEquippedObject = null;
+            if (interactable != null)
+            {
+                // force re-grab
+                handInteractor.interactionManager.SelectEnter(handInteractor, interactable);
+            }
+            return;
+        }
+
+        if (currentEquippedObject == releasedObj)
+        {
+            currentEquippedObject = null;
+            SetGripMode(0);
+        }
     }
-}
 
 
 
@@ -81,6 +89,7 @@ public class HandEquipmentManager : MonoBehaviour
 
         UnequipCurrent();
 
+        SetGripMode(2);
         Debug.Log("EquipItem(" + data + ")");
         // Ahora currentEquippedObject ya existe y puede guardar la referencia
         GameObject newObject = Instantiate(data.modelPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
@@ -95,44 +104,60 @@ public class HandEquipmentManager : MonoBehaviour
         }
         else
         {
+            SetGripMode(0);
             Debug.LogError("ERROR: prefab " + data.modelPrefab.name + " doesnt have XR Grab / Locked Interactable");
         }
     }
 
     public void UnequipCurrent()
-{
-    if (currentEquippedObject != null)
     {
-        GameObject tempObj = currentEquippedObject;
-        Debug.Log("Forzando desequipado de: " + tempObj.name);
-
-        if (handInteractor.hasSelection)
+        if (currentEquippedObject != null)
         {
-            // 1. Raise the flag so OnObjectReleased ignores this event
-            isUnequipping = true; 
+            GameObject tempObj = currentEquippedObject;
+            Debug.Log("Forzando desequipado de: " + tempObj.name);
 
-            var selected = handInteractor.interactablesSelected[0];
-            handInteractor.interactionManager.SelectExit(handInteractor, selected);
-            
-            // 2. Lower the flag immediately after the event fires
-            isUnequipping = false; 
+            if (handInteractor.hasSelection)
+            {
+                isUnequipping = true;
+
+                var selected = handInteractor.interactablesSelected[0];
+                handInteractor.interactionManager.SelectExit(handInteractor, selected);
+
+                isUnequipping = false;
+            }
+
+            currentEquippedObject = null;
+
+            if (realHandModel != null)
+            {
+                realHandModel.SetActive(true);
+            }
+
+            Destroy(tempObj);
+            SetGripMode(0);
+
+            Debug.Log("Objeto destruido con éxito.");
         }
-
-        // 3. Clear the reference
-        currentEquippedObject = null;
-
-        // 4. IMPORTANT: Since we skipped OnObjectReleased, we must manually show the hand here
-        if (realHandModel != null)
-        {
-            realHandModel.SetActive(true);
-        }
-
-        // 5. Now it is safe to destroy
-        Destroy(tempObj);
-
-        Debug.Log("Objeto destruido con éxito.");
     }
-}
+
+    // Grip mode switcher
+    private void SetGripMode(int value)
+    {
+        // state = 0
+        // toggle = 2
+        var nearFar = handInteractor as NearFarInteractor;
+        if (nearFar != null)
+        {
+            nearFar.ForceSetGripType(value);
+        }
+
+        // debug
+        string mode = "null";
+        if(value == 0) mode = "state";
+        else if (value == 2) mode = "toggle";
+        Debug.Log("Grip mode: " + mode);
+    }
+
 
     // Actual drop of item
     public void DropToWorld()
