@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164705571879959090}
   - component: {fileID: 2818971628382573792}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Teleport Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1568835888838292402}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5481916040785349607}
   - component: {fileID: 1620006699838480083}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
