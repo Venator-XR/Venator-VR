@@ -1709,6 +1709,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6091483384375479234, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_EnableFarCasting
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8526702195527005112, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_IsActive
       value: 0
