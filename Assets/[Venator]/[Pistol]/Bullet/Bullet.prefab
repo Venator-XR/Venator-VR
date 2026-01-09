@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactFX: {fileID: 0}
   vampireImpactFX: {fileID: 0}
+  delay: 0.1
 --- !u!1001 &4565674526367001890
 PrefabInstance:
   m_ObjectHideFlags: 0

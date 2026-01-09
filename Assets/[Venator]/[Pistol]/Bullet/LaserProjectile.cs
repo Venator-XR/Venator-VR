@@ -33,16 +33,17 @@ public class LaserProjectile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(direction);
 
         // Apply speed
-        StartCoroutine(DelayProjectile(delay));
-        rb.linearVelocity = direction.normalized * speed;
+        StartCoroutine(DelayedProjectile(delay, direction, speed));
 
         // Autodestroy
         Destroy(gameObject, 5.0f);
     }
 
-    private IEnumerator DelayProjectile(float delay)
+    private IEnumerator DelayedProjectile(float delay, Vector3 direction, float speed)
     {
         yield return new WaitForSeconds(delay);
+
+        rb.linearVelocity = direction.normalized * speed;
     }
 
     void OnCollisionEnter(Collision collision)
