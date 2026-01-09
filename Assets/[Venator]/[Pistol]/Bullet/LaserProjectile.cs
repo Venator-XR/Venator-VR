@@ -13,6 +13,7 @@ public class LaserProjectile : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("projectile awake()");
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
     }
@@ -57,6 +58,11 @@ public class LaserProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && vampireImpactFX != null)
         {
             Instantiate(vampireImpactFX, transform.position, Quaternion.identity);
+        }
+
+        if(collision.gameObject.CompareTag("Painting"))
+        {
+            collision.gameObject.GetComponent<PaintingShot>().Shot();
         }
 
         Destroy(gameObject);

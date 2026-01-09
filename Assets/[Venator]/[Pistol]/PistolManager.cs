@@ -6,6 +6,7 @@ public class PistolManager : MonoBehaviour
     [Header("References")]
     public GameObject projectilePrefab;
     public Transform firePoint;
+    public GameObject pistolHand;
     public Animator mainAnim;
     public Animator modelAnim;
     public Animator handAnim;
@@ -72,5 +73,15 @@ public class PistolManager : MonoBehaviour
             foreach (ParticleSystem PS in muzzleFlashPS)
                 PS.Play();
         }
+    }
+
+    public void Grab()
+    {
+        pistolHand.SetActive(true);
+    }
+    
+    public void Ungrab()
+    {
+        pistolHand.SetActive(false);
     }
 }
