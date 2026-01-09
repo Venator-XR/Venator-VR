@@ -3,9 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscenas : MonoBehaviour
 {
-    public void JugarOtraVez()
+    public void JugarOtraVezDerrota()
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
+        CheckpointState.SpawnAtCheckpoint = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void JugarOtraVezVictoria()
+    {
+        Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
+        CheckpointState.SpawnAtCheckpoint = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
