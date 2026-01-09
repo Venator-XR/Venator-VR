@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -10,6 +11,7 @@ public class LaserProjectile : MonoBehaviour
     [Tooltip("Sparks/explosion prefab")]
     public GameObject impactFX; 
     public GameObject vampireImpactFX; 
+    public float delay = 0.05f;
 
     void Awake()
     {
@@ -31,10 +33,16 @@ public class LaserProjectile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(direction);
 
         // Apply speed
+        StartCoroutine(DelayProjectile(delay));
         rb.linearVelocity = direction.normalized * speed;
 
         // Autodestroy
         Destroy(gameObject, 5.0f);
+    }
+
+    private IEnumerator DelayProjectile(float delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 
     void OnCollisionEnter(Collision collision)
