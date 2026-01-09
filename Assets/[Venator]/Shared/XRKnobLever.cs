@@ -10,7 +10,7 @@ namespace UnityEngine.XR.Content.Interaction
     /// An interactable knob that follows the rotation of the interactor
     /// </summary>
     public class XRKnobLever : XRBaseInteractable
-    {   
+    {
         [Header("Hand GameObjects")]
         public GameObject objectHand;
 
@@ -214,6 +214,12 @@ namespace UnityEngine.XR.Content.Interaction
         {
             selectEntered.RemoveListener(StartGrab);
             selectExited.RemoveListener(EndGrab);
+
+            if (objectHand != null)
+            {
+                objectHand.SetActive(false);
+            }
+
             base.OnDisable();
         }
 

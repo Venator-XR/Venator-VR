@@ -2,22 +2,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Content.Interaction; // Necesario para ver el XRKnobLever
+using UnityEngine.XR.Content.Interaction;
 
 public class LeverLogic : MonoBehaviour
 {
-    [Header("Referencias")]
-    [Tooltip("Arrastra aquí el componente XRKnobLever")]
+    [Header("References")]
     public XRKnobLever knobLever;
 
-    [Header("Configuración")]
+    [Header("Config")]
     [Range(0f, 0.5f)]
     public float activationThreshold = 0.2f;
-    
-    [Tooltip("Tiempo que tarda en hacer el 'snap' automático")]
     public float snapDuration = 0.2f;
 
-    [Header("Eventos")]
+    [Header("Events")]
     public UnityEvent OnLeverActivated;
 
     private bool isLocked = false;
@@ -26,10 +23,8 @@ public class LeverLogic : MonoBehaviour
     {
         if (knobLever != null)
         {
-            // Nos suscribimos a cuando el jugador suelta la palanca
             knobLever.selectExited.AddListener(OnLeverReleased);
             
-            // Nos suscribimos al cambio de valor para detectar si llega al final manualmente
             knobLever.onValueChange.AddListener(OnValueChange);
         }
     }
@@ -42,13 +37,10 @@ public class LeverLogic : MonoBehaviour
             knobLever.onValueChange.RemoveListener(OnValueChange);
         }
     }
-
-    // 1. Detección manual: Si el jugador la baja hasta el fondo (o casi) sin soltarla
     private void OnValueChange(float currentValue)
     {
         if (isLocked) return;
 
-        // Si llega al 98% del recorrido, la damos por activada
         if (currentValue <= 0.05f)
         {
             CompleteActivation();
