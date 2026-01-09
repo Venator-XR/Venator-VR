@@ -11,7 +11,7 @@ public class PistolManager : MonoBehaviour
     public Animator handAnim;
     //--------------
     private AudioSource audioSource;
-    private ParticleSystem muzzleFlashPS;
+    private ParticleSystem[] muzzleFlashPS;
 
     [Header("Settings")]
     public float projectileSpeed = 20f;
@@ -23,7 +23,7 @@ public class PistolManager : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        muzzleFlashPS = GetComponent<ParticleSystem>();
+        muzzleFlashPS = GetComponentsInChildren<ParticleSystem>();
     }
 
     public void Fire()
@@ -35,11 +35,10 @@ public class PistolManager : MonoBehaviour
             if (projectilePrefab == null || firePoint == null) return;
 
             // Play animation, SFX and FX
+            if (audioSource) audioSource.Play();
             if (mainAnim) mainAnim.SetTrigger("shoot");
             if (modelAnim) modelAnim.SetTrigger("shoot");
             if (handAnim) handAnim.SetTrigger("shoot");
-            if (audioSource) audioSource.Play();
-            if (muzzleFlashPS) muzzleFlashPS.Play();
 
             // Create projectile
             GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
@@ -64,5 +63,14 @@ public class PistolManager : MonoBehaviour
 
         Debug.Log("Reloaded");
         canShoot = true;
+    }
+
+    public void PlayPS()
+    {
+        if (muzzleFlashPS.Length != 0)
+        {
+            foreach (ParticleSystem PS in muzzleFlashPS)
+                PS.Play();
+        }
     }
 }
