@@ -4,4 +4,5 @@ public static class CheckpointState
     // It will be used to determine if the player should spawn at the checkpoint or
     // at the starting spawn point.
     public static bool SpawnAtCheckpoint = false;
+    public static bool FinalSceneReached = false;
 }

@@ -279,6 +279,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56652832}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &163298147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 163298148}
+  m_Layer: 0
+  m_Name: Checkpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &163298148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163298147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.00494, z: 0.00251}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3263562233360832847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &173740054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1628,6 +1659,7 @@ GameObject:
   - component: {fileID: 1354962904}
   - component: {fileID: 1354962905}
   - component: {fileID: 1354962906}
+  - component: {fileID: 1354962907}
   m_Layer: 0
   m_Name: FinalFightManager
   m_TagString: Untagged
@@ -1691,6 +1723,20 @@ MonoBehaviour:
   teleportProvider: {fileID: 173740055}
   snapTurnProvider: {fileID: 173740058}
   contTurnProvider: {fileID: 173740057}
+--- !u!114 &1354962907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354962903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288f7d5c33bd9ac46b14f8ff1df2b9e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobilityManager: {fileID: 1354962906}
+  checkpointPosition: {fileID: 163298148}
 --- !u!1 &1387519732
 GameObject:
   m_ObjectHideFlags: 0
@@ -3682,6 +3728,7 @@ Transform:
   m_Children:
   - {fileID: 1400471680}
   - {fileID: 976916522}
+  - {fileID: 163298148}
   - {fileID: 56652833}
   m_Father: {fileID: 1902746761}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

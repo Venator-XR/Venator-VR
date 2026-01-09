@@ -7,6 +7,9 @@ public class ControladorEscenas : MonoBehaviour
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
         CheckpointState.SpawnAtCheckpoint = true;
+        if (CheckpointState.FinalSceneReached)
+            SceneManager.LoadScene("Final");
+        else
         SceneManager.LoadScene("Main");
     }
 
