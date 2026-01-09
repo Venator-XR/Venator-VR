@@ -82,13 +82,13 @@ public class FinalFightManager : MonoBehaviour
     private IEnumerator IntroSequence()
     {
         transiton.Play("fadeIn");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         // Disable player Mobility
         _playerMobilityManager.SetPlayerMobility(false, true);
 
         // Set player pos and rotation
-        player.transform.SetPositionAndRotation(playerFightStartPos.position, playerFightStartPos.rotation);
+        player.transform.position = playerFightStartPos.position;
 
         // equip pistol and disable inventory
         handEquipmentManager.EquipItem(pistolData);
