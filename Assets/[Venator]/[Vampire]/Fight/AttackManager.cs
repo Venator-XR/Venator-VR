@@ -11,6 +11,13 @@ public class AttackManager : MonoBehaviour
     [SerializeField] private ParticleSystem attackPS;
     [SerializeField] private Animator flashlightAnim;
 
+    [Header("SFXs")]
+    [SerializeField] private AudioClip startSFX;
+    [SerializeField] private AudioClip attackSFX;
+    [SerializeField] private AudioClip endSFX;
+    private AudioSource audioSource;
+
+
     [Header("Configuration")]
     [SerializeField] private int swarmCount = 10;
     [SerializeField] private float timeBetweenShots = 0.2f;
@@ -57,6 +64,11 @@ public class AttackManager : MonoBehaviour
         set => attackProbability = value;
     }
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     /// <summary>
     /// Initiates a swarm attack if not already attacking.
     /// </summary>
@@ -100,6 +112,7 @@ public class AttackManager : MonoBehaviour
 
         animator.SetBool("isAttacking", true);
         attackPS.Play();
+        audioSource.PlayOneShot(startSFX);
 
         yield return new WaitForSeconds(1);
 
@@ -116,6 +129,8 @@ public class AttackManager : MonoBehaviour
 
             Instantiate(batProjectile, selectedSpawnPoint.position, Quaternion.LookRotation(directionToPlayer));
 
+            audioSource.PlayOneShot(attackSFX);
+
             Debug.Log($"Bat projectile {i + 1}/{swarmCount} launched!");
 
             yield return new WaitForSeconds(timeBetweenShots);
@@ -123,6 +138,7 @@ public class AttackManager : MonoBehaviour
 
         attackPS.Stop();
         animator.SetBool("isAttacking", false);
+        audioSource.PlayOneShot(endSFX);
 
         // Post-attack cooldown
         yield return new WaitForSeconds(postAttackDelay);

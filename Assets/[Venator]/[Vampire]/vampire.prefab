@@ -182,6 +182,9 @@ MonoBehaviour:
   animator: {fileID: 5442778976524262615}
   attackPS: {fileID: 1929789804901601684}
   flashlightAnim: {fileID: 0}
+  startSFX: {fileID: 8300000, guid: f903865d3c0ba0947b3b545d85a5b8ea, type: 3}
+  attackSFX: {fileID: 8300000, guid: 8402401ddd4111441b21b3ff9e17d80f, type: 3}
+  endSFX: {fileID: 8300000, guid: 21dab4c8ad102084997b3453c805b210, type: 3}
   swarmCount: 3
   timeBetweenShots: 2
   postAttackDelay: 1
