@@ -14,6 +14,14 @@ public class ShapeshiftManager : MonoBehaviour
     [SerializeField] int shapeshiftDelayMs = 600; // its in milliseconds
     public ShapeState currentForm;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip sfx;
+    private AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -25,6 +33,7 @@ public class ShapeshiftManager : MonoBehaviour
     public async void Shapeshift()
     {
         shapeshiftPS.Play();
+        audioSource.PlayOneShot(sfx);        
 
         await Task.Delay(shapeshiftDelayMs);
 
