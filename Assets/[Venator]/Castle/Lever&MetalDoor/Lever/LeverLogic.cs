@@ -14,8 +14,17 @@ public class LeverLogic : MonoBehaviour
     public float activationThreshold = 0.2f;
     public float snapDuration = 0.2f;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip activateSFX;
+    private AudioSource audioSource;
+
     [Header("Events")]
     public UnityEvent OnLeverActivated;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private bool isLocked = false;
 
@@ -69,6 +78,9 @@ public class LeverLogic : MonoBehaviour
         isLocked = true;
 
         Debug.Log("¡Palanca Activada y Bloqueada!");
+
+        audioSource.Stop();
+        audioSource.PlayOneShot(activateSFX);
 
         OnLeverActivated.Invoke();
 
