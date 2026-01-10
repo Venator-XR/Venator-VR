@@ -97,6 +97,8 @@ public class WardrobeSequence : MonoBehaviour
         // play sfx: wardrobe opening | steps | wardrobe closing
         // audioSource.PlayOneShot(exitingAudioClip);
 
+        wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
+
         // fade from black
         fadeAnim.Play("fadeOut");
         yield return new WaitForSeconds(0.5f);
@@ -108,6 +110,19 @@ public class WardrobeSequence : MonoBehaviour
         foreach (GameObject room in nextRooms) room.SetActive(true);
 
         yield break;
+    }
+
+    void ForceRelease()
+    {
+        if (targetLever != null && targetLever.isSelected)
+        {
+            // Obtenemos el manager y el interactor que la tiene agarrada
+            var manager = targetLever.interactionManager;
+            var interactor = targetLever.interactorsSelecting[0]; // La primera mano que lo agarra
+
+            manager.SelectExit(interactor, targetLever);
+            wardrobe.GetComponentInChildren<XRKnobLever>().value = 0;
+        }
     }
 
     private IEnumerator VampireCoroutine()
@@ -146,19 +161,5 @@ public class WardrobeSequence : MonoBehaviour
         vampire.SetActive(false);
         Debug.Log("VampireCoroutine end");
         yield break;
-    }
-
-    void ForceRelease()
-    {
-        if (targetLever != null && targetLever.isSelected)
-        {
-            // Obtenemos el manager y el interactor que la tiene agarrada
-            var manager = targetLever.interactionManager;
-            var interactor = targetLever.interactorsSelecting[0]; // La primera mano que lo agarra
-
-            manager.SelectExit(interactor, targetLever);
-            wardrobe.GetComponentInChildren<XRKnobLever>().value = 0;
-            wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
-        }
     }
 }
