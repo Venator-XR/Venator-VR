@@ -10,6 +10,12 @@ public class PistolManager : MonoBehaviour
     public Animator mainAnim;
     public Animator modelAnim;
     public Animator handAnim;
+
+    [Header("Audio")]
+    public AudioClip shootSFX;
+    public AudioClip reloadSFX;
+
+
     //--------------
     private AudioSource audioSource;
     private ParticleSystem[] muzzleFlashPS;
@@ -36,7 +42,7 @@ public class PistolManager : MonoBehaviour
             if (projectilePrefab == null || firePoint == null) return;
 
             // Play animation, SFX and FX
-            if (audioSource) audioSource.Play();
+            if (audioSource) StartCoroutine(PlaySFX());
             if (mainAnim) mainAnim.SetTrigger("shoot");
             if (modelAnim) modelAnim.SetTrigger("shoot");
             if (handAnim) handAnim.SetTrigger("shoot");
@@ -64,6 +70,13 @@ public class PistolManager : MonoBehaviour
 
         Debug.Log("Reloaded");
         canShoot = true;
+    }
+
+    private IEnumerator PlaySFX()
+    {
+        audioSource.PlayOneShot(shootSFX);
+        yield return new WaitForSeconds(.25f);
+        audioSource.PlayOneShot(reloadSFX);
     }
 
     public void PlayPS()

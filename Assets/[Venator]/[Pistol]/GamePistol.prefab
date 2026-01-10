@@ -5572,6 +5572,8 @@ MonoBehaviour:
   mainAnim: {fileID: 8829334015491183120}
   modelAnim: {fileID: 9088858860893773839}
   handAnim: {fileID: 5753279680156457554}
+  shootSFX: {fileID: 8300000, guid: ad6c37b38ad83574f9d98a00442e4b3c, type: 3}
+  reloadSFX: {fileID: 8300000, guid: c9e7720c7853e654aa241bc764ba8324, type: 3}
   projectileSpeed: 20
   damage: 5
   interval: 1
@@ -5627,7 +5629,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5638,7 +5640,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0
+  Pan2D: 0.3
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -5672,7 +5674,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

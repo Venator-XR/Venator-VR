@@ -1,23 +1,42 @@
 using System.Collections;
 using UnityEngine;
 
+public class DestroyAfterSound : MonoBehaviour
+{
+    void Update()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class LaserProjectile : MonoBehaviour
 {
+    [Header("Conf")]
+    public float delay = 0.05f;
     private int damageAmount;
     private Rigidbody rb;
     private bool isInitialized = false;
 
-    [Tooltip("Sparks/explosion prefab")]
+    [Header("SFXs")]
+    private AudioSource audioSource;
+    public AudioClip hitSFX;
+    public AudioClip vampireHitSFX;
+
+    [Header("Impact FXs")]
     public GameObject impactFX; 
     public GameObject vampireImpactFX; 
-    public float delay = 0.05f;
 
     void Awake()
     {
         Debug.Log("projectile awake()");
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     public void Initialize(Vector3 direction, float speed, int damage)
@@ -58,15 +77,14 @@ public class LaserProjectile : MonoBehaviour
             Debug.Log("Hit! Damage applied");
         }
 
+        audioSource.PlayOneShot(hitSFX);
         // Impact FX
-        if (impactFX != null)
-        {
-            Instantiate(impactFX, transform.position, Quaternion.identity);
-        }
+        if (impactFX != null) Instantiate(impactFX, transform.position, Quaternion.identity);
 
-        if (collision.gameObject.CompareTag("Enemy") && vampireImpactFX != null)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(vampireImpactFX, transform.position, Quaternion.identity);
+            if(vampireHitSFX) audioSource.PlayOneShot(vampireHitSFX);
+            if(vampireImpactFX) Instantiate(vampireImpactFX, transform.position, Quaternion.identity);
         }
 
         if(collision.gameObject.CompareTag("Painting"))
@@ -74,6 +92,10 @@ public class LaserProjectile : MonoBehaviour
             collision.gameObject.GetComponent<PaintingShot>().Shot();
         }
 
+        // Detach audio source before destroying bullet
+        audioSource.transform.parent = null;
+        audioSource.gameObject.AddComponent<DestroyAfterSound>();
+        
         Destroy(gameObject);
     }
 }
