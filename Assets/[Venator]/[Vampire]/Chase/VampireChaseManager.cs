@@ -18,7 +18,6 @@ public class VampireChaseManager : MonoBehaviour
     [Header("Player")]
     public DynamicMoveProvider dynamicMoveProvider;
     public FlashlightController flashlightController;
-    public Animator flashlightAnim;
 
     private bool chaseStarted = false;
     private bool approachStarted = false;
@@ -48,9 +47,7 @@ public class VampireChaseManager : MonoBehaviour
 
     private System.Collections.IEnumerator ApproachCoroutine()
     {
-        flashlightAnim.SetBool("dimmmed", true);
-        yield return new WaitForSeconds(.5f);
-        flashlightController.TurnOff();
+        flashlightController.Malfunction(true);
         vampire.SetActive(true);
 
         vampireAgent.speed = approachSpeed;
@@ -59,8 +56,6 @@ public class VampireChaseManager : MonoBehaviour
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);
         yield return new WaitForSeconds(2f);
-        flashlightController.TurnOn();
-        flashlightAnim.SetBool("dimmed", false);
         dynamicMoveProvider.moveSpeed = 3f;
         approachStarted = true;
     }
