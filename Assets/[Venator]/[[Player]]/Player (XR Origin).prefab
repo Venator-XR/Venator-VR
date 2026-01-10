@@ -517,7 +517,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457792026112001258}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8517c26378c129a4d9465a768091e094, type: 3}
   m_Name: 
@@ -1813,7 +1813,7 @@ GameObject:
   - component: {fileID: 2774361735473047761}
   m_Layer: 0
   m_Name: Left Controller
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3941,6 +3941,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TunnelingVignette
       objectReference: {fileID: 0}
+    - target: {fileID: 8429981633443581377, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8429981633443581382, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4524,6 +4528,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 766333103914741336}
     m_Modifications:
+    - target: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: shakeCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: shakeThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: minShakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: OnShakeDetected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShakenOn
+      objectReference: {fileID: 0}
     - target: {fileID: 1512743508490912282, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.42
@@ -4629,6 +4653,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2179050761425143969}
     - target: {fileID: 4346636873046052980, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 2179050761425143969}
+    - target: {fileID: 4346636873046052980, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: _shakeDetector
+      value: 
+      objectReference: {fileID: 3652892837653739541}
+    - target: {fileID: 4346636873046052980, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 1883
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346636873046052980, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: toggleButtonSource.m_Action.m_SingletonActionBindings.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -4647,6 +4683,10 @@ PrefabInstance:
     - target: {fileID: 5253155807618891215, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_Name
       value: Flashlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 5253155807618891215, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6005351759580861275, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
       propertyPath: m_Layer
@@ -4699,6 +4739,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2004450406331077419, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
   m_PrefabInstance: {fileID: 3886084375125610686}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3652892837653739541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 531296700714035371, guid: a236b401b6163dc4aba7c7df29befc24, type: 3}
+  m_PrefabInstance: {fileID: 3886084375125610686}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b43b34ab11e76b42a5f86ae8a5d7d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6675709237712417435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4746,6 +4797,10 @@ PrefabInstance:
     - target: {fileID: 1874768395158167052, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 72.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901495657809037362, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2490128582994820769, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
       propertyPath: m_LocalScale.y
@@ -4931,6 +4986,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 22.97
       objectReference: {fileID: 0}
+    - target: {fileID: 4613193467956454698, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4798982541408090682, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
       propertyPath: m_Controller
       value: 
@@ -5010,6 +5069,10 @@ PrefabInstance:
     - target: {fileID: 6074571976586873177, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
       propertyPath: m_Name
       value: hand
+      objectReference: {fileID: 0}
+    - target: {fileID: 6074571976586873177, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6198762657912298691, guid: b842a8957cfa66e45a70032f436f7152, type: 3}
       propertyPath: m_LocalScale.x
@@ -5813,6 +5876,10 @@ PrefabInstance:
     - target: {fileID: 8758423527188247893, guid: 1392f805216c47742996d4742c80721c, type: 3}
       propertyPath: m_Name
       value: Left Controller Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758423527188247893, guid: 1392f805216c47742996d4742c80721c, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

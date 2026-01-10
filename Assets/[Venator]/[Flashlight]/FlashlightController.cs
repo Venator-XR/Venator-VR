@@ -11,6 +11,11 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private ShakeDetector _shakeDetector;
 
+    [Header("SFXs")]
+    [SerializeField] private AudioClip buttonSFX;
+    [SerializeField] private AudioClip flickerSFX;
+    private AudioSource audioSource;
+
     [Header("Input Settings")]
     public InputActionProperty toggleButtonSource;
 
@@ -39,6 +44,11 @@ public class FlashlightController : MonoBehaviour
     }
     // -----------------------------
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         UpdateLightVisuals();
@@ -48,13 +58,14 @@ public class FlashlightController : MonoBehaviour
     {
         if (IsOn) RaycastUpdate();
 
-        if (!canPushBt) return;
+        // if (!canPushBt) { Debug.Log("!canPushBt"); return; }
 
         // Button input detection
         if (toggleButtonSource.action != null && toggleButtonSource.action.WasPressedThisFrame())
         {
             Debug.Log("Flashlight button pressed!");
             _animator.Play("flashlightButton", -1, 0f);
+            audioSource.PlayOneShot(buttonSFX);
             ToggleLight();
         }
     }
@@ -125,6 +136,7 @@ public class FlashlightController : MonoBehaviour
     public void Dim(bool value)
     {
         _animator.SetBool("dimmed", value);
+        if(value) audioSource.PlayOneShot(flickerSFX);
     }
 
     public void Malfunction(bool reActivate)
@@ -136,6 +148,7 @@ public class FlashlightController : MonoBehaviour
     {
         canPushBt = false;
         Dim(true);
+
         yield return new WaitForSeconds(.5f);
 
         TurnOff();

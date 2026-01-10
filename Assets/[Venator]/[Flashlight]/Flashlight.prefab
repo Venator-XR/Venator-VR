@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1512743508490912282}
   - component: {fileID: 4346636873046052980}
   - component: {fileID: 531296700714035371}
+  - component: {fileID: 6843473998745083527}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -82,7 +83,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightSource: {fileID: 5572598189913220769}
   lightCone: {fileID: 4492760695530286820}
-  handAnim: {fileID: 0}
+  _animator: {fileID: 0}
+  _shakeDetector: {fileID: 0}
+  buttonSFX: {fileID: 8300000, guid: dd6bc5a548797fc42b24ca52e1407efc, type: 3}
+  flickerSFX: {fileID: 8300000, guid: ad4137289ea49b645960f0a3fc7380f9, type: 3}
   toggleButtonSource:
     m_UseReference: 0
     m_Action:
@@ -92,7 +96,15 @@ MonoBehaviour:
       m_Id: 9ee4cbed-8c6a-45d2-879a-c453cf2258ef
       m_Processors: 
       m_Interactions: 
-      m_SingletonActionBindings: []
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 87ff9977-038f-406d-91a9-594eb4263d12
+        m_Path: <XRController>{LeftHand}/primaryButton
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Toggle Button Source
+        m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: -6730069882215067947, guid: da2b439d1a2de5c46a4f428f8cf4fe19, type: 3}
   maxDistance: 8
@@ -132,6 +144,103 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!82 &6843473998745083527
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253155807618891215}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5572598189913220769
 GameObject:
   m_ObjectHideFlags: 0
