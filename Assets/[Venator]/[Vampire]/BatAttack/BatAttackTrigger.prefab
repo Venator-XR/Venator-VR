@@ -49,6 +49,7 @@ MonoBehaviour:
   batAttackPrefab: {fileID: 4906538942662944369, guid: 3c3748ceab3972a41b844c656f3d3b01, type: 3}
   batStartTransform: {fileID: 2166399402832040977}
   objectiveTransform: {fileID: 0}
+  attackSFX: {fileID: 8300000, guid: ac5721d32954e1e4a9bb8045a6f4fdbe, type: 3}
 --- !u!65 &3387212667837780534
 BoxCollider:
   m_ObjectHideFlags: 0
