@@ -20,6 +20,9 @@ public class TutorialManager : MonoBehaviour
     public HandEquipmentManager handManager;
     public InventoryItemData pistolData;
 
+    //--------------------------
+    private int step = 1;
+
 
     void Awake()
     {
@@ -63,9 +66,11 @@ public class TutorialManager : MonoBehaviour
 
     private void FlashlightTutorial()
     {
+        if (step > 1) return;
         flashlightText.SetActive(false);
 
         // enable inventory to continue tutorial
+        step = 2;
         inventoryText1.SetActive(true);
         inventoryController.enabled = true;
         inventoryGameObj.SetActive(true);
@@ -74,12 +79,12 @@ public class TutorialManager : MonoBehaviour
     // Inventory Opened
     private void HandleInventoryOpened()
     {
-        // activate second text
-        inventoryText1.SetActive(false);
-        inventoryText2.SetActive(true);
-
-        // just to be sure
-        inventoryText3.SetActive(false);
+        if (step < 3)
+        {
+            // activate second text
+            inventoryText1.SetActive(false);
+            inventoryText2.SetActive(true);
+        }
     }
 
     // Inventory Closed
@@ -90,30 +95,34 @@ public class TutorialManager : MonoBehaviour
 
         if (currentItem == pistolData)
         {
+            step = 3;
             // Next step (tutorial complete)
             inventoryText2.SetActive(false);
             inventoryText3.SetActive(true);
-            
+
             StartCoroutine(DestroyTutorial());
         }
         else
         {
-            // reset texts if player did NOT held pistol
-            inventoryText1.SetActive(true);
-            inventoryText2.SetActive(false);
+            if (step < 3)
+            {
+                // reset texts if player did NOT held pistol
+                inventoryText1.SetActive(true);
+                inventoryText2.SetActive(false);
+            }
         }
     }
 
     private IEnumerator DestroyTutorial()
     {
         playerMobilityManager.SetPlayerMobility(true, true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(6f);
         inventoryText3.SetActive(false);
         inventoryText4.SetActive(true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(6f);
         inventoryText4.SetActive(false);
-        
+
         Destroy(canvas);
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
 }
