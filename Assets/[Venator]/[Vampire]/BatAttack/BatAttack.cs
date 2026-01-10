@@ -23,11 +23,12 @@ public class BatAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        HandleImpact(other.gameObject);
+        if (!_flashlightTurnedOff) HandleImpact(other.gameObject);
     }
 
     private void HandleImpact(GameObject hitObject)
     {
+        Debug.Log("hitObject name: " + hitObject.gameObject.name);
         if (hitObject.CompareTag("Player"))
         {
             if (!_flashlightTurnedOff)
@@ -38,20 +39,20 @@ public class BatAttack : MonoBehaviour
 
                 _flashlightTurnedOff = true;
             }
+
+            ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+
+            if (ps != null)
+            {
+                ps.transform.parent = null;
+
+                ps.Stop();
+
+                float destroyDelay = ps.main.duration + ps.main.startLifetime.constantMax;
+                Destroy(ps.gameObject, destroyDelay);
+            }
+
+            Destroy(gameObject);
         }
-
-        ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
-
-        if (ps != null)
-        {
-            ps.transform.parent = null;
-
-            ps.Stop();
-
-            float destroyDelay = ps.main.duration + ps.main.startLifetime.constantMax;
-            Destroy(ps.gameObject, destroyDelay);
-        }
-
-        Destroy(gameObject);
     }
 }

@@ -12,6 +12,7 @@ public class BatAttackTrigger : MonoBehaviour
         {
             Quaternion rotation = Quaternion.LookRotation(objectiveTransform.position - batStartTransform.position);
             Instantiate(batAttackPrefab, batStartTransform.position, rotation);
+            Destroy(gameObject);
         }
     }
 }
