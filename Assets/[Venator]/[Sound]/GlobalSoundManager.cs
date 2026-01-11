@@ -9,14 +9,15 @@ public class GlobalSoundManager : MonoBehaviour
     [SerializeField] private float fadeDuration = 2.0f;
     [SerializeField] private float targetVolume = 1.0f;
 
-    public AudioSource _audioSource;
+    private AudioSource _audioSource;
     private Coroutine _fadeCoroutine;
-    private int _currentIndex = -1; // Starts at -1 so first play hits index 0
+    private int _currentIndex = -1;
 
     void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = 0f;
-        _audioSource.loop = true; // Loops current track until Stop is called
+        _audioSource.loop = true;
     }
 
     void Start()
@@ -33,7 +34,7 @@ public class GlobalSoundManager : MonoBehaviour
         _currentIndex = (_currentIndex + 1) % tracks.Length;
 
         // Setup audio source
-        _audioSource.Stop(); // Ensure clean cut before swapping
+        _audioSource.Stop();
         _audioSource.clip = tracks[_currentIndex];
         _audioSource.volume = 0f; 
         _audioSource.Play();

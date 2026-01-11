@@ -20,6 +20,7 @@ public class WardrobeSequence : MonoBehaviour
     public TutorialManager inventoryTutorialManager;
     public Material normalCurtainsMat;
     public GameObject curtains;
+    public PlayerHealth playerHealth;
 
     [Header("Vampire References")]
     public GameObject vampire;
@@ -64,6 +65,8 @@ public class WardrobeSequence : MonoBehaviour
         // fade to black
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
+
+        playerHealth.Heal();
 
         ForceRelease();
         flashlightController.TurnOff();

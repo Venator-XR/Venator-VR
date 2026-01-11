@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private int healthyMin = 3;
     [SerializeField] private int hurtMin = 2;
     [SerializeField] private int criticalMin = 1;
-    
+
     [Header("Vulnerability")]
     [SerializeField] private bool isVulnerable = true;
 
@@ -112,7 +112,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (health >= healthyMin) return HealthState.Healthy;
         if (health >= hurtMin) return HealthState.Hurt;
         if (health >= criticalMin) return HealthState.Critical;
-        
+
         // Fallback for edge cases with unusual threshold configurations
         return HealthState.Critical;
     }
@@ -134,5 +134,12 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
 
         Debug.Log($"PlayerHealth: State changed to {currentState} (Health: {currentHealth})");
+    }
+
+    public void Heal()
+    {
+        currentHealth = maxHealth;
+        var newState = CalculateState(currentHealth);
+        UpdateState(newState);
     }
 }
