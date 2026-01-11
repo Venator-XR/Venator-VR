@@ -2743,6 +2743,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1732272475114904345, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732272475114904345, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4195922591384189183, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0045689414
@@ -2801,6 +2809,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
       propertyPath: m_Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: fadeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
+      propertyPath: maxVolume
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8256732769082627693, guid: 885860a2a61037b4785df19dc506bec5, type: 3}
@@ -11130,9 +11146,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 15
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -11195,7 +11211,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.075
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -17350,7 +17366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7
+      value: 12.07
       objectReference: {fileID: 0}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17358,7 +17374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalRotation.w

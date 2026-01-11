@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 namespace UnityEngine.XR.Content.Interaction
 {
     public class XRKnobDoor : XRBaseInteractable
-    {   
+    {
         [Header("Hand References")]
         [Tooltip("Hand positive local Z")]
         public GameObject handFront;
@@ -16,9 +16,21 @@ namespace UnityEngine.XR.Content.Interaction
         public GameObject handBack;
         public Transform knob;
 
-        private GameObject m_CurrentActiveHand;
+        [Header("SFXs Settings")]
+        [SerializeField] private AudioClip moveSFX;
+        [SerializeField] private AudioClip activateSFX;
+        [SerializeField] private float maxVolume = 1.0f; // Volumen máximo deseado
+        [SerializeField] private float fadeSpeed = 5.0f; // Qué tan rápido sube/baja el volumen (Más alto = más rápido)
 
-        const float k_ModeSwitchDeadZone = 0.1f; 
+        const float k_ModeSwitchDeadZone = 0.1f;
+
+
+        private AudioSource m_AudioSource;
+        private float m_TargetVolume = 0f; // A qué volumen QUEREMOS ir
+        private bool m_WasAboveThreshold; // Para saber desde dónde veníamos
+        private float m_Threshold = 0.5f; // El punto de activación
+
+        private GameObject m_CurrentActiveHand;
 
         struct TrackedRotation
         {
@@ -34,7 +46,7 @@ namespace UnityEngine.XR.Content.Interaction
         [Serializable] public class ValueChangeEvent : UnityEvent<float> { }
 
         [SerializeField] Transform m_Handle = null;
-        [SerializeField] [Range(0.0f, 1.0f)] float m_Value = 0.5f;
+        [SerializeField][Range(0.0f, 1.0f)] float m_Value = 0.5f;
         [SerializeField] bool m_ClampedMotion = true;
         [SerializeField] float m_MaxAngle = 90.0f;
         [SerializeField] float m_MinAngle = -90.0f;
@@ -59,8 +71,25 @@ namespace UnityEngine.XR.Content.Interaction
         {
             SetValue(m_Value);
             SetKnobRotation(ValueToRotation());
-            if(handFront) handFront.SetActive(false);
-            if(handBack) handBack.SetActive(false);
+            if (handFront) handFront.SetActive(false);
+            if (handBack) handBack.SetActive(false);
+
+            m_AudioSource = GetComponent<AudioSource>();
+            if (moveSFX != null)
+            {
+                m_AudioSource.clip = moveSFX;
+                m_AudioSource.loop = true;
+                m_AudioSource.volume = 0f;
+                m_AudioSource.Play();
+            }
+        }
+
+        void Update()
+        {
+            if (m_AudioSource != null)
+            {
+                m_AudioSource.volume = Mathf.MoveTowards(m_AudioSource.volume, m_TargetVolume, fadeSpeed * Time.deltaTime);
+            }
         }
 
         protected override void OnEnable() { base.OnEnable(); selectEntered.AddListener(StartGrab); selectExited.AddListener(EndGrab); }
@@ -110,7 +139,87 @@ namespace UnityEngine.XR.Content.Interaction
 
         // ... (El resto de funciones UpdateRotation, SetKnobRotation, etc., se mantienen igual que tu original)
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase) { base.ProcessInteractable(updatePhase); if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic && isSelected) UpdateRotation(); }
-        void UpdateRotation(bool freshCheck = false) { var interactorTransform = m_Interactor.GetAttachTransform(this); var localOffset = transform.InverseTransformVector(interactorTransform.position - m_Handle.position); localOffset.y = 0.0f; var radiusOffset = transform.TransformVector(localOffset).magnitude; localOffset.Normalize(); var localForward = transform.InverseTransformDirection(interactorTransform.forward); var localY = Math.Abs(localForward.y); localForward.y = 0.0f; localForward.Normalize(); var localUp = transform.InverseTransformDirection(interactorTransform.up); localUp.y = 0.0f; localUp.Normalize(); if (m_PositionDriven && !freshCheck) radiusOffset *= (1.0f + k_ModeSwitchDeadZone); if (radiusOffset >= m_PositionTrackedRadius) { if (!m_PositionDriven || freshCheck) { m_PositionAngles.SetBaseFromVector(localOffset); m_PositionDriven = true; } } else m_PositionDriven = false; if (!freshCheck) { if (!m_UpVectorDriven) localY *= (1.0f - (k_ModeSwitchDeadZone * 0.5f)); else localY *= (1.0f + (k_ModeSwitchDeadZone * 0.5f)); } if (localY > 0.707f) { if (!m_UpVectorDriven || freshCheck) { m_UpVectorAngles.SetBaseFromVector(localUp); m_UpVectorDriven = true; } } else { if (m_UpVectorDriven || freshCheck) { m_ForwardVectorAngles.SetBaseFromVector(localForward); m_UpVectorDriven = false; } } if (m_PositionDriven) m_PositionAngles.SetTargetFromVector(localOffset); if (m_UpVectorDriven) m_UpVectorAngles.SetTargetFromVector(localUp); else m_ForwardVectorAngles.SetTargetFromVector(localForward); var knobRotation = m_BaseKnobRotation - ((m_UpVectorAngles.totalOffset + m_ForwardVectorAngles.totalOffset) * m_TwistSensitivity) - m_PositionAngles.totalOffset; if (m_ClampedMotion) knobRotation = Mathf.Clamp(knobRotation, m_MinAngle, m_MaxAngle); SetKnobRotation(knobRotation); var knobValue = (knobRotation - m_MinAngle) / (m_MaxAngle - m_MinAngle); SetValue(knobValue); }
+        void UpdateRotation(bool freshCheck = false)
+        {
+            var interactorTransform = m_Interactor.GetAttachTransform(this);
+            var localOffset = transform.InverseTransformVector(interactorTransform.position - m_Handle.position);
+            localOffset.y = 0.0f;
+            var radiusOffset = transform.TransformVector(localOffset).magnitude;
+            localOffset.Normalize();
+            var localForward = transform.InverseTransformDirection(interactorTransform.forward);
+            var localY = Math.Abs(localForward.y);
+            localForward.y = 0.0f;
+            localForward.Normalize();
+            var localUp = transform.InverseTransformDirection(interactorTransform.up);
+            localUp.y = 0.0f;
+            localUp.Normalize(); if (m_PositionDriven && !freshCheck) radiusOffset *= (1.0f + k_ModeSwitchDeadZone);
+            if (radiusOffset >= m_PositionTrackedRadius)
+            {
+                if (!m_PositionDriven || freshCheck)
+                {
+                    m_PositionAngles.SetBaseFromVector(localOffset); m_PositionDriven = true;
+                }
+            }
+            else
+                m_PositionDriven = false;
+
+            if (!freshCheck)
+            {
+                if (!m_UpVectorDriven)
+                    localY *= (1.0f - (k_ModeSwitchDeadZone * 0.5f));
+                else
+                    localY *= (1.0f + (k_ModeSwitchDeadZone * 0.5f));
+            }
+            if (localY > 0.707f)
+            {
+                if (!m_UpVectorDriven || freshCheck)
+                {
+                    m_UpVectorAngles.SetBaseFromVector(localUp); m_UpVectorDriven = true;
+                }
+            }
+            else
+            {
+                if (m_UpVectorDriven || freshCheck)
+                {
+                    m_ForwardVectorAngles.SetBaseFromVector(localForward); m_UpVectorDriven = false;
+                }
+            }
+            if (m_PositionDriven) m_PositionAngles.SetTargetFromVector(localOffset);
+            if (m_UpVectorDriven) m_UpVectorAngles.SetTargetFromVector(localUp);
+            else m_ForwardVectorAngles.SetTargetFromVector(localForward);
+
+            var knobRotation = m_BaseKnobRotation - ((m_UpVectorAngles.totalOffset + m_ForwardVectorAngles.totalOffset) * m_TwistSensitivity) - m_PositionAngles.totalOffset;
+
+            if (m_ClampedMotion)
+                knobRotation = Mathf.Clamp(knobRotation, m_MinAngle, m_MaxAngle);
+
+            SetKnobRotation(knobRotation);
+
+            var knobValue = (knobRotation - m_MinAngle) / (m_MaxAngle - m_MinAngle);
+
+            // --- NUEVA LÓGICA DE AUDIO (TARGET VOLUME) ---
+            float previousValue = m_Value;
+            SetValue(knobValue);
+            float diff = Mathf.Abs(m_Value - previousValue);
+
+            bool isAbove = m_Value > m_Threshold;
+
+            if (isAbove != m_WasAboveThreshold)
+            {
+                // Solo suena si hay movimiento real (evita ruidos al soltar o micro-vibraciones)
+                if (diff > 0.001f && activateSFX != null)
+                {
+                    // Usamos PlayOneShot para que no corte el sonido de movimiento (el loop)
+                    m_AudioSource.PlayOneShot(activateSFX);
+                }
+                m_WasAboveThreshold = isAbove;
+            }
+
+            // Lógica de movimiento
+            if (diff > 0.0001f) m_TargetVolume = maxVolume;
+            else m_TargetVolume = 0f;
+            // ---------------------------------------------
+        }
         void SetKnobRotation(float angle) { if (m_AngleIncrement > 0) { var normalizeAngle = angle - m_MinAngle; angle = (Mathf.Round(normalizeAngle / m_AngleIncrement) * m_AngleIncrement) + m_MinAngle; } if (m_Handle != null) m_Handle.localEulerAngles = new Vector3(0.0f, angle, 0.0f); }
         void SetValue(float value) { if (m_ClampedMotion) value = Mathf.Clamp01(value); if (m_AngleIncrement > 0) { var angleRange = m_MaxAngle - m_MinAngle; var angle = Mathf.Lerp(0.0f, angleRange, value); angle = Mathf.Round(angle / m_AngleIncrement) * m_AngleIncrement; value = Mathf.InverseLerp(0.0f, angleRange, angle); } m_Value = value; m_OnValueChange.Invoke(m_Value); }
         float ValueToRotation() => m_ClampedMotion ? Mathf.Lerp(m_MinAngle, m_MaxAngle, m_Value) : Mathf.LerpUnclamped(m_MinAngle, m_MaxAngle, m_Value);
