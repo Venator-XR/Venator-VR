@@ -37,6 +37,8 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] AudioClip exitingAudioClip;
     [SerializeField] AudioClip doorShutAudio;
     [SerializeField] AudioSource playerAudioSource;
+    [SerializeField] AudioClip silentBreathingSFX;
+    [SerializeField] AudioClip tenseBreathingSFX;
     [SerializeField] AudioClip stingerSFX;
     [SerializeField] GlobalSoundManager globalSoundManager;
 
@@ -86,6 +88,11 @@ public class WardrobeSequence : MonoBehaviour
 
         // fade from black
         fadeAnim.Play("fadeOut");
+
+        playerAudioSource.clip = silentBreathingSFX;
+        playerAudioSource.loop = true;
+        playerAudioSource.Play();
+
         yield return new WaitForSeconds(4f);
 
         // wait until VampireCoroutine completes
@@ -117,6 +124,10 @@ public class WardrobeSequence : MonoBehaviour
         
         globalSoundManager.PlayNextSequence();
 
+        playerAudioSource.clip = tenseBreathingSFX;
+        playerAudioSource.loop = true;
+        playerAudioSource.Play();
+
         yield break;
     }
 
@@ -147,7 +158,9 @@ public class WardrobeSequence : MonoBehaviour
         shapeshiftManager.Shapeshift();
         // turn off candles
         yield return new WaitForSeconds(1f);
+        playerAudioSource.loop = false;
         playerAudioSource.PlayOneShot(stingerSFX);
+
         candles.SetActive(false);
 
         yield return new WaitForSeconds(2f);
@@ -156,6 +169,10 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent.speed = 1.5f;
         vampireNavAgent.SetDestination(vampireDestination.position);
         yield return new WaitForSeconds(2f);
+
+        playerAudioSource.clip = silentBreathingSFX;
+        playerAudioSource.loop = true;
+        playerAudioSource.Play();
 
         // play curtains moving SFX and change material
         curtains.GetComponent<Renderer>().material = normalCurtainsMat;

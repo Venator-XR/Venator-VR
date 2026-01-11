@@ -23,6 +23,7 @@ public class VampireChaseManager : MonoBehaviour
     public AudioSource audioSource;
     public GlobalSoundManager globalSoundManager;
     public AudioClip stingerSFX;
+    public AudioClip heavyBreathing;
     
     private bool chaseStarted = false;
     private bool approachStarted = false;
@@ -61,7 +62,9 @@ public class VampireChaseManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         globalSoundManager.PlayNextSequence();
-
+        audioSource.clip = heavyBreathing;
+        audioSource.loop = true;
+        audioSource.Play();
 
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);
