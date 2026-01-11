@@ -14,7 +14,6 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private Animator coffinAnimator;
     [SerializeField] private GameObject[] candelabra;
     [SerializeField] private AudioSource vampAudioSource;
-    [SerializeField] private AudioClip vampireHeartbeat;
     [SerializeField] private AudioClip laughSFX;
 
     [Header("Player References")]
@@ -92,8 +91,6 @@ public class FinalFightManager : MonoBehaviour
         transiton.Play("fadeIn");
         yield return new WaitForSeconds(2f);
 
-        vampAudioSource.PlayOneShot(vampireHeartbeat);
-
         // Disable player Mobility
         _playerMobilityManager.SetPlayerMobility(false, true);
 
@@ -110,6 +107,9 @@ public class FinalFightManager : MonoBehaviour
 
         transiton.Play("fadeOut");
         Debug.Log("Coffin opening...");
+        vampAudioSource.Stop();
+        vampAudioSource.loop = false;
+        vampAudioSource.minDistance = 3f;
         vampAudioSource.PlayOneShot(laughSFX);
         vampAudioSource.PlayOneShot(coffinOpenSFX);
         vampAnimator.SetTrigger("coffinExit");
