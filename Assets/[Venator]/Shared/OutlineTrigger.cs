@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class OutlineTrigger : MonoBehaviour
 {
-    private Outline outline;
+    public Outline outline;
 
     void Start()
     {
-        outline = GetComponent<Outline>();
+        if(outline == null) outline = GetComponent<Outline>();
 
         if (outline == null) Debug.LogError("Outline.cs not found");
         else outline.enabled = false;
