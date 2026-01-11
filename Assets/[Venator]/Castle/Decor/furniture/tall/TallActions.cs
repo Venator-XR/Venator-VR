@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class TallActions : MonoBehaviour
 {
-    private Animator animator;
-
+    public AudioClip sfx;
+    private Animator _animator;
+    private AudioSource _audioSource;
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
     }
 
     public void Move()
     {
-        animator.SetTrigger("move");
+        _animator.SetTrigger("move");
+        _audioSource.PlayOneShot(sfx);
     }
 }
