@@ -36,6 +36,13 @@ public class PaintingTransition : MonoBehaviour
     private Collider paintingCollider; // Collider del cuadro para raycast
     private Bounds paintingBounds; // Bounds del cuadro
 
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         Debug.Log("PaintingTransition: Iniciando script...");
@@ -421,6 +428,8 @@ public class PaintingTransition : MonoBehaviour
         // Al finalizar la transición: ocultar el cuadro normal y mostrar el oscuro
         normalPainting.SetActive(false);
         darkPainting.SetActive(true);
+
+        _audioSource.Play();
 
         transitionCompleted = true;
 

@@ -60,10 +60,9 @@ public class MainMenuActions : MonoBehaviour
     {
         transition.Play("fadeIn");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         SceneManager.LoadScene(scene);
-        yield break;
     }
 
     public void TogglePainting()

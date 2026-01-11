@@ -149,6 +149,7 @@ public class WardrobeSequence : MonoBehaviour
 
             manager.SelectExit(interactor, targetLever);
             wardrobe.GetComponentInChildren<XRKnobLever>().value = 0;
+            wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
         }
     }
 

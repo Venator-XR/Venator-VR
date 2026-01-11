@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 4061670090455004140}
   - component: {fileID: 3129610775331005710}
   m_Layer: 3
-  m_Name: Vampire
+  m_Name: vampire
   m_TagString: Enemy
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -148,6 +148,9 @@ MonoBehaviour:
   _currentWaypoint: {fileID: 0}
   _waypointsManager: {fileID: 0}
   _animator: {fileID: 5442778976524262615}
+  globalSoundManager: {fileID: 0}
+  laughSFX: {fileID: 0}
+  screamSFX: {fileID: 0}
 --- !u!114 &1853507790679004899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5442778976524262615}
   attackPS: {fileID: 1929789804901601684}
-  flashlightAnim: {fileID: 0}
+  flashlightController: {fileID: 0}
   startSFX: {fileID: 8300000, guid: f903865d3c0ba0947b3b545d85a5b8ea, type: 3}
   attackSFX: {fileID: 8300000, guid: 8402401ddd4111441b21b3ff9e17d80f, type: 3}
   endSFX: {fileID: 8300000, guid: 21dab4c8ad102084997b3453c805b210, type: 3}
@@ -209,6 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   startVulnerable: 1
+  hurtClips: []
+  deathSFX: {fileID: 0}
 --- !u!114 &4061670090455004140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +241,7 @@ AudioSource:
   m_GameObject: {fileID: 1900310419257922468}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8322671723354941552, guid: b7e12dee41d4d864898cfd7e7bbf15df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

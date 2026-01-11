@@ -66,7 +66,7 @@ public class DebrisSequence : MonoBehaviour
         playerMobilityManager.TeleportTo(destination);
 
         // Play SFXs audio track
-        audioSource.PlayOneShot(audioClip);
+//        audioSource.PlayOneShot(audioClip);
 
         // activate debris game object
         debris.SetActive(true);

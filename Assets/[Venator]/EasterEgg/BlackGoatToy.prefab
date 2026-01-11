@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b43b34ab11e76b42a5f86ae8a5d7d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeThreshold: 0.75
+  shakeThreshold: 0.5
   minShakeDuration: 0.5
   shakeCooldown: 3
   showDebugLogs: 1
@@ -112,7 +112,7 @@ AudioSource:
   m_GameObject: {fileID: 6419445080823418533}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8322671723354941552, guid: b7e12dee41d4d864898cfd7e7bbf15df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -125,7 +125,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -160,7 +160,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
