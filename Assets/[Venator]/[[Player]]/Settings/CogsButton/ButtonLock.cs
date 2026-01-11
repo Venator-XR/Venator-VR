@@ -6,15 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class ButtonLock : MonoBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("Arrastra aquí el objeto visual que se mueve (el engranaje)")]
+    [Header("Configuration")]
     public Transform visualButtonObject;
-
-    [Tooltip("La altura Y local donde se quedará bloqueado (ej: -0.02)")]
     public float lockedHeightY = -0.05f;
-
-    [Tooltip("La altura Y original (cuando está subido)")]
     public float originalHeightY = 0.0f;
+
+    [Header("SFX")]
+    private AudioSource audioSource;
 
     private XRBaseInteractable interactable;
     private bool isLocked = false;
@@ -23,6 +21,8 @@ public class ButtonLock : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.loop = true;
         interactable = GetComponent<XRBaseInteractable>();
 
         xRPokeFollowAffordance = GetComponent<XRPokeFollowAffordance>();
@@ -45,6 +45,7 @@ public class ButtonLock : MonoBehaviour
     {
         isLocked = true;
         Debug.LogWarning("isLocked: " + isLocked);
+        audioSource.Play();
 
         // disable every script interacting with button
         xRPokeFollowAffordance.enabled = false;
@@ -66,5 +67,6 @@ public class ButtonLock : MonoBehaviour
         interactable.enabled = true;
 
         Debug.LogWarning("isLocked: " + isLocked);
+        audioSource.Stop();
     }
 }
