@@ -714,6 +714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1030365765587591826}
+  vampireAudioSource: {fileID: 0}
+  vampireDirectAttack: {fileID: 0}
   persecutionDamage: 1
   defeatSceneName: Defeat
   vampireSlowdownDuration: 10

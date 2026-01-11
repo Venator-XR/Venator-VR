@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 8145069147113550540}
   - component: {fileID: 9010018218044097184}
   - component: {fileID: 1473668132591061113}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WoodLever
   m_TagString: Untagged
   m_Icon: {fileID: 0}

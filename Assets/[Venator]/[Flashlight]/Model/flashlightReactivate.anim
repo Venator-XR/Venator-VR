@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Intensity
-    path: Flashlight/Spot Light
+    path: Flashlight/SpotLight
     classID: 108
     script: {fileID: 0}
     flags: 0
@@ -56,7 +56,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1212273534
+      path: 2930175295
       attribute: 898800009
       script: {fileID: 0}
       typeID: 108
@@ -112,7 +112,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Intensity
-    path: Flashlight/Spot Light
+    path: Flashlight/SpotLight
     classID: 108
     script: {fileID: 0}
     flags: 0

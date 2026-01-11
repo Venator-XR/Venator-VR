@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject inventoryText2;
     [SerializeField] GameObject inventoryText3;
     [SerializeField] GameObject inventoryText4;
+    [SerializeField] GameObject shakeTutorial;
 
     [Header("References")]
     public PlayerMobilityManager playerMobilityManager;
@@ -48,6 +49,7 @@ public class TutorialManager : MonoBehaviour
         if (flashlightController != null)
         {
             flashlightController.OnFlashlightToggle += FlashlightTutorial;
+            flashlightController.OnFlashlightShaken += ShakenTutorial;
         }
 
         canvas.SetActive(true);
@@ -74,6 +76,11 @@ public class TutorialManager : MonoBehaviour
         inventoryText1.SetActive(true);
         inventoryController.enabled = true;
         inventoryGameObj.SetActive(true);
+    }
+
+    private void ShakenTutorial()
+    {
+        Destroy(shakeTutorial);
     }
 
     // Inventory Opened

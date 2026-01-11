@@ -5301,7 +5301,7 @@ GameObject:
   - component: {fileID: 6548673305449763453}
   - component: {fileID: 7050048215141147820}
   - component: {fileID: 4971708434740974091}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LaserEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

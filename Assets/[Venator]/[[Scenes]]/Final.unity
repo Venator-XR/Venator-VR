@@ -311,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracks:
   - {fileID: 8300000, guid: 31dc2b46a8d1fec4582d16230446a800, type: 3}
-  - {fileID: 8300000, guid: 5ec398af463e0e940ab8f244fdae3b0e, type: 3}
+  - {fileID: 8300000, guid: 87da8ae15caa262418347a6b28558b09, type: 3}
   - {fileID: 8300000, guid: 9b3c9d672524808459fcc32da9cb83f3, type: 3}
   - {fileID: 8300000, guid: c3b541847aa14284bb7d05b4457df5d3, type: 3}
   fadeDuration: 2
@@ -1571,6 +1571,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: a36c4dca2c1d6d24fb69a63b75bf5bd1, type: 3}
     - target: {fileID: 1883453817167868422, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
+      propertyPath: screamSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: aa2fe992602bf124b98d8682a9eb6fc5, type: 3}
+    - target: {fileID: 1883453817167868422, guid: f4269b02fb569b6468a1711ce705c28f, type: 3}
       propertyPath: _currentWaypoint
       value: 
       objectReference: {fileID: 1513333447}
@@ -1891,7 +1895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239324012907557337, guid: dd8fdbbe353f3584687a48bc2f7ebe6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2996,7 +3000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

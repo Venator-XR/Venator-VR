@@ -12,6 +12,10 @@ public class PersecutionManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerHealth playerHealth;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource vampireAudioSource;
+    [SerializeField] private AudioClip vampireDirectAttack;
+
     [Header("Configuration")]
     [SerializeField] private int persecutionDamage = 2;
     [SerializeField] private string defeatSceneName = "Pantalla_Derrota";
@@ -68,6 +72,7 @@ public class PersecutionManager : MonoBehaviour
         cooldown = true;
         StartCoroutine(Cooldown(cooldownTime));
         playerHealth.ApplyDamage(persecutionDamage);
+        vampireAudioSource.PlayOneShot(vampireDirectAttack);
 
         // Slow down the vampire on hit
         FollowPlayerAgent scriptVampiro = FindFirstObjectByType<FollowPlayerAgent>();

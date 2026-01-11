@@ -205,7 +205,6 @@ MonoBehaviour:
   lightSource: {fileID: 7745054594798812309}
   lightCone: {fileID: 4492760695530286820}
   _animator: {fileID: 0}
-  _shakeDetector: {fileID: 0}
   buttonSFX: {fileID: 8300000, guid: dd6bc5a548797fc42b24ca52e1407efc, type: 3}
   flickerSFX: {fileID: 8300000, guid: ad4137289ea49b645960f0a3fc7380f9, type: 3}
   toggleButtonSource:
@@ -524,7 +523,7 @@ Light:
       e32: 0
       e33: 1
     m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
+  m_Cookie: {fileID: 2800000, guid: 3bfa6f2c74793cd45a0d69cb1a0d1964, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0

@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 0.5764706, b: 0, a: 0.7490196}
   outlineWidth: 10
   precomputeOutline: 1
@@ -2033,7 +2033,7 @@ GameObject:
   - component: {fileID: 7347268383853072240}
   - component: {fileID: 276930637532591262}
   - component: {fileID: 2438645158691949649}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Knob
   m_TagString: Untagged
   m_Icon: {fileID: 0}

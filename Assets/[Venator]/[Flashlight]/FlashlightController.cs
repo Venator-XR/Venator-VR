@@ -9,7 +9,7 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private GameObject lightSource;
     [SerializeField] private GameObject lightCone;
     [SerializeField] private Animator _animator;
-    [SerializeField] private ShakeDetector _shakeDetector;
+    private ShakeDetector _shakeDetector;
 
     [Header("SFXs")]
     [SerializeField] private AudioClip buttonSFX;
@@ -27,6 +27,7 @@ public class FlashlightController : MonoBehaviour
 
     public bool IsOn { get; private set; } = true;
     public event Action OnFlashlightToggle;
+    public event Action OnFlashlightShaken;
 
     private bool canPushBt = true;
 
@@ -46,6 +47,7 @@ public class FlashlightController : MonoBehaviour
 
     void Awake()
     {
+        _shakeDetector = GetComponent<ShakeDetector>();
         audioSource = GetComponent<AudioSource>();
     }
 

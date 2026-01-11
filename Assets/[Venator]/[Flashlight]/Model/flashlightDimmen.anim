@@ -33,15 +33,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.28333333
         value: 5
-        inSlope: -27.142859
-        outSlope: -27.142859
+        inSlope: -25.714287
+        outSlope: -25.714287
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.35
-        value: 0.5
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -50,7 +50,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 5
+        value: 3
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -68,7 +68,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.46666667
-        value: 5
+        value: 3
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -88,7 +88,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Intensity
-    path: Flashlight/Spot Light
+    path: Flashlight/SpotLight
     classID: 108
     script: {fileID: 0}
     flags: 0
@@ -101,7 +101,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1212273534
+      path: 2930175295
       attribute: 898800009
       script: {fileID: 0}
       typeID: 108
@@ -147,15 +147,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.28333333
         value: 5
-        inSlope: -27.142859
-        outSlope: -27.142859
+        inSlope: -25.714287
+        outSlope: -25.714287
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.35
-        value: 0.5
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -164,7 +164,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 5
+        value: 3
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -182,7 +182,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.46666667
-        value: 5
+        value: 3
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -202,7 +202,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Intensity
-    path: Flashlight/Spot Light
+    path: Flashlight/SpotLight
     classID: 108
     script: {fileID: 0}
     flags: 0
