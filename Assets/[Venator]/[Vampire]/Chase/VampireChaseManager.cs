@@ -1,6 +1,7 @@
 using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
@@ -18,15 +19,24 @@ public class VampireChaseManager : MonoBehaviour
     [Header("Player")]
     public DynamicMoveProvider dynamicMoveProvider;
     public FlashlightController flashlightController;
+    public VRFootstepController footstepController;
 
     [Header("SFX")]
     public AudioSource audioSource;
-    public GlobalSoundManager globalSoundManager;
+    public GameObject globalSoundManagerGO;
     public AudioClip stingerSFX;
     public AudioClip heavyBreathing;
+    GlobalSoundManager globalSoundManager;
+    MixerController mixerController;
     
     private bool chaseStarted = false;
     private bool approachStarted = false;
+
+    void Awake()
+    {
+        globalSoundManager = globalSoundManagerGO.GetComponent<GlobalSoundManager>();
+        mixerController = globalSoundManagerGO.GetComponent<MixerController>();
+    }
 
     void Update()
     {
@@ -62,8 +72,11 @@ public class VampireChaseManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         globalSoundManager.PlayNextSequence();
+
+        yield return new WaitForSeconds(1f);
         audioSource.clip = heavyBreathing;
         audioSource.loop = true;
+        mixerController.SetGroupVolume("PlayerMain", 0.1f);
         audioSource.Play();
 
         vampireAgent.speed = approachSpeed;
@@ -73,6 +86,7 @@ public class VampireChaseManager : MonoBehaviour
         vampireAgent.SetDestination(approachDestination.position);
         yield return new WaitForSeconds(2f);
         dynamicMoveProvider.moveSpeed = 3f;
+        // footstepController.isRunning = true;
         approachStarted = true;
     }
 }

@@ -16,6 +16,7 @@ public class DebrisSequence : MonoBehaviour
     [SerializeField] private XRKnobLever targetLever;
     public DynamicMoveProvider dynamicMoveProvider;
     public GameObject vampireGameObject;
+    public VRFootstepController footstepController;
 
     [Header("Past rooms")]
     public GameObject[] pastRooms;
@@ -40,6 +41,7 @@ public class DebrisSequence : MonoBehaviour
         Debug.Log("Coroutine started!");
 
         dynamicMoveProvider.moveSpeed = 1.2f;
+        // footstepController.isRunning = false;
 
         // Stop Vampire movement
         followPlayerAgent = vampireGameObject.GetComponent<FollowPlayerAgent>();
@@ -64,13 +66,13 @@ public class DebrisSequence : MonoBehaviour
         playerMobilityManager.TeleportTo(destination);
 
         // Play SFXs audio track
-        // audioSource.PlayOneShot(audioClip);
+        audioSource.PlayOneShot(audioClip);
 
         // activate debris game object
         debris.SetActive(true);
 
         // wait until sfxs audio track ends
-        // yield return new WaitWhile(() => audioSource.isPlaying);
+        yield return new WaitForSeconds(5f);
 
         // fade from black
         fadeAnim.Play("fadeOut");

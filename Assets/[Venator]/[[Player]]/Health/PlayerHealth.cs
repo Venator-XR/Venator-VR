@@ -16,9 +16,17 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [Header("Vulnerability")]
     [SerializeField] private bool isVulnerable = true;
 
+
     [Header("Debug")]
     [SerializeField] private int currentHealth;
     [SerializeField] private HealthState currentState;
+
+    [Header("SFXs")]
+    [SerializeField] private AudioClip[] hurtClips;
+    [SerializeField] private AudioClip criticalSFX;
+    [SerializeField] private MixerController mixerController;
+    [SerializeField] private AudioSource mainAudioSource;
+    [SerializeField] private AudioSource healthAudioSource;
 
     /// <summary>
     /// Invoked when damage is applied. Parameter is the damage amount.
@@ -79,6 +87,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
 
         currentHealth = Mathf.Max(0, currentHealth - amount);
+        if (healthAudioSource != null && hurtClips.Length != 0)
+            healthAudioSource.PlayOneShot(hurtClips[UnityEngine.Random.Range(0, hurtClips.Length)]);
         OnDamaged?.Invoke(amount);
 
         var newState = CalculateState(currentHealth);
@@ -131,6 +141,14 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (newState == HealthState.Dead)
         {
             OnDeath?.Invoke();
+        }
+        else if (newState == HealthState.Critical)
+        {
+            if (mainAudioSource != null && criticalSFX != null && mixerController != null)
+            {
+                mixerController.SetGroupVolume("PlayerMain", 0.3f);
+                mainAudioSource.PlayOneShot(criticalSFX);
+            }
         }
 
         Debug.Log($"PlayerHealth: State changed to {currentState} (Health: {currentHealth})");

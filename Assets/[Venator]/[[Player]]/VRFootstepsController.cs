@@ -10,14 +10,24 @@ public class VRFootstepController : MonoBehaviour
 
     [Header("SFXs")]
     [SerializeField] private AudioClip[] defaultClips;
+    [SerializeField] private AudioClip[] runningClips;
 
-    public CharacterController _cc;
-    private AudioSource _audioSource;
+    public bool isRunning = false;
+
+    private CharacterController _cc;
+    public AudioSource audioSource;
     private float _distanceTravelled;
+
+    private Vector3 _lastPosition;
 
     void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _cc = GetComponent<CharacterController>();
+    }
+
+    void Start()
+    {
+        _lastPosition = transform.position;
     }
 
     void Update()
@@ -27,45 +37,44 @@ public class VRFootstepController : MonoBehaviour
 
     private void CheckFootsteps()
     {
-        // 1. Si no estamos en el suelo, no suenan pasos (evita sonido al caer)
-        if (!_cc.isGrounded) return;
+        Vector3 currentPos = transform.position;
+        Vector3 displacement = currentPos - _lastPosition;
+        displacement.y = 0;
 
-        // 2. Calculamos la velocidad horizontal (ignoramos movimiento vertical Y)
-        Vector2 horizontalVelocity = new Vector2(_cc.velocity.x, _cc.velocity.z);
-        float speed = horizontalVelocity.magnitude;
+        float distanceThisFrame = displacement.magnitude;
 
-        // 3. Si nos movemos
+        float speed = distanceThisFrame / Time.deltaTime;
+
         if (speed > minSpeed)
         {
-            // Acumulamos distancia basada en cuanto nos hemos movido este frame
-            _distanceTravelled += speed * Time.deltaTime;
+            _distanceTravelled += distanceThisFrame;
 
-            // 4. Si hemos superado la distancia de un paso
             if (_distanceTravelled >= stepDistance)
             {
                 PlayFootstep();
-                _distanceTravelled = 0f; // Reseteamos contador
+                _distanceTravelled = 0f;
             }
         }
         else
         {
-            // Opcional: Si nos paramos, reseteamos la distancia para que el
-            // primer paso al arrancar suene casi inmediato o mantenga el ritmo.
-            _distanceTravelled = stepDistance * 0.9f; 
+            _distanceTravelled = stepDistance * 0.9f;
         }
+
+        _lastPosition = currentPos;
     }
 
     private void PlayFootstep()
     {
-        if (defaultClips.Length == 0) return;
+        AudioClip[] clips;
+        if (!isRunning) clips = defaultClips;
+        else clips = runningClips;
+        if (clips.Length == 0) return;
 
-        // Elegir clip aleatorio
-        AudioClip clip = defaultClips[Random.Range(0, defaultClips.Length)];
-        
-        // Variación de Pitch (CRUCIAL para que no suene a metralleta robótica)
-        _audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
-        _audioSource.volume = Random.Range(0.8f, 1.0f); // Leve variación volumen
-        
-        _audioSource.PlayOneShot(clip);
+        AudioClip clip = clips[Random.Range(0, clips.Length)];
+
+        audioSource.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+        audioSource.volume = Random.Range(0.8f, 1.0f);
+
+        audioSource.PlayOneShot(clip);
     }
 }
