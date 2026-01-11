@@ -7,15 +7,18 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class FinalFightManager : MonoBehaviour
 {
-    [Header("Vampire Brain")]
+    [Header("Vampire Refs")]
     [SerializeField] private VampireFightBrain vampireBrain;
+    [SerializeField] private Animator vampAnimator;
+    [SerializeField] private Animator vampirePS;
+    [SerializeField] private Animator coffinAnimator;
+    [SerializeField] private GameObject[] candelabra;
 
     [Header("Player References")]
     [SerializeField] private GameObject player;
     [SerializeField] private Transform playerFightStartPos;
     [SerializeField] private InventoryItemData pistolData;
     [SerializeField] private HandEquipmentManager handEquipmentManager;
-
 
     [Header("Screens")]
     [SerializeField] private string victorySceneName = "";
@@ -29,8 +32,7 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private Animator transiton;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioClip bossMusic;
+    [SerializeField] private GlobalSoundManager globalSoundManager;
 
     private IHealth _vampireHealth;
     // player privates
@@ -41,7 +43,7 @@ public class FinalFightManager : MonoBehaviour
 
     private void Awake()
     {
-
+        if(vampirePS != null) vampirePS.enabled = false; 
         if (vampireBrain == null) Debug.LogError("vampireBrain not assigned");
         else _vampireHealth = vampireBrain.GetComponent<IHealth>();
 
@@ -75,6 +77,7 @@ public class FinalFightManager : MonoBehaviour
 
     public void StartFight()
     {
+        globalSoundManager.StopSequence();
         StartCoroutine(IntroSequence());
     }
 
@@ -98,24 +101,25 @@ public class FinalFightManager : MonoBehaviour
             vampireBrain.enabled = false;
 
         transiton.Play("fadeOut");
-        yield return new WaitForSeconds(1f);
-
         Debug.Log("Coffin opening...");
+        vampAnimator.SetTrigger("coffinExit");
+
         // TODO: Trigger coffin opening animation
 
         yield return new WaitForSeconds(introDelay);
 
-        // Start boss music and enable combat
-        if (musicSource != null && bossMusic != null)
+        foreach(GameObject c in candelabra)
         {
-            musicSource.clip = bossMusic;
-            musicSource.Play();
+            Light[] candles = c.GetComponentsInChildren<Light>();
+            foreach(Light candle in candles) StartCoroutine(FadeLightOut(candle));
         }
 
-        if (vampireBrain != null)
-            vampireBrain.enabled = true;
+        if(vampirePS != null) vampirePS.enabled = true;
+
+        if (vampireBrain != null) vampireBrain.enabled = true;
 
         Debug.Log("The hunt begins!");
+
     }
 
     private void OnVampireDefeated()
@@ -130,6 +134,22 @@ public class FinalFightManager : MonoBehaviour
         StartCoroutine(EndSequence(false));
     }
 
+    private IEnumerator FadeLightOut(Light light)
+    {
+        float fadeDuration = 1f;
+        float elapsedTime = 0f;
+        float initialIntensity = light.intensity;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            light.intensity = Mathf.Lerp(initialIntensity, 0f, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        light.enabled = false;
+    }
+
     private IEnumerator EndSequence(bool victory)
     {
         // Stop combat
@@ -137,10 +157,7 @@ public class FinalFightManager : MonoBehaviour
             vampireBrain.enabled = false;
 
         // Change music
-        if (musicSource != null)
-        {
-            // TODO: music slowly dies
-        }
+        globalSoundManager.StopSequence();
 
         yield return new WaitForSeconds(endSequenceDelay);
 

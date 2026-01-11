@@ -19,6 +19,7 @@ public class VampireFightBrain : MonoBehaviour
     [Header("References")]
     [SerializeField] private WaypointsManager _waypointsManager;
     [SerializeField] private Animator _animator;
+    public GlobalSoundManager globalSoundManager;
     // all classes below have to be inside vampire gameobject, which has VampireFightBrain (this script)
     private VampireHealth _health;
     private VampireFightMovementManager _movement;
@@ -101,6 +102,7 @@ public class VampireFightBrain : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         Debug.Log("Done! Restarting combat loop...");
 
+
         // Restart Coroutine from 0 so it flies away directly
         StartCoroutine(CombatLoop());
     }
@@ -108,6 +110,9 @@ public class VampireFightBrain : MonoBehaviour
     private IEnumerator CombatLoop()
     {
         if (!init) { yield return new WaitForSeconds(initialDelay); init = true; }
+        
+        // start / next music
+        globalSoundManager.PlayNextSequence();
 
         Debug.Log("ComatLoop()");
 

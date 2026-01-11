@@ -5575,7 +5575,7 @@ MonoBehaviour:
   shootSFX: {fileID: 8300000, guid: ad6c37b38ad83574f9d98a00442e4b3c, type: 3}
   reloadSFX: {fileID: 8300000, guid: c9e7720c7853e654aa241bc764ba8324, type: 3}
   projectileSpeed: 20
-  damage: 5
+  damage: 4
   interval: 1
 --- !u!114 &8948588719143595019
 MonoBehaviour:
