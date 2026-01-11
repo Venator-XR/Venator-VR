@@ -26,7 +26,6 @@ public class DebrisSequence : MonoBehaviour
     [SerializeField] Animator lightningAnim;
 
     [Header("Audio")]
-    [SerializeField] AudioClip audioClip;
     [SerializeField] AudioSource audioSource;
 
     FollowPlayerAgent followPlayerAgent;
@@ -66,13 +65,13 @@ public class DebrisSequence : MonoBehaviour
         playerMobilityManager.TeleportTo(destination);
 
         // Play SFXs audio track
-//        audioSource.PlayOneShot(audioClip);
+        audioSource.Play();
 
         // activate debris game object
         debris.SetActive(true);
 
         // wait until sfxs audio track ends
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6.5f);
 
         // fade from black
         fadeAnim.Play("fadeOut");

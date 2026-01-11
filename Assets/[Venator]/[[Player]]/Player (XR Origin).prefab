@@ -503,7 +503,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d03656c38a2749b4e9a3ad7f2b13d33b, type: 3}
   - {fileID: 8300000, guid: c4dadfe5f1ef16f408a6fd7129a2aa36, type: 3}
   - {fileID: 8300000, guid: 6d74b705908dd5043b75c92c29428856, type: 3}
-  criticalSFX: {fileID: 0}
+  criticalSFX: {fileID: 8300000, guid: 7ade85384314dc14faf8c4c504014460, type: 3}
   mixerController: {fileID: 0}
   mainAudioSource: {fileID: 4208787500139738605}
   healthAudioSource: {fileID: 569872722972403079}
