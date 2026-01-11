@@ -141,16 +141,29 @@ public class WardrobeSequence : MonoBehaviour
 
     void ForceRelease()
     {
-        if (targetLever != null && targetLever.isSelected)
-        {
-            // Obtenemos el manager y el interactor que la tiene agarrada
-            var manager = targetLever.interactionManager;
-            var interactor = targetLever.interactorsSelecting[0]; // La primera mano que lo agarra
+        // 1. Verificación de seguridad básica
+        if (targetLever == null) return;
 
-            manager.SelectExit(interactor, targetLever);
-            wardrobe.GetComponentInChildren<XRKnobLever>().value = 0;
-            wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
+        // 2. Si está seleccionado, forzamos la salida de TODOS los interactores (por si acaso son 2 manos)
+        if (targetLever.isSelected)
+        {
+            var manager = targetLever.interactionManager;
+            
+            // Hacemos una copia de la lista porque al hacer SelectExit la lista original cambia
+            var interactors = new System.Collections.Generic.List<IXRSelectInteractor>(targetLever.interactorsSelecting);
+            
+            foreach (var interactor in interactors)
+            {
+                manager.SelectExit(interactor, targetLever);
+            }
         }
+
+        // 3. EL TRUCO DE LA BUILD: Desactivar y reactivar el componente interactable
+        // Esto limpia cualquier "ghost grip" que quede en el sistema de eventos de XR
+        targetLever.enabled = false;
+        
+        // Reset visual y de valores
+        targetLever.value = 0;
     }
 
     private IEnumerator VampireCoroutine()
