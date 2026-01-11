@@ -111,6 +111,7 @@ namespace UnityEngine.XR.Content.Interaction
         {
             ResetHandVisuals();
             m_Interactor = null;
+            m_TargetVolume = 0f;
         }
 
         private void HandleHandVisuals(IXRSelectInteractor interactor)
@@ -207,7 +208,7 @@ namespace UnityEngine.XR.Content.Interaction
             if (isAbove != m_WasAboveThreshold)
             {
                 // Solo suena si hay movimiento real (evita ruidos al soltar o micro-vibraciones)
-                if (diff > 0.001f && activateSFX != null)
+                if (diff > 0.0012 && activateSFX != null)
                 {
                     // Usamos PlayOneShot para que no corte el sonido de movimiento (el loop)
                     m_AudioSource.PlayOneShot(activateSFX);
@@ -216,7 +217,7 @@ namespace UnityEngine.XR.Content.Interaction
             }
 
             // Lógica de movimiento
-            if (diff > 0.0001f) m_TargetVolume = maxVolume;
+            if (diff > 0.0002f) m_TargetVolume = maxVolume;
             else m_TargetVolume = 0f;
             // ---------------------------------------------
         }
