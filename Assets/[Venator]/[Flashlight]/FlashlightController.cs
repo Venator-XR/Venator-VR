@@ -58,14 +58,13 @@ public class FlashlightController : MonoBehaviour
     {
         if (IsOn) RaycastUpdate();
 
-        // if (!canPushBt) { Debug.Log("!canPushBt"); return; }
-
         // Button input detection
         if (toggleButtonSource.action != null && toggleButtonSource.action.WasPressedThisFrame())
         {
             Debug.Log("Flashlight button pressed!");
             _animator.Play("flashlightButton", -1, 0f);
             audioSource.PlayOneShot(buttonSFX);
+
             ToggleLight();
         }
     }
@@ -106,22 +105,30 @@ public class FlashlightController : MonoBehaviour
 
     public void ToggleLight()
     {
-        IsOn = !IsOn;
+        if (!canPushBt) { Debug.Log("Button locked"); return; }
+
+        SetLightState(!IsOn);
+    }
+
+    private void SetLightState(bool state)
+    {
+        IsOn = state;
         UpdateLightVisuals();
         OnFlashlightToggle?.Invoke();
     }
 
-    // called for occasions when we need the flashlight a specific way
     public void TurnOff()
     {
         if (!IsOn) return;
-        ToggleLight();
+        SetLightState(false);
+        Debug.Log("TurnOff() Forced");
     }
 
     public void TurnOn()
     {
         if (IsOn) return;
-        ToggleLight();
+        SetLightState(true);
+        Debug.Log("TurnOn() Forced");
     }
     //------------------------
 
@@ -136,7 +143,7 @@ public class FlashlightController : MonoBehaviour
     public void Dim(bool value)
     {
         _animator.SetBool("dimmed", value);
-        if(value) audioSource.PlayOneShot(flickerSFX);
+        if (value) audioSource.PlayOneShot(flickerSFX);
     }
 
     public void Malfunction(bool reActivate)
