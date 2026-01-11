@@ -9,7 +9,7 @@ public class AttackManager : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Animator animator;
     [SerializeField] private ParticleSystem attackPS;
-    [SerializeField] private Animator flashlightAnim;
+    [SerializeField] private FlashlightController flashlightController;
 
     [Header("SFXs")]
     [SerializeField] private AudioClip startSFX;
@@ -108,7 +108,7 @@ public class AttackManager : MonoBehaviour
         Debug.Log("SwarmRoutine()");
         _isAttacking = true;
 
-        flashlightAnim.SetBool("dimmed", true);
+        flashlightController.Dim(true);
 
         animator.SetBool("isAttacking", true);
         attackPS.Play();
@@ -146,7 +146,7 @@ public class AttackManager : MonoBehaviour
         _isAttacking = false;
         Debug.Log("Swarm attack completed.");
 
-        flashlightAnim.SetBool("dimmed", false);
+        flashlightController.Dim(false);
     }
 
     /// <summary>
@@ -161,6 +161,9 @@ public class AttackManager : MonoBehaviour
             // just to be sure
             attackPS.Stop();
             animator.SetBool("isAttacking", false);
+
+            // make sure flashlight is visible
+            flashlightController.Dim(false);
 
             _isAttacking = false;
         }

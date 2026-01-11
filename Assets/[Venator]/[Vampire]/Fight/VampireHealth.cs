@@ -10,12 +10,17 @@ public class VampireHealth : MonoBehaviour, IHealth
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private bool startVulnerable = true;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip[] hurtClips;
+    [SerializeField] private AudioClip deathSFX;
+    private AudioSource _audioSource;
+
     private int _currentHealth;
     private bool _isVulnerable;
     private bool _isDead;
 
     public event Action OnDeath;
-    
+
     public event Action<int> OnHealthChanged;
 
     public bool IsVulnerable => _isVulnerable;
@@ -36,6 +41,7 @@ public class VampireHealth : MonoBehaviour, IHealth
         _currentHealth = maxHealth;
         _isVulnerable = startVulnerable;
         _isDead = false;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void ApplyDamage(int amount)
@@ -53,7 +59,11 @@ public class VampireHealth : MonoBehaviour, IHealth
         {
             Kill();
         }
-        
+        else
+        {
+            _audioSource.PlayOneShot(hurtClips[UnityEngine.Random.Range(0, hurtClips.Length)]);
+        }
+
         OnHealthChanged?.Invoke(_currentHealth);
     }
 
@@ -67,6 +77,7 @@ public class VampireHealth : MonoBehaviour, IHealth
         _isVulnerable = false;
 
         Debug.Log("Vampire has been defeated!");
+        _audioSource.PlayOneShot(deathSFX);
         OnDeath?.Invoke();
     }
 

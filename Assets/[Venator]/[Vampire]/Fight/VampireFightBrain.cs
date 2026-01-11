@@ -25,7 +25,12 @@ public class VampireFightBrain : MonoBehaviour
     private VampireFightMovementManager _movement;
     private ShapeshiftManager _shapeshifter;
     private AttackManager _attackManager;
-    
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip laughSFX;
+    [SerializeField] private AudioClip screamSFX;
+    private AudioSource _audioSource;
+
 
     public bool IsInBatForm => _shapeshifter != null && _shapeshifter.currentForm == ShapeState.Bat;
 
@@ -39,6 +44,8 @@ public class VampireFightBrain : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+
         if (_movementStrategy == null)
         {
             _movementStrategy = new RandomMovementStrategy();
@@ -86,20 +93,22 @@ public class VampireFightBrain : MonoBehaviour
         // invunerable while animation 
         _health.SetVulnerability(false);
 
+        yield return new WaitForSeconds(1f);
+
         // start animation & SFX
         if (phase == 1)
         {
             _animator.SetTrigger("laugh");
-            // audioSource.PlayOneShot(laughSound);
+            _audioSource.PlayOneShot(laughSFX);
         }
         else if (phase == 2)
         {
             _animator.SetTrigger("scream");
-            // audioSource.PlayOneShot(screamSound);
+            _audioSource.PlayOneShot(screamSFX);
         }
 
         // wait for animation
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(4.0f);
         Debug.Log("Done! Restarting combat loop...");
 
 
@@ -110,7 +119,7 @@ public class VampireFightBrain : MonoBehaviour
     private IEnumerator CombatLoop()
     {
         if (!init) { yield return new WaitForSeconds(initialDelay); init = true; }
-        
+
         // start / next music
         globalSoundManager.PlayNextSequence();
 

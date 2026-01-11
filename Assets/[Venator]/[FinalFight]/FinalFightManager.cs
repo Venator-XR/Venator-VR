@@ -10,9 +10,11 @@ public class FinalFightManager : MonoBehaviour
     [Header("Vampire Refs")]
     [SerializeField] private VampireFightBrain vampireBrain;
     [SerializeField] private Animator vampAnimator;
-    [SerializeField] private Animator vampirePS;
+    [SerializeField] private ParticleSystem vampirePS;
     [SerializeField] private Animator coffinAnimator;
     [SerializeField] private GameObject[] candelabra;
+    [SerializeField] private AudioSource vampAudioSource;
+    [SerializeField] private AudioClip vampireHeartbeat;
 
     [Header("Player References")]
     [SerializeField] private GameObject player;
@@ -43,7 +45,7 @@ public class FinalFightManager : MonoBehaviour
 
     private void Awake()
     {
-        if(vampirePS != null) vampirePS.enabled = false; 
+        if(vampirePS != null) vampirePS.Stop(); 
         if (vampireBrain == null) Debug.LogError("vampireBrain not assigned");
         else _vampireHealth = vampireBrain.GetComponent<IHealth>();
 
@@ -86,6 +88,8 @@ public class FinalFightManager : MonoBehaviour
         transiton.Play("fadeIn");
         yield return new WaitForSeconds(2f);
 
+        vampAudioSource.PlayOneShot(vampireHeartbeat);
+
         // Disable player Mobility
         _playerMobilityManager.SetPlayerMobility(false, true);
 
@@ -104,6 +108,7 @@ public class FinalFightManager : MonoBehaviour
         Debug.Log("Coffin opening...");
         vampAnimator.SetTrigger("coffinExit");
 
+
         // TODO: Trigger coffin opening animation
 
         yield return new WaitForSeconds(introDelay);
@@ -114,7 +119,7 @@ public class FinalFightManager : MonoBehaviour
             foreach(Light candle in candles) StartCoroutine(FadeLightOut(candle));
         }
 
-        if(vampirePS != null) vampirePS.enabled = true;
+        if(vampirePS != null) vampirePS.Play();
 
         if (vampireBrain != null) vampireBrain.enabled = true;
 
