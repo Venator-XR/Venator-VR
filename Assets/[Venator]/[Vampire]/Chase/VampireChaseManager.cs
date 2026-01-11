@@ -19,6 +19,11 @@ public class VampireChaseManager : MonoBehaviour
     public DynamicMoveProvider dynamicMoveProvider;
     public FlashlightController flashlightController;
 
+    [Header("SFX")]
+    public AudioSource audioSource;
+    public GlobalSoundManager globalSoundManager;
+    public AudioClip stingerSFX;
+    
     private bool chaseStarted = false;
     private bool approachStarted = false;
 
@@ -47,8 +52,16 @@ public class VampireChaseManager : MonoBehaviour
 
     private System.Collections.IEnumerator ApproachCoroutine()
     {
+        globalSoundManager.StopSequence();
         flashlightController.Malfunction(true);
         vampire.SetActive(true);
+
+
+        audioSource.PlayOneShot(stingerSFX);
+        yield return new WaitForSeconds(1f);
+
+        globalSoundManager.PlayNextSequence();
+
 
         vampireAgent.speed = approachSpeed;
         vampireAgent.SetDestination(approachDestination.position);

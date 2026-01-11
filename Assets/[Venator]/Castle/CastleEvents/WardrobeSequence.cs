@@ -36,7 +36,9 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] AudioClip enteringAudioClip;
     [SerializeField] AudioClip exitingAudioClip;
     [SerializeField] AudioClip doorShutAudio;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource playerAudioSource;
+    [SerializeField] AudioClip stingerSFX;
+    [SerializeField] GlobalSoundManager globalSoundManager;
 
     private XRKnobLever targetLever;
 
@@ -55,6 +57,8 @@ public class WardrobeSequence : MonoBehaviour
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, true);
 
+        globalSoundManager.StopSequence();
+
         // fade to black
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
@@ -67,7 +71,9 @@ public class WardrobeSequence : MonoBehaviour
         playerMobilityManager.TeleportTo(insideDestination);
 
         // play sfx: wardrobe opening | steps | wardrobe closing
-        // audioSource.PlayOneShot(enteringAudioClip);
+        playerAudioSource.PlayOneShot(enteringAudioClip);
+
+        // play sfx: silent breathing
 
         // tp vampire, disable nav agent to evade smooth movement for this
         vampireNavAgent.enabled = false;
@@ -108,6 +114,8 @@ public class WardrobeSequence : MonoBehaviour
         // next door and rooms ennabled now
         nextDoorScript.enabled = true;
         foreach (GameObject room in nextRooms) room.SetActive(true);
+        
+        globalSoundManager.PlayNextSequence();
 
         yield break;
     }
@@ -139,6 +147,7 @@ public class WardrobeSequence : MonoBehaviour
         shapeshiftManager.Shapeshift();
         // turn off candles
         yield return new WaitForSeconds(1f);
+        playerAudioSource.PlayOneShot(stingerSFX);
         candles.SetActive(false);
 
         yield return new WaitForSeconds(2f);
@@ -154,7 +163,7 @@ public class WardrobeSequence : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         // play door close SFX
-        audioSource.PlayOneShot(doorShutAudio);
+        playerAudioSource.PlayOneShot(doorShutAudio);
 
         yield return new WaitForSeconds(2f);
 
