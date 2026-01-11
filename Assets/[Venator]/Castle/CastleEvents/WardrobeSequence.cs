@@ -42,12 +42,13 @@ public class WardrobeSequence : MonoBehaviour
     [SerializeField] AudioClip tenseBreathingSFX;
     [SerializeField] AudioClip stingerSFX;
     [SerializeField] GlobalSoundManager globalSoundManager;
+    private AudioSource audioSource;
 
     private XRKnobLever targetLever;
 
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
         targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
         playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
@@ -56,11 +57,17 @@ public class WardrobeSequence : MonoBehaviour
     {
         shapeshiftManager = vampire.GetComponentInChildren<ShapeshiftManager>();
         vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
+        wardrobe.GetComponentInChildren<OutlineTrigger>().enabled = false;
+        wardrobe.GetComponentInChildren<Outline>().enabled = false;
 
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, true);
 
+        // Stop Music
         globalSoundManager.StopSequence();
+
+        // play sfx: wardrobe opening | steps | wardrobe closing
+        playerAudioSource.PlayOneShot(enteringAudioClip);
 
         // fade to black
         fadeAnim.Play("fadeIn");
@@ -75,19 +82,18 @@ public class WardrobeSequence : MonoBehaviour
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
 
-        // play sfx: wardrobe opening | steps | wardrobe closing
-        playerAudioSource.PlayOneShot(enteringAudioClip);
-
         // play sfx: silent breathing
 
         // tp vampire, disable nav agent to evade smooth movement for this
         vampireNavAgent.enabled = false;
         vampire.transform.position = vampireStart.position;
         vampire.transform.rotation = Quaternion.Euler(0, vampireStart.eulerAngles.y, 0);
-        vampireNavAgent.enabled = true;
+
+        yield return new WaitForSeconds(5f);
 
         // transform into bat
         shapeshiftManager.Shapeshift();
+        vampireNavAgent.enabled = true;
 
         // fade from black
         fadeAnim.Play("fadeOut");
@@ -96,30 +102,29 @@ public class WardrobeSequence : MonoBehaviour
         playerAudioSource.loop = true;
         playerAudioSource.Play();
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         // wait until VampireCoroutine completes
         yield return StartCoroutine(VampireCoroutine());
 
         // fade to black
         fadeAnim.Play("fadeIn");
-        yield return new WaitForSeconds(0.5f);
 
         flashlightController.enabled = true;
 
         // tp player outside wardrobe looking at door
         playerMobilityManager.TeleportTo(outsideDestination);
+        wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
 
         // play sfx: wardrobe opening | steps | wardrobe closing
-        // audioSource.PlayOneShot(exitingAudioClip);
-
-        wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
+        audioSource.PlayOneShot(exitingAudioClip);
+        yield return new WaitForSeconds(5f);
 
         // fade from black
         fadeAnim.Play("fadeOut");
+        inventoryTutorialManager.enabled = true;
         yield return new WaitForSeconds(0.5f);
 
-        inventoryTutorialManager.enabled = true;
 
         // next door and rooms ennabled now
         nextDoorScript.enabled = true;
@@ -155,7 +160,7 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent.speed = 1f;
         vampireNavAgent.SetDestination(batDestination.position);
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
 
         // transform back inside the room where player clearly sees
         shapeshiftManager.Shapeshift();
