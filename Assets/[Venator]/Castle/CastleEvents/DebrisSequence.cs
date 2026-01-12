@@ -50,18 +50,18 @@ public class DebrisSequence : MonoBehaviour
         }
         else Debug.LogWarning("FollowPlayerAgent not found");
 
-        // disable movement and camera turning
-        playerMobilityManager.SetPlayerMobility(false, false);
-
         // fade to black
         fadeAnim.Play("fadeIn");
         yield return new WaitForSeconds(0.5f);
 
+        // disable movement and camera turning
+        playerMobilityManager.SetPlayerMobility(false, false);
+        // TP player to designated transform
+        playerMobilityManager.TeleportTo(destination);
+
         // deselect (force hand to let go)
         ForceRelease();
 
-        // TP player to designated transform
-        playerMobilityManager.TeleportTo(destination);
 
         // Play SFXs audio track
         audioSource.Play();

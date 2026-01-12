@@ -66,7 +66,7 @@ public class MainMenuActions : MonoBehaviour
     public void VideoPlay()
     {
         Debug.Log("[MENU] VideoPlay -> " + videoSceneName);
-        StartCoroutine(sceneTransition.ChangeSceneRoutine(mainSceneName));
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(videoSceneName));
     }
 
     // Settings

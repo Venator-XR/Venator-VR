@@ -85,8 +85,6 @@ public class WardrobeSequence : MonoBehaviour
         // tp player inside wardrobe looking through the hole
         playerMobilityManager.TeleportTo(insideDestination);
 
-        // play sfx: silent breathing
-
         // tp vampire, disable nav agent to evade smooth movement for this
         vampireNavAgent.enabled = false;
         vampire.transform.position = vampireStart.position;
@@ -101,6 +99,7 @@ public class WardrobeSequence : MonoBehaviour
         // fade from black
         fadeAnim.Play("fadeOut");
 
+        // play sfx: silent breathing
         playerAudioSource.clip = silentBreathingSFX;
         playerAudioSource.loop = true;
         playerAudioSource.Play();
