@@ -1,35 +1,34 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ControladorEscenas : MonoBehaviour
+public class ScreenActions : MonoBehaviour
 {
-    public void JugarOtraVezDerrota()
+    [Header("Scenes names")]
+    public string finalScene = "Final";
+    public string mainScene = "Main";
+    public string menuScene = "Menu";
+
+    public SceneTransition sceneTransition;
+
+    public void PlayAgain()
     {
         Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
         CheckpointState.SpawnAtCheckpoint = true;
         if (CheckpointState.FinalSceneReached)
-            SceneManager.LoadScene("Final");
+            StartCoroutine(sceneTransition.ChangeSceneRoutine(finalScene));
         else
-        SceneManager.LoadScene("Main");
+            StartCoroutine(sceneTransition.ChangeSceneRoutine(mainScene));
     }
 
-    public void JugarOtraVezVictoria()
-    {
-        Time.timeScale = 1; // Importante: Quitar la pausa antes de recargar
-        CheckpointState.SpawnAtCheckpoint = false;
-        CheckpointState.FinalSceneReached = false;
-        SceneManager.LoadScene("Main");
-    }
-
-    public void SalirAlMenu()
+    public void ExitToMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
+            StartCoroutine(sceneTransition.ChangeSceneRoutine(menuScene));
     }
 
-    public void SalirDelJuegoTotal()
+    public void ExitGame()
     {
         Application.Quit(); // Esto cierra el .exe o la app (no funciona en el editor)
-        Debug.Log("Saliendo del juego...");
+        Debug.Log("Exiting game...");
     }
 }

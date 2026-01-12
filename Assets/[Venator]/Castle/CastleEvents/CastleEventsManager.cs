@@ -13,7 +13,7 @@ public class CastleEventsManager : MonoBehaviour
     private bool wardrobeActioned = false;
     //-----------------------
     public string finalScene = "Final";
-    public Animator transition;
+    public SceneTransition sceneTransition;
 
     void Start()
     {
@@ -48,20 +48,7 @@ public class CastleEventsManager : MonoBehaviour
     {
         if (value > 0.7 || value < 0.3)
         {
-            StartCoroutine(SceneChangeCoroutine());
+            StartCoroutine(sceneTransition.ChangeSceneRoutine(finalScene));
         }
-    }
-
-    private IEnumerator SceneChangeCoroutine()
-    {
-        transition.Play("fadeIn");
-
-        yield return new WaitForSeconds(1f);
-
-        CheckpointState.FinalSceneReached = true;
-        CheckpointState.SpawnAtCheckpoint = false;
-        SceneManager.LoadScene(finalScene);
-        
-        yield break;
     }
 }

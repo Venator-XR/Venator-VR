@@ -11,6 +11,8 @@ public class PersecutionManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private SceneTransition sceneTransition;
+
 
     [Header("Audio")]
     [SerializeField] private AudioSource vampireAudioSource;
@@ -92,6 +94,6 @@ public class PersecutionManager : MonoBehaviour
     private void HandlePlayerDeath()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(defeatSceneName);
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(defeatSceneName));
     }
 }

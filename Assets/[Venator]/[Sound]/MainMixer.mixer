@@ -115,6 +115,8 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: 0d4f5259f5e346c4db0695f111c539d8
+    name: MUS&AMB
   - guid: f1dc342d59749ac4bbd3fab61b7b452f
     name: PlayerMain
   m_AudioMixerGroupViews:
@@ -181,8 +183,8 @@ AudioMixerSnapshotController:
     100caf51dda987642a86e5fc4c664f1b: 10
     c5e20404356e63844a935cca4bbb3565: -9.73219
     c14deb06d280a8342b6854cb6c49fed2: -9.732203
-    0d4f5259f5e346c4db0695f111c539d8: -10.139159
-    f1dc342d59749ac4bbd3fab61b7b452f: 0
+    0d4f5259f5e346c4db0695f111c539d8: -6
+    f1dc342d59749ac4bbd3fab61b7b452f: -3.3775113
     4085321ea75d98b4cabce8bdadb87344: 6.7923827
   m_TransitionOverrides: {}
 --- !u!244 &6966353616232383

@@ -1002,6 +1002,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494de861d93f0b642a24c98f240b352d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalScene: Final
+  mainScene: Main
+  menuScene: Menu
+  sceneTransition: {fileID: 1096112451}
 --- !u!4 &1050442255
 Transform:
   m_ObjectHideFlags: 0
@@ -1074,6 +1078,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+--- !u!114 &1096112451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+  m_PrefabInstance: {fileID: 1096112450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391c35ecb56564441b33d7b2d9f73f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1351898268
 GameObject:
   m_ObjectHideFlags: 0

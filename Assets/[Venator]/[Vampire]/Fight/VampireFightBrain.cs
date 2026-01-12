@@ -19,6 +19,7 @@ public class VampireFightBrain : MonoBehaviour
     [Header("References")]
     [SerializeField] private WaypointsManager _waypointsManager;
     [SerializeField] private Animator _animator;
+    public GameObject bat;
     public GlobalSoundManager globalSoundManager;
     // all classes below have to be inside vampire gameobject, which has VampireFightBrain (this script)
     private VampireHealth _health;
@@ -69,7 +70,7 @@ public class VampireFightBrain : MonoBehaviour
             enabled = false;
         }
     }
-
+    
     private void Start()
     {
         StartCoroutine(CombatLoop());
@@ -182,6 +183,12 @@ public class VampireFightBrain : MonoBehaviour
     {
         if (_health != null)
             _health.SetVulnerability(true);
+    }
+
+    public IEnumerator Death()
+    {
+        yield return new WaitForSeconds(1f);
+        _shapeshifter.Death();
     }
 
     private void OnDestroy()

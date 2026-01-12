@@ -8,7 +8,7 @@ public class ShapeshiftManager : MonoBehaviour
     [SerializeField] GameObject vampireForm;
     [SerializeField] GameObject batForm;
     [SerializeField] ParticleSystem shapeshiftPS;
-    
+
 
     [Header("Shapeshift Variables")]
     [SerializeField] int shapeshiftDelayMs = 600; // its in milliseconds
@@ -33,7 +33,7 @@ public class ShapeshiftManager : MonoBehaviour
     public async void Shapeshift()
     {
         shapeshiftPS.Play();
-        audioSource.PlayOneShot(sfx);        
+        audioSource.PlayOneShot(sfx);
 
         await Task.Delay(shapeshiftDelayMs);
 
@@ -49,5 +49,16 @@ public class ShapeshiftManager : MonoBehaviour
             vampireForm.SetActive(true);
             currentForm = ShapeState.Vampire;
         }
+    }
+
+    public async void Death()
+    {
+        shapeshiftPS.Play();
+        audioSource.PlayOneShot(sfx);
+
+        await Task.Delay(shapeshiftDelayMs);
+
+        vampireForm.SetActive(false);
+        batForm.SetActive(false);
     }
 }

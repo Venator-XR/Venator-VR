@@ -9,7 +9,7 @@ public class MainMenuActions : MonoBehaviour
     [SerializeField] private string videoSceneName = "Video360";
 
     [Header("Transition")]
-    public Animator transition;
+    public SceneTransition sceneTransition;
 
     [Header("Settings")]
     [SerializeField] GameObject settingsCanvas;
@@ -53,16 +53,7 @@ public class MainMenuActions : MonoBehaviour
         Debug.Log("[MENU] PlayGame -> " + mainSceneName);
         CheckpointState.SpawnAtCheckpoint = false;
         CheckpointState.FinalSceneReached = false;
-        StartCoroutine(SceneChangeCoroutine(mainSceneName));
-    }
-
-    private IEnumerator SceneChangeCoroutine(string scene)
-    {
-        transition.Play("fadeIn");
-
-        yield return new WaitForSeconds(2f);
-
-        SceneManager.LoadScene(scene);
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(mainSceneName));
     }
 
     public void TogglePainting()
@@ -75,7 +66,7 @@ public class MainMenuActions : MonoBehaviour
     public void VideoPlay()
     {
         Debug.Log("[MENU] VideoPlay -> " + videoSceneName);
-        StartCoroutine(SceneChangeCoroutine(videoSceneName));
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(mainSceneName));
     }
 
     // Settings

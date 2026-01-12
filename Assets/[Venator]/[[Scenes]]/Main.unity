@@ -2729,7 +2729,7 @@ Transform:
   m_GameObject: {fileID: 546728051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01176, y: -0.00813, z: 0}
+  m_LocalPosition: {x: -0.01309, y: -0.0078, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6030,7 +6030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracks:
-  - {fileID: 8300000, guid: 31dc2b46a8d1fec4582d16230446a800, type: 3}
+  - {fileID: 8300000, guid: 6c007dcfa79a52c4589940d8b1e5c2f4, type: 3}
   - {fileID: 8300000, guid: d43a5d63d1f32d147ad8f074a6c17317, type: 3}
   - {fileID: 8300000, guid: 6c007dcfa79a52c4589940d8b1e5c2f4, type: 3}
   fadeDuration: 2
@@ -6576,6 +6576,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 1628627519666777413, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
   m_PrefabInstance: {fileID: 4106758266181106459}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1432919403 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+  m_PrefabInstance: {fileID: 4106758266181106459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391c35ecb56564441b33d7b2d9f73f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1459333105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6931,7 +6942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalScene: Final
-  transition: {fileID: 1432919402}
+  sceneTransition: {fileID: 1432919403}
 --- !u!4 &1561023164
 Transform:
   m_ObjectHideFlags: 0
@@ -14018,7 +14029,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 70546175808756724, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
       propertyPath: m_Name
-      value: FadeTransition
+      value: SceneTransition
       objectReference: {fileID: 0}
     - target: {fileID: 5545919669338090856, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17534,7 +17545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6527836224458381483
 Transform:
   m_ObjectHideFlags: 0
@@ -19067,6 +19078,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player (XR Origin)
       objectReference: {fileID: 0}
+    - target: {fileID: 5785084521394687840, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 1432919402}
+    - target: {fileID: 5785084521394687840, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: sceneTransition
+      value: 
+      objectReference: {fileID: 1432919403}
     - target: {fileID: 5785084521394687840, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: vampireAudioSource
       value: 

@@ -577,6 +577,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5785084521394687840, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: sceneTransition
+      value: 
+      objectReference: {fileID: 1988635138}
     - target: {fileID: 5942978530868232298, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3089,6 +3093,7 @@ MonoBehaviour:
   - {fileID: 1232995861}
   vampAudioSource: {fileID: 953249473}
   laughSFX: {fileID: 8300000, guid: a36c4dca2c1d6d24fb69a63b75bf5bd1, type: 3}
+  finalLaughSFX: {fileID: 8300000, guid: ed46d60e2b2954e4599032b5ee99bbeb, type: 3}
   player: {fileID: 1244542587}
   playerFightStartPos: {fileID: 932858680}
   pistolData: {fileID: 11400000, guid: babc1611ee4c2f94e8c5ffd50e46c50c, type: 2}
@@ -3096,8 +3101,9 @@ MonoBehaviour:
   victorySceneName: Victory
   deafeatSceneName: Defeat
   introDelay: 3
-  endSequenceDelay: 2
+  endSequenceDelay: 4
   transiton: {fileID: 1683728682}
+  sceneTransition: {fileID: 1988635138}
   globalSoundManager: {fileID: 100035426}
   coffinOpenSFX: {fileID: 8300000, guid: cf4383ddf2559f34692041bb5bc7dac0, type: 3}
 --- !u!114 &1354962906
@@ -4533,6 +4539,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6046c1af2001eea47b08e1edeac3f10e, type: 3}
+--- !u!114 &1988635138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+  m_PrefabInstance: {fileID: 1683728681}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391c35ecb56564441b33d7b2d9f73f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2020190261
 PrefabInstance:
   m_ObjectHideFlags: 0

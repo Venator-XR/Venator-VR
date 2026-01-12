@@ -15,6 +15,8 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private GameObject[] candelabra;
     [SerializeField] private AudioSource vampAudioSource;
     [SerializeField] private AudioClip laughSFX;
+    [SerializeField] private AudioClip finalLaughSFX;
+
 
     [Header("Player References")]
     [SerializeField] private GameObject player;
@@ -32,6 +34,7 @@ public class FinalFightManager : MonoBehaviour
 
     [Header("Transition")]
     [SerializeField] private Animator transiton;
+    [SerializeField] private SceneTransition sceneTransition;
 
     [Header("Audio")]
     [SerializeField] private GlobalSoundManager globalSoundManager;
@@ -46,7 +49,7 @@ public class FinalFightManager : MonoBehaviour
 
     private void Awake()
     {
-        if(vampirePS != null) vampirePS.Stop(); 
+        if (vampirePS != null) vampirePS.Stop();
         if (vampireBrain == null) Debug.LogError("vampireBrain not assigned");
         else _vampireHealth = vampireBrain.GetComponent<IHealth>();
 
@@ -117,13 +120,13 @@ public class FinalFightManager : MonoBehaviour
 
         yield return new WaitForSeconds(introDelay);
 
-        foreach(GameObject c in candelabra)
+        foreach (GameObject c in candelabra)
         {
             Light[] candles = c.GetComponentsInChildren<Light>();
-            foreach(Light candle in candles) StartCoroutine(FadeLightOut(candle));
+            foreach (Light candle in candles) StartCoroutine(FadeLightOut(candle));
         }
 
-        if(vampirePS != null) vampirePS.Play();
+        if (vampirePS != null) vampirePS.Play();
 
         if (vampireBrain != null) vampireBrain.enabled = true;
 
@@ -163,20 +166,21 @@ public class FinalFightManager : MonoBehaviour
     {
         // Stop combat
         if (vampireBrain != null)
-            vampireBrain.enabled = false;
+            vampireBrain.StopAllCoroutines();
+            vampireBrain.Death();
+            // vampireBrain.enabled = false;
 
         // Change music
         globalSoundManager.StopSequence();
 
         yield return new WaitForSeconds(endSequenceDelay);
 
-        // Fade to black (important for VR comfort)
-        transiton.Play("fadeOut");
-        yield return new WaitForSeconds(1f);
 
         if (victory)
-            SceneManager.LoadScene(victorySceneName);
+            StartCoroutine(sceneTransition.FinalRoutine(victory));
         else
-            SceneManager.LoadScene(deafeatSceneName);
+            vampAudioSource.PlayOneShot(finalLaughSFX);
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(sceneTransition.FinalRoutine(victory));
     }
 }
