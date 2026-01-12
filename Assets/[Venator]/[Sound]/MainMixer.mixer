@@ -33,6 +33,39 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-4583665405289967364
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 54f2407ef8937454eb02e4f611935782
+  m_EffectName: Attenuation
+  m_MixLevel: 35b596369443cfa4088c24a87e4629b9
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-4278370157515697219
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Thunders
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6998a2236de4b344eb9bb89bd8b84307
+  m_Children: []
+  m_Volume: 100caf51dda987642a86e5fc4c664f1b
+  m_Pitch: c97aaf93fe191da41a64f9b93257f613
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -4583665405289967364}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-4208765282742808814
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -92,6 +125,7 @@ AudioMixerController:
     - 118179fd6d0b694428943e139c25f847
     - 8d80d83c74543b1488f34e2ef1a4a1db
     - f7078eea7532a8d4ea7a286613e8f5c4
+    - 6998a2236de4b344eb9bb89bd8b84307
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -110,6 +144,7 @@ AudioMixerGroupController:
   - {fileID: 1164910015909380968}
   - {fileID: 5909139052443306203}
   - {fileID: 8322671723354941552}
+  - {fileID: -4278370157515697219}
   m_Volume: 4a2297f2274c8ba439c8b900baf9f3d6
   m_Pitch: f1f4c6f1caf47414290695652accbbd5
   m_Send: 00000000000000000000000000000000
@@ -143,6 +178,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 08da0976ee70d51449bb1e18eafdffb6
   m_FloatValues:
+    100caf51dda987642a86e5fc4c664f1b: 10
     c5e20404356e63844a935cca4bbb3565: -9.73219
     c14deb06d280a8342b6854cb6c49fed2: -9.732203
     0d4f5259f5e346c4db0695f111c539d8: -10.139159
