@@ -58,6 +58,7 @@ public class WardrobeSequence : MonoBehaviour
 
     public IEnumerator WardrobeCoroutine()
     {
+        Debug.Log("WardrobeCoroutine()");
         shapeshiftManager = vampire.GetComponentInChildren<ShapeshiftManager>();
         vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
         wardrobe.GetComponentInChildren<OutlineTrigger>().enabled = false;
@@ -65,6 +66,7 @@ public class WardrobeSequence : MonoBehaviour
 
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, true);
+        Debug.Log("disable movement and camera");
 
         // Stop Music
         globalSoundManager.StopSequence();

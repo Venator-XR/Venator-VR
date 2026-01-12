@@ -59,8 +59,6 @@ public class FinalFightManager : MonoBehaviour
             _inventoryController = player.GetComponent<InventoryController>();
         }
 
-        _playerMobilityManager = GetComponent<PlayerMobilityManager>();
-
         vampAnimator.SetTrigger("coffinIddle");
     }
 

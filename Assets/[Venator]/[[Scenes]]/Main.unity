@@ -8195,6 +8195,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: WardrobeInteractable
       objectReference: {fileID: 0}
+    - target: {fileID: 6798067052036991253, guid: e762e635b39d5bd47ab5f5cfeeef85ea, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1561023163}
+    - target: {fileID: 6798067052036991253, guid: e762e635b39d5bd47ab5f5cfeeef85ea, type: 3}
+      propertyPath: m_OnValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayWardrobeSequence
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
