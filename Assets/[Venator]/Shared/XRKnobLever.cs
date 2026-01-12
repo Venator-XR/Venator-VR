@@ -41,13 +41,13 @@ namespace UnityEngine.XR.Content.Interaction
             public void SetBaseFromVector(Vector3 direction)
             {
                 m_AccumulatedAngle += m_CurrentOffset;
-                m_BaseAngle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+                m_BaseAngle = Mathf.Atan2(-direction.x, direction.z) * Mathf.Rad2Deg;
                 m_CurrentOffset = 0.0f;
             }
 
             public void SetTargetFromVector(Vector3 direction)
             {
-                var targetAngle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+                var targetAngle = Mathf.Atan2(-direction.x, direction.z) * Mathf.Rad2Deg;
                 m_CurrentOffset = ShortestAngleDistance(m_BaseAngle, targetAngle, 360.0f);
 
                 if (Mathf.Abs(m_CurrentOffset) > 90.0f)
@@ -190,8 +190,9 @@ namespace UnityEngine.XR.Content.Interaction
             // (Lógica de rotación original sin cambios hasta abajo...)
             var interactorTransform = m_Interactor.GetAttachTransform(this);
 
-            var localOffset = transform.InverseTransformVector(interactorTransform.position - m_Handle.position);
+            var localOffset = transform.InverseTransformPoint(interactorTransform.position);
             localOffset.y = 0.0f;
+
             var radiusOffset = transform.TransformVector(localOffset).magnitude;
             localOffset.Normalize();
 
