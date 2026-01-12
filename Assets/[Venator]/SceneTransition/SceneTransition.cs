@@ -69,9 +69,9 @@ public class SceneTransition : MonoBehaviour
 
     public IEnumerator SlowFadeIn()
     {
-        Debug.Log("FadeIn()");
+        Debug.Log("SlowFadeIn()");
         _animator.Play("slowFadeIn");
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(3f);
     }
 }
