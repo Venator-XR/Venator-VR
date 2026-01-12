@@ -83,7 +83,8 @@ public class WardrobeSequence : MonoBehaviour
         flashlightController.enabled = false;
 
         // tp player inside wardrobe looking through the hole
-        playerMobilityManager.TeleportTo(insideDestination);
+        Debug.Log("TeleportTo(" + insideDestination + ")");
+        playerMobilityManager.ForceTeleport(insideDestination);
 
         // tp vampire, disable nav agent to evade smooth movement for this
         vampireNavAgent.enabled = false;
@@ -115,7 +116,7 @@ public class WardrobeSequence : MonoBehaviour
         flashlightController.enabled = true;
 
         // tp player outside wardrobe looking at door
-        playerMobilityManager.TeleportTo(outsideDestination);
+        playerMobilityManager.ForceTeleport(outsideDestination);
         wardrobe.GetComponentInChildren<XRKnobLever>().enabled = false;
 
         // play sfx: wardrobe opening | steps | wardrobe closing

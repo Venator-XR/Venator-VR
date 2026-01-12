@@ -10,7 +10,7 @@ public class CheckpointLoader : MonoBehaviour
         if (CheckpointState.SpawnAtCheckpoint)
         {
             Debug.Log("teleporting to checkpoint");
-            mobilityManager.TeleportTo(checkpointPosition);
+            mobilityManager.ForceTeleport(checkpointPosition);
         }
         else
         {

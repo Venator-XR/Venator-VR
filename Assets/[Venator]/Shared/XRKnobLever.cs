@@ -18,10 +18,13 @@ namespace UnityEngine.XR.Content.Interaction
         [SerializeField] private float maxVolume = 1.0f; // Volumen máximo deseado
         [SerializeField] private float fadeSpeed = 5.0f; // Qué tan rápido sube/baja el volumen (Más alto = más rápido)
 
+        private float m_TargetVolume = 0f; // A qué volumen QUEREMOS ir
+        private bool m_WasAboveThreshold; // Para saber desde dónde veníamos
+        private float m_Threshold = 0.5f; // El punto de activación
+
         const float k_ModeSwitchDeadZone = 0.1f;
 
         private AudioSource m_AudioSource;
-        private float m_TargetVolume = 0f; // A qué volumen QUEREMOS ir
 
         // Structs originales...
         struct TrackedRotation
@@ -267,15 +270,22 @@ namespace UnityEngine.XR.Content.Interaction
             SetValue(knobValue);
             float diff = Mathf.Abs(m_Value - previousValue);
 
-            // Si hay movimiento significativo
-            if (diff > 0.0001f) // Umbral muy bajo para detectar cualquier micro-movimiento
+            bool isAbove = m_Value > m_Threshold;
+
+            if (isAbove != m_WasAboveThreshold)
             {
-                m_TargetVolume = maxVolume; // Queremos subir al máximo
+                // Solo suena si hay movimiento real (evita ruidos al soltar o micro-vibraciones)
+                if (diff > 0.0012 && activateSFX != null)
+                {
+                    // Usamos PlayOneShot para que no corte el sonido de movimiento (el loop)
+                    m_AudioSource.PlayOneShot(activateSFX);
+                }
+                m_WasAboveThreshold = isAbove;
             }
-            else
-            {
-                m_TargetVolume = 0f; // Queremos silencio (pero con fade out gracias al Update)
-            }
+
+            // Lógica de movimiento
+            if (diff > 0.0002f) m_TargetVolume = maxVolume;
+            else m_TargetVolume = 0f;
             // ---------------------------------------------
         }
 

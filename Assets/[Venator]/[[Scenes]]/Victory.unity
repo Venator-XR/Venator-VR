@@ -420,8 +420,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1050442254}
-        m_TargetAssemblyTypeName: ControladorEscenas, Assembly-CSharp
-        m_MethodName: SalirAlMenu
+        m_TargetAssemblyTypeName: ScreenActions, Assembly-CSharp
+        m_MethodName: ExitToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

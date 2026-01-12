@@ -140,6 +140,7 @@ public class FlashlightController : MonoBehaviour
         Dim(false);
         canPushBt = true;
         _shakeDetector.enabled = false;
+        OnFlashlightShaken?.Invoke();
     }
 
     public void Dim(bool value)

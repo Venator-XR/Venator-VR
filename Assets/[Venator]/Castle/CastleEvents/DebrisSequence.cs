@@ -10,6 +10,7 @@ public class DebrisSequence : MonoBehaviour
 
     [Header("References")]
     public PlayerMobilityManager playerMobilityManager;
+    public PersecutionManager persecutionManager;
     [SerializeField] Transform destination;
     [SerializeField] GameObject debris;
     public XRBaseInteractor handInteractor;
@@ -42,6 +43,7 @@ public class DebrisSequence : MonoBehaviour
         // footstepController.isRunning = false;
 
         // Stop Vampire movement
+        persecutionManager.enabled = false;
         followPlayerAgent = vampireGameObject.GetComponent<FollowPlayerAgent>();
         if (followPlayerAgent != null)
         {
@@ -57,7 +59,7 @@ public class DebrisSequence : MonoBehaviour
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, false);
         // TP player to designated transform
-        playerMobilityManager.TeleportTo(destination);
+        playerMobilityManager.ForceTeleport(destination);
 
         // deselect (force hand to let go)
         ForceRelease();

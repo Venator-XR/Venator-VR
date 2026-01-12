@@ -36,30 +36,39 @@ public class PlayerMobilityManager : MonoBehaviour
             contTurnProvider.enabled = canTurn;
     }
 
-    public void TeleportTo(Transform destination)
+    public void ForceTeleport(Transform destination)
+{
+    XROrigin rig = GetComponent<XROrigin>(); // O usa tu variable serializada xrOrigin
+    
+    if (rig == null) 
     {
-        if (teleportProvider == null)
-        {
-            Debug.LogError("PlayerMobilityManager: Falta asignar el TeleportationProvider en el Inspector.");
-            return;
-        }
-
-        // Creamos la solicitud de teletransporte
-        TeleportRequest request = new TeleportRequest()
-        {
-            // Posición de destino (donde irán los PIES)
-            destinationPosition = destination.position,
-
-            // Rotación de destino (hacia donde mirará la CÁMARA)
-            destinationRotation = destination.rotation,
-
-            // IMPORTANTE: Esto le dice al sistema "Gira el Rig para que coincida con la flecha azul del destino"
-            matchOrientation = MatchOrientation.TargetUpAndForward
-        };
-
-        // Encolamos la solicitud. El sistema la ejecutará en el siguiente frame físico.
-        teleportProvider.QueueTeleportRequest(request);
-        
-        Debug.Log($"Teletransportando a {destination.name} usando TeleportRequest");
+        Debug.LogError("No encuentro XROrigin para forzar el TP");
+        return;
     }
+
+    // 1. Mover el Rig (los pies) al destino
+    rig.transform.position = destination.position;
+
+    // 2. Girar el Rig para mirar al frente (Match Orientation)
+    // Calculamos la rotación ignorando la inclinación vertical de la cabeza
+    Vector3 cameraForward = rig.Camera.transform.forward;
+    cameraForward.y = 0;
+    cameraForward.Normalize();
+
+    Vector3 targetForward = destination.forward;
+    targetForward.y = 0;
+    targetForward.Normalize();
+
+    float angleDiff = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
+    rig.transform.Rotate(0, angleDiff, 0);
+
+    // 3. Ajuste fino de cabeza (Importante para que el ojo caiga en el punto exacto)
+    Vector3 cameraNewPos = rig.Camera.transform.position;
+    cameraNewPos.y = destination.position.y; // Proyectar al suelo
+    Vector3 offset = destination.position - cameraNewPos;
+
+    rig.transform.position += offset;
+    
+    Debug.Log("Teletransporte Forzado Completado");
+}
 }
