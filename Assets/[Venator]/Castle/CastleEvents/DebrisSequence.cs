@@ -7,9 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class DebrisSequence : MonoBehaviour
 {
-    PlayerMobilityManager playerMobilityManager;
 
     [Header("References")]
+    public PlayerMobilityManager playerMobilityManager;
     [SerializeField] Transform destination;
     [SerializeField] GameObject debris;
     public XRBaseInteractor handInteractor;
@@ -32,7 +32,6 @@ public class DebrisSequence : MonoBehaviour
 
     void Start()
     {
-        playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
     public IEnumerator DebrisCoroutine()

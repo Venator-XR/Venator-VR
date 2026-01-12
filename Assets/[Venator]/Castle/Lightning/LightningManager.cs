@@ -38,7 +38,7 @@ public class LightningManager : MonoBehaviour
         {
             0 => 3,
             1 => 1,
-            2 => 1,
+            2 => 4,
             _ => 1
         };
 

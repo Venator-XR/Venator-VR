@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 2256724150019579005}
   - component: {fileID: 3761094718466593125}
   - component: {fileID: 5717305061630953781}
+  - component: {fileID: 1014008946692491002}
   m_Layer: 2
   m_Name: Player (XR Origin)
   m_TagString: Player
@@ -340,7 +341,7 @@ MonoBehaviour:
   m_Camera: {fileID: 2390931281982993842}
   m_OriginBaseGameObject: {fileID: 1457792026112001258}
   m_CameraFloorOffsetObject: {fileID: 501663589061450842}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.36144
 --- !u!143 &8002937286805935959
 CharacterController:
@@ -616,6 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1030365765587591826}
+  sceneTransition: {fileID: 0}
   vampireAudioSource: {fileID: 0}
   vampireDirectAttack: {fileID: 8300000, guid: 8f74f3f848f28394181e887ac577c4ec, type: 3}
   persecutionDamage: 1
@@ -759,6 +761,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cab4aa23178481e4fada13f7bd857295, type: 3}
   isRunning: 0
   audioSource: {fileID: 7130693327869635921}
+--- !u!114 &1014008946692491002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457792026112001258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab879afc1928ac418c6338fb2b7a199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1644957034735903464
 GameObject:
   m_ObjectHideFlags: 0

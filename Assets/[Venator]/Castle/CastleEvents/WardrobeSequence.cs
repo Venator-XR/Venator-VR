@@ -1,28 +1,31 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class WardrobeSequence : MonoBehaviour
 {
-    PlayerMobilityManager playerMobilityManager;
+    [SerializeField] GameObject wardrobe;
 
-    [Header("References")]
+    [Header("Player Refs")]
+    public PlayerMobilityManager playerMobilityManager;
+    public XRBaseInteractor handInteractor;
+    public FlashlightController flashlightController;
+    public PlayerHealth playerHealth;
+
+    [Header("Destinations")]
     [SerializeField] Transform insideDestination;
     [SerializeField] Transform outsideDestination;
+
+    [Header("Extras")]
     [SerializeField] Animator fadeAnim;
-    public XRBaseInteractor handInteractor;
-    [SerializeField] GameObject wardrobe;
-    public FlashlightController flashlightController;
     public GameObject candles;
-    public XRKnobDoor nextDoorScript;
     public TutorialManager inventoryTutorialManager;
     public Material normalCurtainsMat;
     public GameObject curtains;
-    public PlayerHealth playerHealth;
 
-    [Header("Vampire References")]
+    [Header("Vampire Refs")]
     public GameObject vampire;
     ShapeshiftManager shapeshiftManager;
     NavMeshAgent vampireNavAgent;
@@ -32,6 +35,7 @@ public class WardrobeSequence : MonoBehaviour
 
     [Header("Next rooms")]
     public GameObject[] nextRooms;
+    public XRKnobDoor nextDoorScript;
 
     [Header("Audio")]
     [SerializeField] AudioClip enteringAudioClip;
@@ -50,7 +54,6 @@ public class WardrobeSequence : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
-        playerMobilityManager = GetComponent<PlayerMobilityManager>();
     }
 
     public IEnumerator WardrobeCoroutine()

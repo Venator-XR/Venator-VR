@@ -13,12 +13,9 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private ParticleSystem vampirePS;
     [SerializeField] private Animator coffinAnimator;
     [SerializeField] private GameObject[] candelabra;
-    [SerializeField] private AudioSource vampAudioSource;
-    [SerializeField] private AudioClip laughSFX;
-    [SerializeField] private AudioClip finalLaughSFX;
-
 
     [Header("Player References")]
+    [SerializeField] private PlayerMobilityManager _playerMobilityManager;
     [SerializeField] private GameObject player;
     [SerializeField] private Transform playerFightStartPos;
     [SerializeField] private InventoryItemData pistolData;
@@ -39,11 +36,13 @@ public class FinalFightManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private GlobalSoundManager globalSoundManager;
     public AudioClip coffinOpenSFX;
+    [SerializeField] private AudioSource vampAudioSource;
+    [SerializeField] private AudioClip laughSFX;
+    [SerializeField] private AudioClip finalLaughSFX;
 
     private IHealth _vampireHealth;
     // player privates
     private IHealth _playerHealth;
-    private PlayerMobilityManager _playerMobilityManager;
     private InventoryController _inventoryController;
 
 
@@ -167,8 +166,8 @@ public class FinalFightManager : MonoBehaviour
         // Stop combat
         if (vampireBrain != null)
             vampireBrain.StopAllCoroutines();
-            vampireBrain.Death();
-            // vampireBrain.enabled = false;
+        vampireBrain.Death();
+        // vampireBrain.enabled = false;
 
         // Change music
         globalSoundManager.StopSequence();

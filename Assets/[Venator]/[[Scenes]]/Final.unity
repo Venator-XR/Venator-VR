@@ -552,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 2256724150019579005, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: playerMobilityManager
       value: 
-      objectReference: {fileID: 1354962906}
+      objectReference: {fileID: 173740055}
     - target: {fileID: 3251922871891952166, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: tracks.Array.size
       value: 4
@@ -628,46 +628,13 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 637103bd737562943b4e560c8263cfde, type: 3}
 --- !u!114 &173740055 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2811935123251820620, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1014008946692491002, guid: 637103bd737562943b4e560c8263cfde, type: 3}
   m_PrefabInstance: {fileID: 173740054}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1244542587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &173740056 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4425267341108958613, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-  m_PrefabInstance: {fileID: 173740054}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1e8c997df241c1a67045eeac79b41b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &173740057 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7402118178394536525, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-  m_PrefabInstance: {fileID: 173740054}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75b29b6c6428c984a8a73ffc2d58063b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &173740058 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6963494878944507949, guid: 637103bd737562943b4e560c8263cfde, type: 3}
-  m_PrefabInstance: {fileID: 173740054}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9f365cf844c03449bc8973eead2c3c1, type: 3}
+  m_Script: {fileID: 11500000, guid: fab879afc1928ac418c6338fb2b7a199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &219034382
@@ -3048,7 +3015,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1354962904}
   - component: {fileID: 1354962905}
-  - component: {fileID: 1354962906}
   - component: {fileID: 1354962907}
   m_Layer: 0
   m_Name: FinalFightManager
@@ -3091,9 +3057,7 @@ MonoBehaviour:
   candelabra:
   - {fileID: 1289900938}
   - {fileID: 1232995861}
-  vampAudioSource: {fileID: 953249473}
-  laughSFX: {fileID: 8300000, guid: a36c4dca2c1d6d24fb69a63b75bf5bd1, type: 3}
-  finalLaughSFX: {fileID: 8300000, guid: ed46d60e2b2954e4599032b5ee99bbeb, type: 3}
+  _playerMobilityManager: {fileID: 173740055}
   player: {fileID: 1244542587}
   playerFightStartPos: {fileID: 932858680}
   pistolData: {fileID: 11400000, guid: babc1611ee4c2f94e8c5ffd50e46c50c, type: 2}
@@ -3106,23 +3070,9 @@ MonoBehaviour:
   sceneTransition: {fileID: 1988635138}
   globalSoundManager: {fileID: 100035426}
   coffinOpenSFX: {fileID: 8300000, guid: cf4383ddf2559f34692041bb5bc7dac0, type: 3}
---- !u!114 &1354962906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354962903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab879afc1928ac418c6338fb2b7a199, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1244542587}
-  moveProvider: {fileID: 173740056}
-  teleportProvider: {fileID: 173740055}
-  snapTurnProvider: {fileID: 173740058}
-  contTurnProvider: {fileID: 173740057}
+  vampAudioSource: {fileID: 953249473}
+  laughSFX: {fileID: 8300000, guid: a36c4dca2c1d6d24fb69a63b75bf5bd1, type: 3}
+  finalLaughSFX: {fileID: 8300000, guid: ed46d60e2b2954e4599032b5ee99bbeb, type: 3}
 --- !u!114 &1354962907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3135,7 +3085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288f7d5c33bd9ac46b14f8ff1df2b9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobilityManager: {fileID: 1354962906}
+  mobilityManager: {fileID: 173740055}
   checkpointPosition: {fileID: 163298148}
 --- !u!1 &1387519732
 GameObject:
