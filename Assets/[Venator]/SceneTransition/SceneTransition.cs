@@ -16,24 +16,30 @@ public class SceneTransition : MonoBehaviour
         // Start Fade Out
         yield return StartCoroutine(FadeIn());
 
-        // Load scene on background
-        Debug.Log("loading scene");
+        // Load scene async, but don't activate yet
         AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
+        operation.allowSceneActivation = false;
 
-        // Change scene after its loaded
+        // Wait until the scene is fully loaded
         while (!operation.isDone)
         {
-            Debug.Log("scene loaded");
+            // Scene is ready but not activated
+            if (operation.progress >= 0.9f)
+            {
+                Debug.Log("Scene loaded, activating after fade");
+                operation.allowSceneActivation = true; // Now actually switch
+            }
+
             yield return null;
         }
     }
+
 
     public IEnumerator FinalRoutine(bool victory)
     {
         yield return StartCoroutine(SlowFadeIn());
 
-        // Load scene on background
-        Debug.Log("loading scene");
+        // Load scene async, but don't activate yet
         AsyncOperation operation;
         if (victory)
         {
@@ -43,13 +49,22 @@ public class SceneTransition : MonoBehaviour
         {
             operation = SceneManager.LoadSceneAsync("Defeat");
         }
-        // Change scene after its loaded
+        operation.allowSceneActivation = false;
+
+        // Wait until the scene is fully loaded
         while (!operation.isDone)
         {
-            Debug.Log("scene loaded");
+            // Scene is ready but not activated
+            if (operation.progress >= 0.9f)
+            {
+                Debug.Log("Scene loaded, activating after fade");
+                operation.allowSceneActivation = true; // Now actually switch
+            }
+
             yield return null;
         }
     }
+
 
     public IEnumerator FadeOut()
     {

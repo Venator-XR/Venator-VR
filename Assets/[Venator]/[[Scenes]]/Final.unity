@@ -573,6 +573,10 @@ PrefabInstance:
       propertyPath: 'tracks.Array.data[3]'
       value: 
       objectReference: {fileID: 8300000, guid: c3b541847aa14284bb7d05b4457df5d3, type: 3}
+    - target: {fileID: 3652892837653739541, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: shakeThreshold
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5447031559837819597, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_Enabled
       value: 1
