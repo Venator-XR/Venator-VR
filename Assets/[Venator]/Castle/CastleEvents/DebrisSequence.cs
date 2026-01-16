@@ -62,8 +62,10 @@ public class DebrisSequence : MonoBehaviour
         playerMobilityManager.ForceTeleport(destination);
 
         // deselect (force hand to let go)
-        ForceRelease();
-
+        if (targetLever != null)
+        {
+            targetLever.ForceEndInteractionAndFade();
+        }
 
         // Play SFXs audio track
         audioSource.Play();
@@ -87,17 +89,5 @@ public class DebrisSequence : MonoBehaviour
         foreach (GameObject room in pastRooms) room.SetActive(false);
 
         yield break;
-    }
-
-    void ForceRelease()
-    {
-        if (targetLever != null && targetLever.isSelected)
-        {
-            // get manager and interactor
-            var manager = targetLever.interactionManager;
-            var interactor = targetLever.interactorsSelecting[0];
-
-            manager.SelectExit(interactor, targetLever);
-        }
     }
 }

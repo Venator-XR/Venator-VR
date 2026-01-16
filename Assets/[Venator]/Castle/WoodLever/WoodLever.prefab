@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7832213283831187318
 Transform:
@@ -124,12 +124,12 @@ GameObject:
   - component: {fileID: 8145069147113550540}
   - component: {fileID: 9010018218044097184}
   - component: {fileID: 1473668132591061113}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: WoodLever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4727314159531957473
 Transform:
@@ -141,7 +141,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 0.008433201, y: 0.008433201, z: 0.0066837287}
+  m_LocalScale: {x: 0.0084331995, y: 0.0084331995, z: 0.0066837287}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2149228674200414726}
@@ -160,7 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 5152882838690044185}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -222,7 +223,8 @@ MonoBehaviour:
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
   objectHand: {fileID: 4243524492213637972}
-  moveSFX: {fileID: 0}
+  m_RotationAxis: 1
+  moveSFX: {fileID: 8300000, guid: 768294394fbb1124a973357bf2525f8c, type: 3}
   activateSFX: {fileID: 0}
   maxVolume: 1
   fadeSpeed: 5
@@ -362,7 +364,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 3
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -397,7 +399,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -451,7 +453,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2149228674200414726
 Transform:

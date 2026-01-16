@@ -2132,9 +2132,10 @@ MonoBehaviour:
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
   objectHand: {fileID: 520223139609269229}
+  m_RotationAxis: 1
   moveSFX: {fileID: 8300000, guid: 4512db7666443384ea095399e3462def, type: 3}
   activateSFX: {fileID: 0}
-  maxVolume: 1
+  maxVolume: 0.7
   fadeSpeed: 5
   m_Handle: {fileID: 1733196882957055092}
   m_Value: 0
@@ -2184,7 +2185,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8322671723354941552, guid: b7e12dee41d4d864898cfd7e7bbf15df, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

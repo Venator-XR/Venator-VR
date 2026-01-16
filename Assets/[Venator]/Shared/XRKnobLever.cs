@@ -3,30 +3,43 @@ using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections;
 
 namespace UnityEngine.XR.Content.Interaction
 {
     [RequireComponent(typeof(AudioSource))]
     public class XRKnobLever : XRBaseInteractable
     {
+        // --- NUEVO: Enum para elegir el eje ---
+        public enum RotationAxis
+        {
+            X, // Para palancas de pared (bajar/subir)
+            Y, // Para dials en mesas (izquierda/derecha) - Default
+            Z  // Para volantes o válvulas frontales
+        }
+        // --------------------------------------
+
         [Header("Hand GameObjects")]
         public GameObject objectHand;
+
+        [Header("Rotation Settings")]
+        [SerializeField] private RotationAxis m_RotationAxis = RotationAxis.Y; // Selector en el Inspector
+        [SerializeField] private bool m_InvertDirection = false;
 
         [Header("SFXs Settings")]
         [SerializeField] private AudioClip moveSFX;
         [SerializeField] private AudioClip activateSFX;
-        [SerializeField] private float maxVolume = 1.0f; // Volumen máximo deseado
-        [SerializeField] private float fadeSpeed = 5.0f; // Qué tan rápido sube/baja el volumen (Más alto = más rápido)
+        [SerializeField] private float maxVolume = 1.0f;
+        [SerializeField] private float fadeSpeed = 5.0f;
 
-        private float m_TargetVolume = 0f; // A qué volumen QUEREMOS ir
-        private bool m_WasAboveThreshold; // Para saber desde dónde veníamos
-        private float m_Threshold = 0.5f; // El punto de activación
+        private float m_TargetVolume = 0f;
+        private bool m_WasAboveThreshold;
+        private float m_Threshold = 0.5f;
 
         const float k_ModeSwitchDeadZone = 0.1f;
 
         private AudioSource m_AudioSource;
 
-        // Structs originales...
         struct TrackedRotation
         {
             float m_BaseAngle;
@@ -44,6 +57,8 @@ namespace UnityEngine.XR.Content.Interaction
             public void SetBaseFromVector(Vector3 direction)
             {
                 m_AccumulatedAngle += m_CurrentOffset;
+                // Atan2 usa (-x, z) asumiendo rotación en Y. 
+                // Nosotros le pasaremos los vectores ya "trucados" para que esto siempre funcione.
                 m_BaseAngle = Mathf.Atan2(-direction.x, direction.z) * Mathf.Rad2Deg;
                 m_CurrentOffset = 0.0f;
             }
@@ -85,7 +100,6 @@ namespace UnityEngine.XR.Content.Interaction
 
         float m_BaseKnobRotation = 0.0f;
 
-        // Propiedades públicas...
         public Transform handle { get => m_Handle; set => m_Handle = value; }
         public float value
         {
@@ -102,42 +116,47 @@ namespace UnityEngine.XR.Content.Interaction
         public float positionTrackedRadius { get => m_PositionTrackedRadius; set => m_PositionTrackedRadius = value; }
         public ValueChangeEvent onValueChange => m_OnValueChange;
 
+        // --- NUEVO: Propiedad para cambiar eje desde código si hace falta ---
+        public RotationAxis axisToRotate
+        {
+            get => m_RotationAxis;
+            set { m_RotationAxis = value; SetKnobRotation(ValueToRotation()); }
+        }
+
+        public bool invertDirection
+        {
+            get => m_InvertDirection;
+            set => m_InvertDirection = value;
+        }
+
         void Start()
         {
             SetValue(m_Value);
             SetKnobRotation(ValueToRotation());
 
-            // CONFIGURACIÓN DE AUDIO INICIAL
             m_AudioSource = GetComponent<AudioSource>();
             if (moveSFX != null)
             {
                 m_AudioSource.clip = moveSFX;
                 m_AudioSource.loop = true;
-                m_AudioSource.volume = 0f; // Empieza en silencio
-                m_AudioSource.Play();      // Siempre reproduciendo
+                m_AudioSource.volume = 0f;
+                m_AudioSource.Play();
             }
         }
 
-        // --- AÑADIDO: Update normal para gestionar el Fading ---
         void Update()
         {
             if (m_AudioSource != null)
             {
-                // MoveTowards hace la magia: mueve el volumen actual hacia el target paso a paso
                 m_AudioSource.volume = Mathf.MoveTowards(m_AudioSource.volume, m_TargetVolume, fadeSpeed * Time.deltaTime);
 
-                // Opcional: Si el volumen es casi 0, pausamos para ahorrar CPU (o lo dejamos si quieres reactividad instantánea)
-                if (m_AudioSource.volume <= 0.001f && m_AudioSource.isPlaying)
-                {
-                    // m_AudioSource.Pause(); // Descomenta si quieres optimizar
-                }
+                if (m_AudioSource.volume <= 0.001f && m_AudioSource.isPlaying) { }
                 else if (m_AudioSource.volume > 0.001f && !m_AudioSource.isPlaying)
                 {
                     m_AudioSource.Play();
                 }
             }
         }
-        // -----------------------------------------------------
 
         protected override void OnEnable()
         {
@@ -168,10 +187,7 @@ namespace UnityEngine.XR.Content.Interaction
         void EndGrab(SelectExitEventArgs args)
         {
             if (objectHand != null) objectHand.SetActive(false);
-
-            // AL SOLTAR: El objetivo es silencio
             m_TargetVolume = 0f;
-
             m_Interactor = null;
         }
 
@@ -188,26 +204,58 @@ namespace UnityEngine.XR.Content.Interaction
             }
         }
 
+        // --- LÓGICA DE TRANSFORMACIÓN DE EJES ---
+        // Esta función convierte la posición real de la mano a un espacio local 
+        // donde el eje Y siempre es el eje de rotación para que las matemáticas no fallen.
+        Vector3 TransformToMathSpace(Vector3 localVector)
+        {
+            switch (m_RotationAxis)
+            {
+                case RotationAxis.X:
+                    // Si rotamos en X, usamos Y y Z para calcular el ángulo
+                    // Mapeamos: Y -> X (ancho), X -> Y (altura ignorada), Z -> Z (profundidad)
+                    return new Vector3(localVector.y, localVector.x, localVector.z);
+
+                case RotationAxis.Z:
+                    // Si rotamos en Z, usamos X e Y para calcular el ángulo
+                    // Mapeamos: X -> X, Z -> Y (altura ignorada), Y -> Z (profundidad matemática)
+                    return new Vector3(localVector.x, localVector.z, localVector.y);
+
+                case RotationAxis.Y:
+                default:
+                    // Comportamiento original
+                    return localVector;
+            }
+        }
+        // ----------------------------------------
+
         void UpdateRotation(bool freshCheck = false)
         {
-            // (Lógica de rotación original sin cambios hasta abajo...)
             var interactorTransform = m_Interactor.GetAttachTransform(this);
 
             var localOffset = transform.InverseTransformPoint(interactorTransform.position);
-            localOffset.y = 0.0f;
+            var localForward = transform.InverseTransformDirection(interactorTransform.forward);
+            var localUp = transform.InverseTransformDirection(interactorTransform.up);
 
-            var radiusOffset = transform.TransformVector(localOffset).magnitude;
+            // 1. Convertimos los vectores al espacio matemático donde Y siempre es el eje de rotación
+            localOffset = TransformToMathSpace(localOffset);
+            localForward = TransformToMathSpace(localForward);
+            localUp = TransformToMathSpace(localUp);
+
+            // 2. Aplanamos la altura (que ahora siempre es Y en nuestro espacio matemático)
+            localOffset.y = 0.0f;
+            var radiusOffset = transform.TransformVector(localOffset).magnitude; // Ojo: magnitud aproximada
             localOffset.Normalize();
 
-            var localForward = transform.InverseTransformDirection(interactorTransform.forward);
-            var localY = Math.Abs(localForward.y);
+            var localY = Math.Abs(localForward.y); // Y ahora representa el eje paralelo a la rotación
             localForward.y = 0.0f;
             localForward.Normalize();
 
-            var localUp = transform.InverseTransformDirection(interactorTransform.up);
             localUp.y = 0.0f;
             localUp.Normalize();
 
+            // El resto de la lógica matemática es idéntica a la original, 
+            // pero operando sobre los vectores transformados.
 
             if (m_PositionDriven && !freshCheck)
                 radiusOffset *= (1.0f + k_ModeSwitchDeadZone);
@@ -256,8 +304,14 @@ namespace UnityEngine.XR.Content.Interaction
             else
                 m_ForwardVectorAngles.SetTargetFromVector(localForward);
 
-            var knobRotation = m_BaseKnobRotation - ((m_UpVectorAngles.totalOffset + m_ForwardVectorAngles.totalOffset) * m_TwistSensitivity) - m_PositionAngles.totalOffset;
+            var totalAngleChange = ((m_UpVectorAngles.totalOffset + m_ForwardVectorAngles.totalOffset) * m_TwistSensitivity) + m_PositionAngles.totalOffset;
 
+            // 2. Si InvertDirection está activo, cambiamos el signo del movimiento
+            if (m_InvertDirection) totalAngleChange *= -1.0f;
+
+            // 3. Aplicamos el cambio (El script original Resta el cambio, así que mantenemos esa lógica)
+            var knobRotation = m_BaseKnobRotation - totalAngleChange;
+            
             if (m_ClampedMotion)
                 knobRotation = Mathf.Clamp(knobRotation, m_MinAngle, m_MaxAngle);
 
@@ -265,7 +319,6 @@ namespace UnityEngine.XR.Content.Interaction
 
             var knobValue = (knobRotation - m_MinAngle) / (m_MaxAngle - m_MinAngle);
 
-            // --- NUEVA LÓGICA DE AUDIO (TARGET VOLUME) ---
             float previousValue = m_Value;
             SetValue(knobValue);
             float diff = Mathf.Abs(m_Value - previousValue);
@@ -274,19 +327,15 @@ namespace UnityEngine.XR.Content.Interaction
 
             if (isAbove != m_WasAboveThreshold)
             {
-                // Solo suena si hay movimiento real (evita ruidos al soltar o micro-vibraciones)
                 if (diff > 0.0012 && activateSFX != null)
                 {
-                    // Usamos PlayOneShot para que no corte el sonido de movimiento (el loop)
                     m_AudioSource.PlayOneShot(activateSFX);
                 }
                 m_WasAboveThreshold = isAbove;
             }
 
-            // Lógica de movimiento
             if (diff > 0.0002f) m_TargetVolume = maxVolume;
             else m_TargetVolume = 0f;
-            // ---------------------------------------------
         }
 
         void SetKnobRotation(float angle)
@@ -298,7 +347,23 @@ namespace UnityEngine.XR.Content.Interaction
             }
 
             if (m_Handle != null)
-                m_Handle.localEulerAngles = new Vector3(0.0f, angle, 0.0f);
+            {
+                // --- NUEVO: Aplicar la rotación al eje correcto ---
+                switch (m_RotationAxis)
+                {
+                    case RotationAxis.X:
+                        m_Handle.localEulerAngles = new Vector3(angle, 0.0f, 0.0f);
+                        break;
+                    case RotationAxis.Z:
+                        m_Handle.localEulerAngles = new Vector3(0.0f, 0.0f, angle);
+                        break;
+                    case RotationAxis.Y:
+                    default:
+                        m_Handle.localEulerAngles = new Vector3(0.0f, angle, 0.0f);
+                        break;
+                }
+                // --------------------------------------------------
+            }
         }
 
         void SetValue(float value)
@@ -353,8 +418,26 @@ namespace UnityEngine.XR.Content.Interaction
             if (m_Handle != null)
                 circleCenter = m_Handle.position;
 
-            var circleX = transform.right;
-            var circleY = transform.forward;
+            // --- NUEVO: Gizmos adaptados al eje ---
+            Vector3 circleX, circleY;
+
+            switch (m_RotationAxis)
+            {
+                case RotationAxis.X: // Plano YZ
+                    circleX = transform.up;
+                    circleY = transform.forward;
+                    break;
+                case RotationAxis.Z: // Plano XY
+                    circleX = transform.right;
+                    circleY = transform.up;
+                    break;
+                case RotationAxis.Y: // Plano XZ (Default)
+                default:
+                    circleX = transform.right;
+                    circleY = transform.forward;
+                    break;
+            }
+            // --------------------------------------
 
             Gizmos.color = Color.green;
             var segmentCounter = 0;
@@ -378,6 +461,45 @@ namespace UnityEngine.XR.Content.Interaction
                 m_MinAngle = m_MaxAngle;
 
             SetKnobRotation(ValueToRotation());
+        }
+
+        public void ForceEndInteractionAndFade()
+        {
+            // 1. Soltar la mano físicamente si está agarrado
+            if (isSelected && interactorsSelecting.Count > 0)
+            {
+                interactionManager.SelectExit(interactorsSelecting[0], this);
+            }
+
+            // 2. Resetear el valor lógico
+            m_Value = 0;
+
+            // 3. Arrancar la corrutina de Fade Out
+            // Importante: Las corrutinas siguen vivas aunque deshabilitemos el componente justo después
+            StartCoroutine(FadeOutAndDisableRoutine());
+        }
+
+        private IEnumerator FadeOutAndDisableRoutine()
+        {
+            // Mientras siga sonando...
+            while (m_AudioSource != null && m_AudioSource.volume > 0)
+            {
+                // Bajamos el volumen usando la misma velocidad que configuraste (fadeSpeed)
+                m_AudioSource.volume = Mathf.MoveTowards(m_AudioSource.volume, 0f, fadeSpeed * Time.deltaTime);
+
+                // Esperamos al siguiente frame
+                yield return null;
+            }
+
+            // 4. Una vez en silencio, paramos el audio y desactivamos el script
+            if (m_AudioSource != null)
+            {
+                m_AudioSource.Stop();
+                m_AudioSource.volume = 0;
+            }
+
+            // Aquí es donde el script se "suicida" (se desactiva a sí mismo)
+            this.enabled = false;
         }
     }
 }

@@ -53,7 +53,6 @@ public class WardrobeSequence : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
     }
 
     public IEnumerator WardrobeCoroutine()
@@ -63,6 +62,7 @@ public class WardrobeSequence : MonoBehaviour
         vampireNavAgent = vampire.GetComponent<NavMeshAgent>();
         wardrobe.GetComponentInChildren<OutlineTrigger>().enabled = false;
         wardrobe.GetComponentInChildren<Outline>().enabled = false;
+        targetLever = wardrobe.GetComponentInChildren<XRKnobLever>();
 
         // disable movement and camera turning
         playerMobilityManager.SetPlayerMobility(false, true);
@@ -80,7 +80,11 @@ public class WardrobeSequence : MonoBehaviour
 
         playerHealth.Heal();
 
-        ForceRelease();
+        if (targetLever != null)
+        {
+            targetLever.ForceEndInteractionAndFade();
+        }
+
         flashlightController.TurnOff();
         flashlightController.enabled = false;
 
@@ -134,7 +138,7 @@ public class WardrobeSequence : MonoBehaviour
         // next door and rooms ennabled now
         nextDoorScript.enabled = true;
         foreach (GameObject room in nextRooms) room.SetActive(true);
-        
+
         globalSoundManager.PlayNextSequence();
 
         playerAudioSource.clip = tenseBreathingSFX;
@@ -144,32 +148,7 @@ public class WardrobeSequence : MonoBehaviour
         yield break;
     }
 
-    void ForceRelease()
-    {
-        // 1. Verificación de seguridad básica
-        if (targetLever == null) return;
-
-        // 2. Si está seleccionado, forzamos la salida de TODOS los interactores (por si acaso son 2 manos)
-        if (targetLever.isSelected)
-        {
-            var manager = targetLever.interactionManager;
-            
-            // Hacemos una copia de la lista porque al hacer SelectExit la lista original cambia
-            var interactors = new System.Collections.Generic.List<IXRSelectInteractor>(targetLever.interactorsSelecting);
-            
-            foreach (var interactor in interactors)
-            {
-                manager.SelectExit(interactor, targetLever);
-            }
-        }
-
-        // 3. EL TRUCO DE LA BUILD: Desactivar y reactivar el componente interactable
-        // Esto limpia cualquier "ghost grip" que quede en el sistema de eventos de XR
-        targetLever.enabled = false;
-        
-        // Reset visual y de valores
-        targetLever.value = 0;
-    }
+    //----------------------------------------
 
     private IEnumerator VampireCoroutine()
     {
