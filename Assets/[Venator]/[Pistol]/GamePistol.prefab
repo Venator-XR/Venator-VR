@@ -5445,7 +5445,7 @@ MonoBehaviour:
   maxDistance: 10
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 1801
+    m_Bits: 777
   lineRenderer: {fileID: 7050048215141147820}
   laserDot: {fileID: 5034579536194303807}
 --- !u!1 &4008159838953154807

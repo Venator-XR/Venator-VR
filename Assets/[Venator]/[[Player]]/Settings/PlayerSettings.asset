@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   useTeleport: 0
-  useSnapTurn: 1
+  useSnapTurn: 0
   snapTurnAngle: 45
-  useVignette: 1
+  useVignette: 0
