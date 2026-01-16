@@ -99,6 +99,8 @@ public class WardrobeSequence : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
+        targetLever.value = 0;
+
         // transform into bat
         shapeshiftManager.Shapeshift();
         vampireNavAgent.enabled = true;

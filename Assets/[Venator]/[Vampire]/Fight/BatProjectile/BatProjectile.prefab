@@ -4958,8 +4958,20 @@ PrefabInstance:
       value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 2743291131866949432, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743291131866949432, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743291131866949432, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743291131866949432, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4576372224130307086, guid: e54321461fa3dc04a921e6d211e393b3, type: 3}
       propertyPath: m_Color.a
@@ -5141,6 +5153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lifeTime: 5
+  detectionRadius: 0.25
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 69
 --- !u!54 &7083908526473121352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5167,4 +5183,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2

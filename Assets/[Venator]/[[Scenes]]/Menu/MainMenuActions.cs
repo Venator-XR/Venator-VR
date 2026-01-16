@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuActions : MonoBehaviour
 {
+    public GameObject player;
+    public Transform initPosition;
+    
     [Header("Scenes")]
     [SerializeField] private string mainSceneName = "Main";
     [SerializeField] private string videoSceneName = "Video360";
@@ -23,8 +26,21 @@ public class MainMenuActions : MonoBehaviour
 
     private bool settings = false;
 
-    void Start()
+    IEnumerator Start()
     {
+        // Esperamos un frame para asegurar que los scripts de Awake han corrido
+        yield return null;
+
+        // Opcional: Esperar un pelín más (0.1s) es mano de santo para evitar conflictos con el tracking
+        yield return new WaitForSeconds(0.05f);
+
+        if (player != null)
+        {
+            // Ahora sí, forzamos el TP
+            Debug.Log("Auto-Teleporting Player to Start Position");
+            player.GetComponent<PlayerMobilityManager>().ForceTeleport(player.transform);
+        }
+
         Application.targetFrameRate = 90;
         // activate vSync
         QualitySettings.vSyncCount = 1;

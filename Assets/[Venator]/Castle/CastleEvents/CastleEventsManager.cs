@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class CastleEventsManager : MonoBehaviour
 {
+    public GameObject player;
     // References in component
     DebrisSequence debrisSequence;
     WardrobeSequence wardrobeSequence;
@@ -15,8 +16,23 @@ public class CastleEventsManager : MonoBehaviour
     public string finalScene = "Final";
     public SceneTransition sceneTransition;
 
-    void Start()
+    // Cambia 'void' por 'IEnumerator' para que Unity lo trate como corrutina automática
+    IEnumerator Start() 
     {
+        // Esperamos un frame para asegurar que los scripts de Awake han corrido
+        yield return null; 
+
+        // Opcional: Esperar un pelín más (0.1s) es mano de santo para evitar conflictos con el tracking
+        yield return new WaitForSeconds(0.05f); 
+
+        if (player != null)
+        {
+            // Ahora sí, forzamos el TP
+            Debug.Log("Auto-Teleporting Player to Start Position");
+            player.GetComponent<PlayerMobilityManager>().ForceTeleport(gameObject.transform);
+        }
+
+        // Inicializamos el resto
         debrisSequence = GetComponent<DebrisSequence>();
         wardrobeSequence = GetComponent<WardrobeSequence>();
     }
