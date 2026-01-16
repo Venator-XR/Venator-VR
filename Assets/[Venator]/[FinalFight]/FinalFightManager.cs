@@ -111,7 +111,7 @@ public class FinalFightManager : MonoBehaviour
         _playerMobilityManager.SetPlayerMobility(false, true);
 
         // Set player pos and rotation
-        player.transform.position = playerFightStartPos.position;
+        player.GetComponent<PlayerMobilityManager>().ForceTeleport(playerFightStartPos);
 
         // equip pistol and disable inventory
         handEquipmentManager.EquipItem(pistolData);
