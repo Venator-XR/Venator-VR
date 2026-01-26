@@ -71,7 +71,7 @@ public class SceneTransition : MonoBehaviour
         Debug.Log("FadeOut()");
         _animator.Play("fadeOut");
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSecondsRealtime(.5f);
     }
 
     public IEnumerator FadeIn()
@@ -79,7 +79,7 @@ public class SceneTransition : MonoBehaviour
         Debug.Log("FadeIn()");
         _animator.Play("fadeIn");
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSecondsRealtime(.5f);
     }
 
     public IEnumerator SlowFadeIn()
@@ -87,6 +87,6 @@ public class SceneTransition : MonoBehaviour
         Debug.Log("SlowFadeIn()");
         _animator.SetTrigger("slowFadeIn");
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSecondsRealtime(3f);
     }
 }
