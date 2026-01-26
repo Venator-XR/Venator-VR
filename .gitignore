@@ -101,3 +101,5 @@ InitTestScene*.unity*
 .vsconfig
 
 ProjectSettings/ProjectVersion.txt
+
+*.rar
