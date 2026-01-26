@@ -74,7 +74,7 @@ public class FinalFightManager : MonoBehaviour
         {
             // Ahora sí, forzamos el TP
             Debug.Log("Auto-Teleporting Player to Start Position");
-            _playerMobilityManager.ForceTeleport(player.transform);
+            _playerMobilityManager.ForceTeleport(gameObject.transform);
         }
     }
 
