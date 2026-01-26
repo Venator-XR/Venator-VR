@@ -8469,6 +8469,10 @@ PrefabInstance:
       propertyPath: fadeSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2490346370363191226, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
+      propertyPath: m_TwistSensitivity
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4636068316450502207, guid: 70395d95e53022e41b8eb74438988ca8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.01306
