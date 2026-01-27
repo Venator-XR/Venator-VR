@@ -206,8 +206,8 @@ MonoBehaviour:
   delay: 0.1
   hitSFX: {fileID: 8300000, guid: 625815064f8c44644a586c5c4a93ef0a, type: 3}
   vampireHitSFX: {fileID: 8300000, guid: 8933edb12cd180d4e99bde7c0f96e68a, type: 3}
-  impactFX: {fileID: 0}
-  vampireImpactFX: {fileID: 0}
+  impactFX: {fileID: 2600064634796933423, guid: 9a180282665fbe443a44adfb9ae05d5a, type: 3}
+  vampireImpactFX: {fileID: 2600064634796933423, guid: 2b953bd37af981f429e4c6bc8ad42912, type: 3}
 --- !u!1001 &4565674526367001890
 PrefabInstance:
   m_ObjectHideFlags: 0
