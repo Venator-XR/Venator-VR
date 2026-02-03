@@ -21,10 +21,6 @@ public class FinalFightManager : MonoBehaviour
     [SerializeField] private InventoryItemData pistolData;
     [SerializeField] private HandEquipmentManager handEquipmentManager;
 
-    [Header("Screens")]
-    [SerializeField] private string victorySceneName = "";
-    [SerializeField] private string deafeatSceneName = "";
-
     [Header("Extra values")]
     [SerializeField] private float introDelay = 2f;
     [SerializeField] private float endSequenceDelay = 2f;
@@ -188,12 +184,17 @@ public class FinalFightManager : MonoBehaviour
 
         yield return new WaitForSeconds(endSequenceDelay);
 
-
         if (victory)
-            StartCoroutine(sceneTransition.FinalRoutine(victory));
+        {
+            // Victory: Transition immediately
+            StartCoroutine(sceneTransition.FinalRoutine(true));
+        }
         else
+        {
+            // Defeat: Laugh, wait, THEN transition
             vampAudioSource.PlayOneShot(finalLaughSFX);
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(sceneTransition.FinalRoutine(victory));
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(sceneTransition.FinalRoutine(false));
+        }
     }
 }

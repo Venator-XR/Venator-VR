@@ -6,6 +6,10 @@ public class SceneTransition : MonoBehaviour
 {
     private Animator _animator;
 
+    [Header("Screens")]
+    [SerializeField] private string victorySceneName = "";
+    [SerializeField] private string defeatSceneName = "";
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -43,11 +47,11 @@ public class SceneTransition : MonoBehaviour
         AsyncOperation operation;
         if (victory)
         {
-            operation = SceneManager.LoadSceneAsync("Victory");
+            operation = SceneManager.LoadSceneAsync(victorySceneName);
         }
         else
         {
-            operation = SceneManager.LoadSceneAsync("Defeat");
+            operation = SceneManager.LoadSceneAsync(defeatSceneName);
         }
         operation.allowSceneActivation = false;
 

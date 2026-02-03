@@ -2596,7 +2596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239324012907557337, guid: dd8fdbbe353f3584687a48bc2f7ebe6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3118,8 +3118,6 @@ MonoBehaviour:
   playerFightStartPos: {fileID: 932858680}
   pistolData: {fileID: 11400000, guid: babc1611ee4c2f94e8c5ffd50e46c50c, type: 2}
   handEquipmentManager: {fileID: 1962409970}
-  victorySceneName: Victory
-  deafeatSceneName: Defeat
   introDelay: 3
   endSequenceDelay: 4
   transiton: {fileID: 1683728682}
@@ -3920,6 +3918,14 @@ PrefabInstance:
     - target: {fileID: 5545919669338090856, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+      propertyPath: defeatSceneName
+      value: Defeat
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+      propertyPath: victorySceneName
+      value: Victory
       objectReference: {fileID: 0}
     - target: {fileID: 7890742890811961725, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
       propertyPath: m_Camera

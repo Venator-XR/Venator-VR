@@ -14873,6 +14873,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+      propertyPath: defeatSceneName
+      value: Defeat
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887716759839973496, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
+      propertyPath: victorySceneName
+      value: Victory
+      objectReference: {fileID: 0}
     - target: {fileID: 7890742890811961725, guid: 101e0b0dd1e7e4545bf4b95b8d9edf4b, type: 3}
       propertyPath: m_Camera
       value: 

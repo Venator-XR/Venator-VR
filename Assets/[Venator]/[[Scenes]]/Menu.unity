@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 743523200}
   initPosition: {fileID: 743523199}
-  mainSceneName: Main
+  mainSceneName: Final
   videoSceneName: Video360
   sceneTransition: {fileID: 41507960}
   settingsCanvas: {fileID: 1407721873}
