@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 743523200}
   initPosition: {fileID: 743523199}
-  mainSceneName: Final
+  mainSceneName: Main
   videoSceneName: Video360
   sceneTransition: {fileID: 41507960}
   settingsCanvas: {fileID: 1407721873}
@@ -1650,10 +1650,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b43b34ab11e76b42a5f86ae8a5d7d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeThreshold: 0.75
-  minShakeDuration: 0.5
+  linearShakeThreshold: 0.5
+  angularShakeThreshold: 45
+  requiredReversals: 5
+  comboTimeWindow: 0.5
   shakeCooldown: 1
-  showDebugLogs: 1
+  showDebug: 1
   OnShakeDetected:
     m_PersistentCalls:
       m_Calls:
@@ -1752,6 +1754,14 @@ PrefabInstance:
     - target: {fileID: 6091483384375479234, guid: 637103bd737562943b4e560c8263cfde, type: 3}
       propertyPath: m_InteractionLayers.m_Bits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6963494878944507949, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_EnableTurnAround
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7402118178394536525, guid: 637103bd737562943b4e560c8263cfde, type: 3}
+      propertyPath: m_EnableTurnAround
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

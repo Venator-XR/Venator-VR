@@ -14,6 +14,7 @@ public class CastleEventsManager : MonoBehaviour
     private bool wardrobeActioned = false;
     //-----------------------
     public string finalScene = "Final";
+    bool sceneChanged = false;
     public SceneTransition sceneTransition;
 
     // Cambia 'void' por 'IEnumerator' para que Unity lo trate como corrutina automática
@@ -62,8 +63,11 @@ public class CastleEventsManager : MonoBehaviour
 
     public void ChangeScene(float value)
     {
+        if(sceneChanged) return;
+        
         if (value > 0.7 || value < 0.3)
         {
+            sceneChanged = true;
             StartCoroutine(sceneTransition.ChangeSceneRoutine(finalScene));
         }
     }
