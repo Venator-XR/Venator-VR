@@ -107,6 +107,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             {
                 m_SmoothMotionEnabled = value;
                 UpdateLocomotionActions();
+                Debug.Log("Update Locomotion smoothMotion = " + value);
             }
         }
 
@@ -117,6 +118,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             {
                 m_SmoothTurnEnabled = value;
                 UpdateLocomotionActions();
+                Debug.Log("Update Locomotion smoothTurn = " + value);
             }
         }
 

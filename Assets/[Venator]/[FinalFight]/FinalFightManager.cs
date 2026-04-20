@@ -1,0 +1,200 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+/// <summary>
+/// Orchestrates the final boss fight sequence including intro, combat, and end states.
+/// </summary>
+public class FinalFightManager : MonoBehaviour
+{
+    [Header("Vampire Refs")]
+    [SerializeField] private VampireFightBrain vampireBrain;
+    [SerializeField] private Animator vampAnimator;
+    [SerializeField] private ParticleSystem vampirePS;
+    [SerializeField] private Animator coffinAnimator;
+    [SerializeField] private GameObject[] candelabra;
+
+    [Header("Player References")]
+    [SerializeField] private PlayerMobilityManager _playerMobilityManager;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Transform playerFightStartPos;
+    [SerializeField] private InventoryItemData pistolData;
+    [SerializeField] private HandEquipmentManager handEquipmentManager;
+
+    [Header("Extra values")]
+    [SerializeField] private float introDelay = 2f;
+    [SerializeField] private float endSequenceDelay = 2f;
+
+    [Header("Transition")]
+    [SerializeField] private Animator transiton;
+    [SerializeField] private SceneTransition sceneTransition;
+
+    [Header("Audio")]
+    [SerializeField] private GlobalSoundManager globalSoundManager;
+    public AudioClip coffinOpenSFX;
+    [SerializeField] private AudioSource vampAudioSource;
+    [SerializeField] private AudioClip laughSFX;
+    [SerializeField] private AudioClip finalLaughSFX;
+
+    private IHealth _vampireHealth;
+    // player privates
+    private IHealth _playerHealth;
+    private InventoryController _inventoryController;
+
+
+    private void Awake()
+    {
+        if (vampirePS != null) vampirePS.Stop();
+        if (vampireBrain == null) Debug.LogError("vampireBrain not assigned");
+        else _vampireHealth = vampireBrain.GetComponent<IHealth>();
+
+        if (player == null) Debug.LogError("player not assigned");
+        else
+        {
+            _playerHealth = player.GetComponent<IHealth>();
+            _inventoryController = player.GetComponent<InventoryController>();
+        }
+
+        vampAnimator.SetTrigger("coffinIddle");
+    }
+
+    IEnumerator Start()
+    {
+        // Esperamos un frame para asegurar que los scripts de Awake han corrido
+        yield return null;
+
+        // Opcional: Esperar un pelín más (0.1s) es mano de santo para evitar conflictos con el tracking
+        yield return new WaitForSeconds(0.05f);
+
+        if (player != null)
+        {
+            // Ahora sí, forzamos el TP
+            Debug.Log("Auto-Teleporting Player to Start Position");
+            _playerMobilityManager.ForceTeleport(gameObject.transform);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_vampireHealth != null)
+            _vampireHealth.OnDeath += OnVampireDefeated;
+
+        if (_playerHealth != null)
+            _playerHealth.OnDeath += OnPlayerDefeated;
+    }
+
+    private void OnDisable()
+    {
+        if (_vampireHealth != null)
+            _vampireHealth.OnDeath -= OnVampireDefeated;
+
+        if (_playerHealth != null)
+            _playerHealth.OnDeath -= OnPlayerDefeated;
+    }
+
+    public void StartFight()
+    {
+        globalSoundManager.StopSequence();
+        StartCoroutine(IntroSequence());
+    }
+
+    private IEnumerator IntroSequence()
+    {
+        transiton.Play("fadeIn");
+        yield return new WaitForSeconds(2f);
+
+        // Disable player Mobility
+        _playerMobilityManager.SetPlayerMobility(false, true);
+
+        // Set player pos and rotation
+        player.GetComponent<PlayerMobilityManager>().ForceTeleport(playerFightStartPos);
+
+        // equip pistol and disable inventory
+        handEquipmentManager.EquipItem(pistolData);
+        _inventoryController.enabled = false;
+
+        // Make sure brain is disabled
+        if (vampireBrain != null)
+            vampireBrain.enabled = false;
+
+        transiton.Play("fadeOut");
+        Debug.Log("Coffin opening...");
+        vampAudioSource.Stop();
+        vampAudioSource.loop = false;
+        vampAudioSource.minDistance = 3f;
+        vampAudioSource.PlayOneShot(laughSFX);
+        vampAudioSource.PlayOneShot(coffinOpenSFX);
+        vampAnimator.SetTrigger("coffinExit");
+        coffinAnimator.SetTrigger("open");
+
+        yield return new WaitForSeconds(introDelay);
+
+        foreach (GameObject c in candelabra)
+        {
+            Light[] candles = c.GetComponentsInChildren<Light>();
+            foreach (Light candle in candles) StartCoroutine(FadeLightOut(candle));
+        }
+
+        if (vampirePS != null) vampirePS.Play();
+
+        if (vampireBrain != null) vampireBrain.enabled = true;
+
+        Debug.Log("The hunt begins!");
+
+    }
+
+    private void OnVampireDefeated()
+    {
+        Debug.Log("Victory: The vampire has been defeated.");
+        StartCoroutine(EndSequence(true));
+    }
+
+    private void OnPlayerDefeated()
+    {
+        Debug.Log("Defeat: The hunter has fallen.");
+        StartCoroutine(EndSequence(false));
+    }
+
+    private IEnumerator FadeLightOut(Light light)
+    {
+        float fadeDuration = 1f;
+        float elapsedTime = 0f;
+        float initialIntensity = light.intensity;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            light.intensity = Mathf.Lerp(initialIntensity, 0f, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        light.enabled = false;
+    }
+
+    private IEnumerator EndSequence(bool victory)
+    {
+        // Stop combat
+        if (vampireBrain != null)
+            vampireBrain.StopAllCoroutines();
+        vampireBrain.Death();
+        // vampireBrain.enabled = false;
+
+        // Change music
+        globalSoundManager.StopSequence();
+
+        yield return new WaitForSeconds(endSequenceDelay);
+
+        if (victory)
+        {
+            // Victory: Transition immediately
+            StartCoroutine(sceneTransition.FinalRoutine(true));
+        }
+        else
+        {
+            // Defeat: Laugh, wait, THEN transition
+            vampAudioSource.PlayOneShot(finalLaughSFX);
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(sceneTransition.FinalRoutine(false));
+        }
+    }
+}

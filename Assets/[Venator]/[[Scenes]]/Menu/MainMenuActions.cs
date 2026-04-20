@@ -1,0 +1,105 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenuActions : MonoBehaviour
+{
+    public GameObject player;
+    public Transform initPosition;
+    
+    [Header("Scenes")]
+    [SerializeField] private string mainSceneName = "Main";
+    [SerializeField] private string videoSceneName = "Video360";
+
+    [Header("Transition")]
+    public SceneTransition sceneTransition;
+
+    [Header("Settings")]
+    [SerializeField] GameObject settingsCanvas;
+    [SerializeField] Transform bigCog;
+    [SerializeField] Transform smallCog1;
+    [SerializeField] Transform smallCog2;
+    [SerializeField] float rotationSpeed = 100f;
+
+    public GameObject painting;
+    private bool paintingActive = false;
+
+    private bool settings = false;
+
+    IEnumerator Start()
+    {
+        // Esperamos un frame para asegurar que los scripts de Awake han corrido
+        yield return null;
+
+        // Opcional: Esperar un pelín más (0.1s) es mano de santo para evitar conflictos con el tracking
+        yield return new WaitForSeconds(0.05f);
+
+        if (player != null)
+        {
+            // Ahora sí, forzamos el TP
+            Debug.Log("Auto-Teleporting Player to Start Position");
+            player.GetComponent<PlayerMobilityManager>().ForceTeleport(player.transform);
+        }
+
+        Application.targetFrameRate = 90;
+        // activate vSync
+        QualitySettings.vSyncCount = 1;
+    }
+
+    private void Update()
+    {
+        // if settings animate cogs manually 
+        if (settings)
+        {
+            // Calculate how much to rotate cogs
+            float step = rotationSpeed * Time.deltaTime;
+
+            // Rotate big cog
+            bigCog.Rotate(0, 0, step);
+
+            // Rotate small cogs on reverse and x2 so it aligns
+            smallCog1.Rotate(0, 0, -step * 2);
+            smallCog2.Rotate(0, 0, -step * 2);
+        }
+    }
+
+    // Change to Game Scene
+    public void PlayGame()
+    {
+        Debug.Log("[MENU] PlayGame -> " + mainSceneName);
+        CheckpointState.SpawnAtCheckpoint = false;
+        CheckpointState.FinalSceneReached = false;
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(mainSceneName));
+    }
+
+    public void TogglePainting()
+    {
+        paintingActive = !paintingActive;
+        painting.SetActive(paintingActive);
+    }
+
+    // 360 Video Scene
+    public void VideoPlay()
+    {
+        Debug.Log("[MENU] VideoPlay -> " + videoSceneName);
+        StartCoroutine(sceneTransition.ChangeSceneRoutine(videoSceneName));
+    }
+
+    // Settings
+    public void ToggleSettings()
+    {
+        settingsCanvas.SetActive(!settings);
+        settings = !settings;
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("[MENU] QuitGame");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+}

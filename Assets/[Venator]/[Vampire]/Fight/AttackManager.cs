@@ -1,0 +1,176 @@
+using System.Collections;
+using UnityEngine;
+
+/// <summary>
+/// Manages vampire attack patterns during combat.
+/// </summary>
+public class AttackManager : MonoBehaviour
+{
+    [Header("Refs")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private ParticleSystem attackPS;
+    [SerializeField] private FlashlightController flashlightController;
+
+    [Header("SFXs")]
+    [SerializeField] private AudioClip startSFX;
+    [SerializeField] private AudioClip attackSFX;
+    [SerializeField] private AudioClip endSFX;
+    private AudioSource audioSource;
+
+
+    [Header("Configuration")]
+    [SerializeField] private int swarmCount = 10;
+    [SerializeField] private float timeBetweenShots = 0.2f;
+    [SerializeField] private float postAttackDelay = 1f;
+    [SerializeField][Range(0f, 1f)] private float attackProbability = 0.7f;
+
+    [Header("Projectile")]
+    [SerializeField] GameObject batProjectile;
+    [SerializeField] private Transform[] projectileSpawnPoints;
+    [SerializeField] private Transform cameraTransform;
+    private Vector3 projectileAim;
+
+    private bool _isAttacking;
+
+    /// <summary>
+    /// Gets whether the vampire is currently executing an attack.
+    /// </summary>
+    public bool IsAttacking => _isAttacking;
+
+    /// <summary>
+    /// Gets or sets the number of projectiles in a swarm attack.
+    /// </summary>
+    public int SwarmCount
+    {
+        get => swarmCount;
+        set => swarmCount = Mathf.Max(1, value);
+    }
+
+    /// <summary>
+    /// Gets or sets 
+    /// </summary>
+    public float TimeBetweenShots
+    {
+        get => timeBetweenShots;
+        set => timeBetweenShots = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the number of projectiles in a swarm attack.
+    /// </summary>
+    public float AttackProbability
+    {
+        get => attackProbability;
+        set => attackProbability = value;
+    }
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    /// <summary>
+    /// Initiates a swarm attack if not already attacking.
+    /// </summary>
+    public void ExecuteSwarmAttack()
+    {
+        if (_isAttacking)
+        {
+            Debug.LogWarning("Attack already in progress!");
+            return;
+        }
+
+        StartCoroutine(SwarmRoutine());
+    }
+
+    /// <summary>
+    /// Decides whether to attack based on probability, then executes if chosen.
+    /// </summary>
+    public bool TryExecuteAttack()
+    {
+        if (_isAttacking)
+            return false;
+
+        if (Random.value <= attackProbability)
+        {
+            ExecuteSwarmAttack();
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Coroutine that executes the swarm attack sequence.
+    /// </summary>
+    private IEnumerator SwarmRoutine()
+    {
+        Debug.Log("SwarmRoutine()");
+        _isAttacking = true;
+
+        flashlightController.Dim(true);
+
+        animator.SetBool("isAttacking", true);
+        attackPS.Play();
+        audioSource.PlayOneShot(startSFX);
+
+        yield return new WaitForSeconds(1);
+
+        Debug.Log($"Launching swarm attack with {swarmCount} projectiles!");
+
+        // use cameraTransform to take into account player height
+        projectileAim = cameraTransform.position - transform.position;
+
+        for (int i = 0; i < swarmCount; i++)
+        {
+            Transform selectedSpawnPoint = projectileSpawnPoints[Random.Range(0, projectileSpawnPoints.Length)];
+
+            Vector3 directionToPlayer = (cameraTransform.position - selectedSpawnPoint.position).normalized;
+
+            Instantiate(batProjectile, selectedSpawnPoint.position, Quaternion.LookRotation(directionToPlayer));
+
+            audioSource.PlayOneShot(attackSFX);
+
+            Debug.Log($"Bat projectile {i + 1}/{swarmCount} launched!");
+
+            yield return new WaitForSeconds(timeBetweenShots);
+        }
+
+        attackPS.Stop();
+        animator.SetBool("isAttacking", false);
+        audioSource.PlayOneShot(endSFX);
+
+        // Post-attack cooldown
+        yield return new WaitForSeconds(postAttackDelay);
+
+        _isAttacking = false;
+        Debug.Log("Swarm attack completed.");
+
+        flashlightController.Dim(false);
+    }
+
+    /// <summary>
+    /// Stops any ongoing attack.
+    /// </summary>
+    public void StopAttack()
+    {
+        if (_isAttacking)
+        {
+            StopAllCoroutines();
+
+            // just to be sure
+            attackPS.Stop();
+            animator.SetBool("isAttacking", false);
+
+            // make sure flashlight is visible
+            flashlightController.Dim(false);
+
+            _isAttacking = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+}
