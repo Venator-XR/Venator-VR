@@ -17,7 +17,6 @@
         "**/*.mid": true,
         "**/*.midi": true,
         "**/*.wav": true,
-        "**/*.gif": true,
         "**/*.ico": true,
         "**/*.jpg": true,
         "**/*.jpeg": true,
